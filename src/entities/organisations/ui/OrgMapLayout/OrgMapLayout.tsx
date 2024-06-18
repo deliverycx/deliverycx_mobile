@@ -1,4 +1,4 @@
-import React, {FC, useState, useCallback} from 'react';
+import React, {FC, useState, useCallback, useEffect} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useOrganisationsQuery} from '../../queries/organisationsQueries';
 import {OrgInfo} from '../OrgInfo';
@@ -21,6 +21,12 @@ export const OrgMapLayout: FC<Props> = ({cityId, style, onChange}) => {
   const handleOrgInfoClose = useCallback(() => {
     setOrganisationInfo(null);
   }, []);
+
+  useEffect(() => {
+    if (data?.length === 1) {
+      setOrganisationInfo(data[0]);
+    }
+  }, [data]);
 
   if (!data) {
     return null;

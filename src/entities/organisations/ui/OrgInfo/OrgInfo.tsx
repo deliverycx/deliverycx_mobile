@@ -1,5 +1,8 @@
 import React, {FC, useEffect, useMemo, useRef} from 'react';
+import Carousel from 'pinar';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import {STATIC_URL} from '../../../../shared/consts';
+import {OrgGallery} from '../OrgGallery';
 import {
   Linking,
   ScrollView,
@@ -7,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -16,6 +20,7 @@ import {Icon} from '../../../../shared/ui/Icon';
 import {Modal} from '../../../../shared/ui/Modal';
 import {COLORS} from '../../../../shared/styles';
 import {Organisation} from '../../types/organisationsTypes';
+
 import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 
@@ -24,8 +29,6 @@ type Props = {
   onCloseRequest: () => void;
   data: Organisation;
 };
-
-const SNAP_POINTS = [250];
 
 export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
@@ -49,6 +52,8 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
 
   return (
     <Modal
+      handleStyle={styles.handle}
+      handleIndicatorStyle={styles.handleStyle}
       onDismiss={onCloseRequest}
       footerComponent={() => (
         <Container style={{marginBottom: insets.bottom}}>
@@ -56,11 +61,18 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
         </Container>
       )}
       ref={modalRef}
-      snapPoints={SNAP_POINTS}>
+      snapPoints={data.gallery.length ? [600] : [250]}>
+      {!!data.gallery.length && (
+        <View style={styles.gallery}>
+          <OrgGallery style={styles.orgGallery} data={data.gallery} />
+        </View>
+      )}
       <ScrollView>
-        <Container style={styles.content}>
+        <Container style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.title}>Старик Хинкалыч {data.city}</Text>
+            <Text style={styles.title}>
+              {data.city}, {data.address}
+            </Text>
             <TouchableOpacity onPress={onCloseRequest}>
               <Icon style={styles.icon} name="close" />
             </TouchableOpacity>
@@ -133,9 +145,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  content: {},
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  gallery: {
+    height: 350,
+    position: 'relative',
+  },
+  orgGallery: {
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    overflow: 'hidden',
+    position: 'absolute',
+    height: '100%',
+  },
+  handle: {
+    backgroundColor: 'red',
+    height: 0,
+    padding: 0,
+  },
+  handleStyle: {
+    top: -8,
+  },
+  container: {
+    paddingTop: 20,
   },
 });

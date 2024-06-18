@@ -1,20 +1,47 @@
 import React, {FC} from 'react';
-import {Text, SectionList, StyleSheet} from 'react-native';
+import {
+  Text,
+  SectionList,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  Insets,
+} from 'react-native';
 import {useCityGroups} from '../../hooks/useCityGroups';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {ListButton} from '../../../../shared/ui/ListButton';
 import {City} from '../../types/citiesTypes';
+import {SomethingWrong} from '../../../../shared/ui/SomethingWrong/SomethingWrong.tsx';
+import {Container} from '../../../../shared/ui/Container';
+import {useCitiesQuery} from '../../queries/citiesQueries';
 
 type Props = {
   onChange: (city: City) => void;
+  style?: StyleProp<ViewStyle>;
+  searchValue: string;
+  scrollIndicatorInsets?: Insets;
 };
 
-export const CitiesList: FC<Props> = ({onChange}) => {
-  const cityGroups = useCityGroups();
+export const CitiesList: FC<Props> = ({
+  onChange,
+  style,
+  searchValue,
+  scrollIndicatorInsets,
+}) => {
+  const {isFetched} = useCitiesQuery();
+  const cityGroups = useCityGroups({searchValue});
+
+  if (cityGroups.length === 0 && isFetched) {
+    return (
+      <Container style={styles.notFoundOrg}>
+        <SomethingWrong text="К сожалению, у нас пока нет ресторана в вашем городе." />
+      </Container>
+    );
+  }
 
   return (
     <SectionList
-      style={styles.sectionList}
+      style={[styles.sectionList, style]}
       sections={cityGroups}
       keyExtractor={item => item.id}
       renderItem={({item}) => (
@@ -25,7 +52,7 @@ export const CitiesList: FC<Props> = ({onChange}) => {
           text={item.name}
         />
       )}
-      scrollIndicatorInsets={{top: -1, bottom: 0}}
+      scrollIndicatorInsets={scrollIndicatorInsets}
       renderSectionHeader={({section: {title}}) => {
         return <Text style={styles.letter}>{title}</Text>;
       }}
@@ -56,5 +83,9 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
+  },
+  notFoundOrg: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
