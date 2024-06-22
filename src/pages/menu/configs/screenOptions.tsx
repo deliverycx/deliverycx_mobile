@@ -1,28 +1,10 @@
 import React from 'react';
-import {BlurView} from '@react-native-community/blur';
-import {StyleSheet} from 'react-native';
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import {KhinIcon} from '../../../shared/ui/CustomIcons/KhinIcon';
+import {COLORS} from '../../../shared/styles';
 
-export const screenOptions: BottomTabNavigationOptions = {
-  tabBarStyle: {position: 'absolute'},
+export const screenOptions = {
+  tabBarIcon: ({color}: {color: string}) => <KhinIcon color={color} />,
+  tabBarActiveTintColor: COLORS.main,
   title: '',
-  headerStyle: {
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-    elevation: 0,
-  },
-  tabBarBackground: () => (
-    <BlurView
-      blurType="xlight"
-      style={styles.blurView}
-      blurAmount={10}
-      reducedTransparencyFallbackColor="white"
-    />
-  ),
+  tabBarLabel: 'Меню',
 };
-
-const styles = StyleSheet.create({
-  blurView: {
-    flex: 1,
-  },
-});

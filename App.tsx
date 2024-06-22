@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,10 +11,19 @@ import {
   Organisations,
   screenOptions as organisationsScreenOptions,
 } from './src/pages/organisations';
-import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
-import {Cart} from './src/pages/cart';
+import {Cart, screenOptions as cartScreenOptions} from './src/pages/cart';
+import {
+  Profile,
+  screenOptions as profileScreenOptions,
+} from './src/pages/profile';
+import {
+  Contacts,
+  screenOptions as contactsScreenOptions,
+} from './src/pages/contacts';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {useCurrentOrg} from './src/features/organisations';
+import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,9 +38,27 @@ const App = (): React.JSX.Element => {
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>
             {currentOrgId ? (
-              <Tab.Navigator screenOptions={menuScreenOptions}>
-                <Tab.Screen name={Routes.Menu} component={Menu} />
-                <Tab.Screen name={Routes.Cart} component={Cart} />
+              <Tab.Navigator screenOptions={tabNavigatorOptions}>
+                <Tab.Screen
+                  name={Routes.Menu}
+                  options={menuScreenOptions}
+                  component={Menu}
+                />
+                <Tab.Screen
+                  options={profileScreenOptions}
+                  name={Routes.Profile}
+                  component={Profile}
+                />
+                <Tab.Screen
+                  options={contactsScreenOptions}
+                  name={Routes.Contacts}
+                  component={Contacts}
+                />
+                <Tab.Screen
+                  options={cartScreenOptions}
+                  name={Routes.Cart}
+                  component={Cart}
+                />
               </Tab.Navigator>
             ) : (
               <Stack.Navigator initialRouteName={Routes.Cities}>

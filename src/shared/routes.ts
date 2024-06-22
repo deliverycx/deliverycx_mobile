@@ -3,6 +3,8 @@ export const enum Routes {
   Organisations = 'Organisations',
   Menu = 'Menu',
   Cart = 'Cart',
+  Profile = 'Profile',
+  Contacts = 'Contacts',
 }
 
 export type StackParamList = {

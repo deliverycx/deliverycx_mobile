@@ -1,2 +1,2 @@
-export {Cart} from './ui/cart';
+export {Contacts} from './ui/contacts';
 export {screenOptions} from './configs/screenOptions';
