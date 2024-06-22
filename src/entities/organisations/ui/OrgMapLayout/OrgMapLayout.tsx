@@ -7,7 +7,7 @@ import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
-  onChange: () => void;
+  onChange: (org: Organisation) => void;
   cityId: string;
 };
 
@@ -38,7 +38,7 @@ export const OrgMapLayout: FC<Props> = ({cityId, style, onChange}) => {
       {organisationInfo && (
         <OrgInfo
           data={organisationInfo}
-          onSelect={() => {}}
+          onSelect={onChange}
           onCloseRequest={handleOrgInfoClose}
         />
       )}

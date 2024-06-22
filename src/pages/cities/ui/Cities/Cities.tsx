@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useLayoutEffect, useState} from 'react';
 import {
   NativeSyntheticEvent,
   SafeAreaView,
@@ -18,7 +18,7 @@ export const Cities: FC<Props> = ({navigation}) => {
   const [searchValue, setSearchValue] = useState('');
   const insets = useSafeAreaInsets();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerSearchBarOptions: {
         hideWhenScrolling: false,

@@ -25,12 +25,12 @@ import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 
 type Props = {
-  onSelect: () => void;
+  onSelect: (org: Organisation) => void;
   onCloseRequest: () => void;
   data: Organisation;
 };
 
-export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
+export const OrgInfo: FC<Props> = ({onCloseRequest, data, onSelect}) => {
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -57,7 +57,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
       onDismiss={onCloseRequest}
       footerComponent={() => (
         <Container style={{marginBottom: insets.bottom}}>
-          <Button onPress={() => {}} text="Выбрать" />
+          <Button onPress={() => onSelect(data)} text="Выбрать" />
         </Container>
       )}
       ref={modalRef}
