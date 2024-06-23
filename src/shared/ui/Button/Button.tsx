@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    lineHeight: 18,
     fontWeight: '500',
     textAlign: 'center',
   },
