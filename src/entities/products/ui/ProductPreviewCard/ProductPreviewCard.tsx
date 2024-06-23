@@ -12,7 +12,7 @@ import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {Product} from '../../types/productsTypes';
 import {Button} from '../../../../shared/ui/Button';
-import {STATIC_URL} from '../../../../shared/consts';
+import {API_URL} from '../../../../shared/consts';
 
 interface Props {
   data: Product;
@@ -33,7 +33,7 @@ export const ProductPreviewCard: FC<Props> = ({data, style}) => {
           resizeMode="contain"
           style={styles.img}
           source={{
-            uri: `${STATIC_URL}/ecomm?origin=${image}`,
+            uri: `${API_URL}/ecomm?origin=${image}`,
           }}
         />
         <View style={styles.body}>

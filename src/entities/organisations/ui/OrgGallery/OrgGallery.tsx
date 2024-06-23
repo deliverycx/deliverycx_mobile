@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Carousel from 'pinar';
 import {Image, StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {STATIC_URL} from '../../../../shared/consts';
+import {API_URL} from '../../../../shared/consts';
 
 type Props = {
   data: string[];
@@ -19,7 +19,7 @@ export const OrgGallery: FC<Props> = ({data, style}) => {
           key={item}
           style={styles.img}
           source={{
-            uri: `${STATIC_URL}/static/shop/${item}`,
+            uri: `${API_URL}/static/shop/${item}`,
           }}
         />
       ))}

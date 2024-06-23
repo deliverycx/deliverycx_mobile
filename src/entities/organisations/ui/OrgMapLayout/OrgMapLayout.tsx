@@ -1,4 +1,4 @@
-import React, {FC, useState, useCallback, useEffect} from 'react';
+import React, {FC, useState, useCallback, useEffect, ReactNode} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useOrganisationsQuery} from '../../queries/organisationsQueries';
 import {OrgInfo} from '../OrgInfo';
@@ -7,11 +7,15 @@ import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
-  onChange: (org: Organisation) => void;
   cityId: string;
+  onRenderSelectButton: (org: Organisation) => ReactNode;
 };
 
-export const OrgMapLayout: FC<Props> = ({cityId, style, onChange}) => {
+export const OrgMapLayout: FC<Props> = ({
+  cityId,
+  style,
+  onRenderSelectButton,
+}) => {
   const {data} = useOrganisationsQuery({cityId});
 
   const [organisationInfo, setOrganisationInfo] = useState<Organisation | null>(
@@ -38,7 +42,7 @@ export const OrgMapLayout: FC<Props> = ({cityId, style, onChange}) => {
       {organisationInfo && (
         <OrgInfo
           data={organisationInfo}
-          onSelect={onChange}
+          onRenderSelectButton={onRenderSelectButton}
           onCloseRequest={handleOrgInfoClose}
         />
       )}

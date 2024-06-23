@@ -1,7 +1,5 @@
-import React, {FC, useEffect, useMemo, useRef} from 'react';
-import Carousel from 'pinar';
+import React, {FC, useEffect, useMemo, useRef, ReactNode} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {STATIC_URL} from '../../../../shared/consts';
 import {OrgGallery} from '../OrgGallery';
 import {
   Linking,
@@ -10,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image,
 } from 'react-native';
 import 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -25,12 +22,16 @@ import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 
 type Props = {
-  onSelect: (org: Organisation) => void;
+  onRenderSelectButton: (org: Organisation) => ReactNode;
   onCloseRequest: () => void;
   data: Organisation;
 };
 
-export const OrgInfo: FC<Props> = ({onCloseRequest, data, onSelect}) => {
+export const OrgInfo: FC<Props> = ({
+  onCloseRequest,
+  data,
+  onRenderSelectButton,
+}) => {
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -57,7 +58,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data, onSelect}) => {
       onDismiss={onCloseRequest}
       footerComponent={() => (
         <Container style={{marginBottom: insets.bottom}}>
-          <Button onPress={() => onSelect(data)} text="Выбрать" />
+          {onRenderSelectButton(data)}
         </Container>
       )}
       ref={modalRef}

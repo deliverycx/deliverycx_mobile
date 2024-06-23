@@ -1,2 +1,2 @@
 export {Menu} from './ui/Menu';
-export {screenOptions} from './configs/screenOptions';
+export {screenOptions, ScreenOptions} from './configs/screenOptions';

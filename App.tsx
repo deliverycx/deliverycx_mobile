@@ -22,20 +22,21 @@ import {
 } from './src/pages/contacts';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
-import {useCurrentOrg} from './src/features/organisations';
+import {useCurrentOrgIds} from './src/features/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 const queryClient = new QueryClient();
 
 const App = (): React.JSX.Element => {
-  const currentOrgId = useCurrentOrg(state => state.orgId);
+  const currentOrgId = useCurrentOrgIds(state => state.orgId);
 
   return (
-    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-      <BottomSheetModalProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+        <BottomSheetModalProvider>
           <NavigationContainer>
             {currentOrgId ? (
               <Tab.Navigator screenOptions={tabNavigatorOptions}>
@@ -75,9 +76,9 @@ const App = (): React.JSX.Element => {
               </Stack.Navigator>
             )}
           </NavigationContainer>
-        </QueryClientProvider>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </QueryClientProvider>
   );
 };
 
