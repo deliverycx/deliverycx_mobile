@@ -63,7 +63,7 @@ export const Button: FC<Props> = ({
         loading && styles.disabled,
       ]}>
       {loading ? (
-        <ActivityIndicator color={COLORS.backgroundPrimary} />
+        <ActivityIndicator size={18} color={COLORS.backgroundPrimary} />
       ) : (
         <View style={styles.textWrapper}>
           {leftAddons}

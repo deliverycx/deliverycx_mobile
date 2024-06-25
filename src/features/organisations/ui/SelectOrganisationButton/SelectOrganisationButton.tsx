@@ -27,5 +27,7 @@ export const SelectOrganisationButton: FC<Props> = ({orgId, cityId}) => {
     }
   };
 
-  return <Button loading={loading} onPress={handleOrgChange} text="Выбрать" />;
+  return (
+    <Button loading={loading} onPress={handleOrgChange} text="Перейти в меню" />
+  );
 };

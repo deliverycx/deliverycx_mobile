@@ -1,3 +1,9 @@
+export interface Filter {
+  _id: string;
+  name: string;
+  images: string;
+}
+
 export interface Organisation {
   address: string;
   city: string;
@@ -8,6 +14,7 @@ export interface Organisation {
   workTime: string[];
   gallery: string[];
   guid: string;
+  filters: Filter[];
 }
 
 export interface OrganisationsRequestModel {

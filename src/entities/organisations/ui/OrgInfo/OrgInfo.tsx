@@ -19,6 +19,7 @@ import {OrgRating} from '../OrgRating';
 import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
 import {OrgWorkTime} from '../OrgWorkTime';
 import {OrgPhone} from '../OrgPhone';
+import {OrgFilters} from '../OrgFilters';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -50,7 +51,7 @@ export const OrgInfo: FC<Props> = ({
         </Container>
       )}
       ref={modalRef}
-      snapPoints={data.gallery.length ? [700] : [450]}>
+      snapPoints={data.gallery.length ? [750] : [450]}>
       {!!data.gallery.length && (
         <View style={styles.gallery}>
           <OrgGallery style={styles.orgGallery} data={data.gallery} />
@@ -72,9 +73,14 @@ export const OrgInfo: FC<Props> = ({
             orgId={data.guid}
           />
           <View style={styles.mainInfo}>
-            <OrgWorkTime style={styles.orgWorkTime} workTime={data.workTime} />
-            <OrgPhone style={styles.orgPhone} phone={data.phone} />
+            <View style={styles.orgWorkTime}>
+              <OrgWorkTime workTime={data.workTime} />
+            </View>
+            <View style={styles.orgPhone}>
+              <OrgPhone phone={data.phone} />
+            </View>
           </View>
+          <OrgFilters style={styles.orgFilters} data={data.filters} />
         </Container>
       </ScrollView>
     </Modal>
@@ -92,7 +98,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
-    gap: 10,
   },
   workTime: {
     fontSize: 14,
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   gallery: {
-    height: 300,
+    height: 250,
     position: 'relative',
   },
   orgGallery: {
@@ -134,8 +139,13 @@ const styles = StyleSheet.create({
   },
   orgWorkTime: {
     width: '50%',
+    paddingRight: 4,
   },
   orgPhone: {
     width: '50%',
+    paddingLeft: 4,
+  },
+  orgFilters: {
+    paddingVertical: 8,
   },
 });
