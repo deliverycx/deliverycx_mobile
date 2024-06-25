@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'pinar';
-import {Image, StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {API_URL} from '../../../../shared/consts';
 
 type Props = {

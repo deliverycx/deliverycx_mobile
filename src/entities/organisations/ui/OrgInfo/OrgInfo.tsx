@@ -12,7 +12,6 @@ import {
 import 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Container} from '../../../../shared/ui/Container';
-import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
 import {Modal} from '../../../../shared/ui/Modal';
 import {COLORS} from '../../../../shared/styles';
@@ -20,6 +19,7 @@ import {Organisation} from '../../types/organisationsTypes';
 
 import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
+import {OrgRating} from '../OrgRating';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -62,7 +62,7 @@ export const OrgInfo: FC<Props> = ({
         </Container>
       )}
       ref={modalRef}
-      snapPoints={data.gallery.length ? [600] : [250]}>
+      snapPoints={data.gallery.length ? [700] : [280]}>
       {!!data.gallery.length && (
         <View style={styles.gallery}>
           <OrgGallery style={styles.orgGallery} data={data.gallery} />
@@ -78,6 +78,7 @@ export const OrgInfo: FC<Props> = ({
               <Icon style={styles.icon} name="close" />
             </TouchableOpacity>
           </View>
+          <OrgRating orgId={data.guid} />
           <View style={styles.mainInfo}>
             <View>
               <Text style={styles.workTime}>{workTime}</Text>
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   gallery: {
-    height: 350,
+    height: 300,
     position: 'relative',
   },
   orgGallery: {

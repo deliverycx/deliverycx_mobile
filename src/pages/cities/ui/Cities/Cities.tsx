@@ -23,6 +23,7 @@ export const Cities: FC<Props> = ({navigation}) => {
       headerSearchBarOptions: {
         hideWhenScrolling: false,
         cancelButtonText: 'Отмена',
+        placeholder: 'Поиск',
         onChangeText: (event: NativeSyntheticEvent<TextInputFocusEventData>) =>
           setSearchValue(event.nativeEvent.text),
       },

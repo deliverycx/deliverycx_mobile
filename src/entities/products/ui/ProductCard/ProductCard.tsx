@@ -12,7 +12,6 @@ import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {getProductWeightText} from '../../utils/getProductWeightText';
 import {Product} from '../../types/productsTypes';
-import {getImageUri} from '../../utils/getImageUri';
 
 interface Props {
   data: Product;
@@ -78,7 +77,7 @@ export const ProductCard: FC<Props> = ({
           <FastImage
             resizeMode="contain"
             style={styles.img}
-            source={{uri: getImageUri(image)}}
+            source={{uri: image}}
           />
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.description}>{description}</Text>

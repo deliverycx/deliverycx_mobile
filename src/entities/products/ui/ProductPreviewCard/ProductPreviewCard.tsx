@@ -17,7 +17,6 @@ import {ProductCard} from '../ProductCard';
 import {Product} from '../../types/productsTypes';
 import {Button} from '../../../../shared/ui/Button';
 import {getProductWeightText} from '../../utils/getProductWeightText';
-import {getImageUri} from '../../utils/getImageUri.ts';
 import {Counter} from '../../../../shared/ui/Counter';
 
 interface Props {
@@ -77,7 +76,7 @@ export const ProductPreviewCard: FC<Props> = ({data, style}) => {
                 resizeMode="contain"
                 style={styles.img}
                 source={{
-                  uri: getImageUri(image),
+                  uri: image,
                 }}
               />
               <View style={styles.body}>

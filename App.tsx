@@ -45,11 +45,11 @@ const App = (): React.JSX.Element => {
                   options={menuScreenOptions}
                   component={Menu}
                 />
-                <Tab.Screen
-                  options={profileScreenOptions}
-                  name={Routes.Profile}
-                  component={Profile}
-                />
+                {/*<Tab.Screen*/}
+                {/*  options={profileScreenOptions}*/}
+                {/*  name={Routes.Profile}*/}
+                {/*  component={Profile}*/}
+                {/*/>*/}
                 <Tab.Screen
                   options={contactsScreenOptions}
                   name={Routes.Contacts}

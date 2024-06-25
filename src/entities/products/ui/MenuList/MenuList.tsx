@@ -1,11 +1,9 @@
 import React, {FC, useRef} from 'react';
 import {
   Insets,
-  SectionList,
   View,
   StyleSheet,
   ViewToken,
-  FlatList,
   Text,
   VirtualizedList,
 } from 'react-native';
@@ -13,9 +11,7 @@ import {ProductPreviewCard} from '../ProductPreviewCard';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useProductsQuery} from '../../queries/productsQueries';
 import {CategoryList} from '../CategoryList';
-import {useCategoryList} from '../../hooks/useCategoryList.ts';
 import {useSyncList} from '../../hooks/useSyncList.ts';
-import {Container} from '../../../../shared/ui/Container';
 import {INDENTS} from '../../../../shared/styles.ts';
 
 type Props = {
@@ -151,28 +147,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
-
-  // productPreviewCardLeft: {
-  //   paddingLeft: INDENTS.main,
-  //   paddingRight: SHIFT,
-  // },
-  // productPreviewCardRight: {
-  //   paddingRight: INDENTS.main,
-  //   paddingLeft: SHIFT,
-  // },
-
-  // itemsList: {
-  //   flexDirection: 'row',
-  //   flexWrap: 'wrap',
-  // },
 });
-
-// <View
-//   style={[
-//     styles.productPreviewCard,
-//     index % 2 === 0
-//       ? styles.productPreviewCardLeft
-//       : styles.productPreviewCardRight,
-//   ]}>
-//   <ProductPreviewCard key={index} data={item} />
-// </View>
