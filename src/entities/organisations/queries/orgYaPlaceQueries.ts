@@ -2,7 +2,7 @@ import {QueryClient, useQuery} from '@tanstack/react-query';
 import {getYaPlaceApi} from '../api/orgYaPlaceApi';
 import {OrgYaPlaceRequestModel} from '../types/orgYaPlaceTypes';
 
-const QUERY_KEY = 'YA_PLACE';
+const QUERY_KEY = 'ORG_YA_PLACE';
 
 const getYaPlace = async (params: OrgYaPlaceRequestModel) => {
   const {data} = await getYaPlaceApi(params);

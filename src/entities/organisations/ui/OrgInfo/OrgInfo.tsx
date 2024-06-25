@@ -20,6 +20,7 @@ import {Organisation} from '../../types/organisationsTypes';
 import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 import {OrgRating} from '../OrgRating';
+import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -79,6 +80,10 @@ export const OrgInfo: FC<Props> = ({
             </TouchableOpacity>
           </View>
           <OrgRating orgId={data.guid} />
+          <OrgKhinkaliCounter
+            style={styles.khinkaliCounter}
+            orgId={data.guid}
+          />
           <View style={styles.mainInfo}>
             <View>
               <Text style={styles.workTime}>{workTime}</Text>
@@ -172,5 +177,8 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: 20,
+  },
+  khinkaliCounter: {
+    paddingVertical: 10,
   },
 });
