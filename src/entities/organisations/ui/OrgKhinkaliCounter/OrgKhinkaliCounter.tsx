@@ -2,21 +2,24 @@ import React, {FC, useMemo} from 'react';
 import {Text, StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
 import {useKhinkaliCounterQuery} from '../../queries/orgKhinkaliCounterQueries';
 import {COLORS} from '../../../../shared/styles';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 type Props = {
   orgId: string;
   style?: StyleProp<ViewStyle>;
 };
 
+const array: number[] = new Array(8).fill(0);
+
 export const OrgKhinkaliCounter: FC<Props> = ({orgId, style}) => {
-  const {data} = useKhinkaliCounterQuery({organization: orgId});
+  const {data, isFetched} = useKhinkaliCounterQuery({organization: orgId});
 
   const values = useMemo(() => {
     if (!data) {
-      return;
+      return array;
     }
 
-    const array: number[] = new Array(8).fill(0);
     const numArray = Array.from(String(data.coutn), Number);
 
     for (let i = 0; i < numArray.length; i++) {
@@ -30,11 +33,23 @@ export const OrgKhinkaliCounter: FC<Props> = ({orgId, style}) => {
     <View style={[styles.wrapper, style]}>
       <Text style={styles.title}>Съедено хинкали</Text>
       <View style={styles.counter}>
-        {values?.map((value, index) => (
-          <View style={styles.counterItem} key={index}>
-            <Text style={styles.counterItemText}>{value}</Text>
-          </View>
-        ))}
+        {values.map((value, index) => {
+          if (!isFetched) {
+            return (
+              <ShimmerPlaceHolder
+                key={index}
+                LinearGradient={LinearGradient}
+                style={styles.counterItem}
+              />
+            );
+          } else {
+            return (
+              <View style={styles.counterItem} key={index}>
+                <Text style={styles.counterItemText}>{value}</Text>
+              </View>
+            );
+          }
+        })}
       </View>
     </View>
   );

@@ -1,11 +1,13 @@
-import React, {type FC} from 'react';
+import React, {type FC, ReactElement} from 'react';
 import {
   StyleSheet,
   Text,
   TouchableHighlight,
   type TouchableHighlightProps,
   ActivityIndicator,
+  View,
 } from 'react-native';
+import {Icon} from '../Icon';
 import {COLORS} from '../../styles';
 import {hexToRgba} from '../../utils/hexToRgba';
 
@@ -25,6 +27,8 @@ interface Props extends TouchableHighlightProps {
   variant?: keyof typeof Variant;
   size?: keyof typeof Size;
   loading?: boolean;
+  leftAddons?: ReactElement;
+  rightAddons?: ReactElement;
 }
 
 const underlayColorPrimary = hexToRgba(COLORS.main, 0.6);
@@ -36,6 +40,8 @@ export const Button: FC<Props> = ({
   size = Size.md,
   style,
   loading = false,
+  leftAddons,
+  rightAddons,
   disabled,
   ...props
 }) => {
@@ -59,9 +65,14 @@ export const Button: FC<Props> = ({
       {loading ? (
         <ActivityIndicator color={COLORS.backgroundPrimary} />
       ) : (
-        <Text style={[styles.text, textStyles[variant], textSizeStyles[size]]}>
-          {text}
-        </Text>
+        <View style={styles.textWrapper}>
+          {leftAddons}
+          <Text
+            style={[styles.text, textStyles[variant], textSizeStyles[size]]}>
+            {text}
+          </Text>
+          {rightAddons}
+        </View>
       )}
     </TouchableHighlight>
   );
@@ -94,7 +105,7 @@ const sizeStyles = StyleSheet.create({
 
 const textSizeStyles = StyleSheet.create({
   sm: {
-    fontSize: 14,
+    fontSize: 13,
   },
   md: {
     fontSize: 16,
@@ -127,5 +138,11 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.4,
+  },
+  textWrapper: {
+    gap: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

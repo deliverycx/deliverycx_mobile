@@ -17,7 +17,6 @@ export const OrgGallery: FC<Props> = ({data, style}) => {
       autoplay={true}>
       {data.map((item, index) => (
         <FastImage
-          defaultSource={2}
           key={item}
           style={styles.img}
           source={{

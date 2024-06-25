@@ -1,8 +1,7 @@
-import React, {FC, useEffect, useMemo, useRef, ReactNode} from 'react';
+import React, {FC, useEffect, useRef, ReactNode} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {OrgGallery} from '../OrgGallery';
 import {
-  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,11 +15,10 @@ import {Icon} from '../../../../shared/ui/Icon';
 import {Modal} from '../../../../shared/ui/Modal';
 import {COLORS} from '../../../../shared/styles';
 import {Organisation} from '../../types/organisationsTypes';
-
-import {getWeekdayIndexFromMonday} from '../../utils/getWeekdayIndexFromMonday';
-import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 import {OrgRating} from '../OrgRating';
 import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
+import {OrgWorkTime} from '../OrgWorkTime';
+import {OrgPhone} from '../OrgPhone';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -41,17 +39,6 @@ export const OrgInfo: FC<Props> = ({
     modalRef.current?.present();
   }, []);
 
-  const formattedPhoneNumber = useMemo(() => {
-    return formatRussianPhoneNumber(data.phone);
-  }, [data]);
-
-  const handlePhonePress = () => {
-    Linking.openURL(`tel:${data.phone}`);
-  };
-
-  const currentWeekDayIndex = getWeekdayIndexFromMonday(new Date());
-  const workTime = data.workTime[currentWeekDayIndex];
-
   return (
     <Modal
       handleStyle={styles.handle}
@@ -63,7 +50,7 @@ export const OrgInfo: FC<Props> = ({
         </Container>
       )}
       ref={modalRef}
-      snapPoints={data.gallery.length ? [700] : [280]}>
+      snapPoints={data.gallery.length ? [700] : [450]}>
       {!!data.gallery.length && (
         <View style={styles.gallery}>
           <OrgGallery style={styles.orgGallery} data={data.gallery} />
@@ -85,19 +72,8 @@ export const OrgInfo: FC<Props> = ({
             orgId={data.guid}
           />
           <View style={styles.mainInfo}>
-            <View>
-              <Text style={styles.workTime}>{workTime}</Text>
-              <Text style={styles.address}>{data.address}</Text>
-            </View>
-            <Text>1.4 км</Text>
-          </View>
-          <View style={styles.infoBlock}>
-            <Text style={styles.infoBlockTitle}>Телефон:</Text>
-            <View>
-              <TouchableOpacity onPress={handlePhonePress}>
-                <Text style={styles.phone}>{formattedPhoneNumber}</Text>
-              </TouchableOpacity>
-            </View>
+            <OrgWorkTime style={styles.orgWorkTime} workTime={data.workTime} />
+            <OrgPhone style={styles.orgPhone} phone={data.phone} />
           </View>
         </Container>
       </ScrollView>
@@ -109,39 +85,14 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  infoBlockListItem: {
-    fontSize: 12,
-    textAlign: 'right',
-  },
-  phone: {
-    textAlign: 'right',
-    paddingVertical: 2,
-    color: COLORS.main,
-    fontWeight: '500',
-  },
-  infoBlockTitle: {
-    fontWeight: '500',
-  },
-  infoBlock: {
-    marginVertical: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   icon: {
     color: COLORS.main,
-  },
-  address: {
-    color: COLORS.textSecondary,
-    marginTop: 2,
   },
   mainInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 10,
-    paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderColor: COLORS.border,
-    marginBottom: 10,
+    paddingVertical: 10,
+    gap: 10,
   },
   workTime: {
     fontSize: 14,
@@ -180,5 +131,11 @@ const styles = StyleSheet.create({
   },
   khinkaliCounter: {
     paddingVertical: 10,
+  },
+  orgWorkTime: {
+    width: '50%',
+  },
+  orgPhone: {
+    width: '50%',
   },
 });
