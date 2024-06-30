@@ -1,6 +1,6 @@
-import {useCurrentOrgIds} from '../stores/useCurrentOrgIds.ts';
-import {useOrganisationData} from '../../../entities/organisations';
 import {useEffect} from 'react';
+import {useCurrentOrgIds} from '../stores/useCurrentOrgIds';
+import {useOrganisationData} from './useOrganisationData';
 
 export const useCurrentOrg = () => {
   const cityId = useCurrentOrgIds(state => state.cityId)!;

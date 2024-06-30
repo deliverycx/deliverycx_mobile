@@ -18,10 +18,10 @@ import {
   screenOptions as contactsScreenOptions,
 } from './src/pages/contacts';
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
-import {useCurrentOrgIds} from './src/features/organisations';
 import {
   OrgStatusAlertsProvider,
   OrgStatusAlerts,
+  useCurrentOrgIds,
 } from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 

@@ -26,14 +26,22 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
   const isWork = organizationStatus === OrganisationStatus.Work;
   const hasAllData = !!(organizationStatus && currentWorkTime);
 
+  let isOrgWorking: boolean | undefined;
+  let isOrgClosing: boolean | undefined;
+
+  if (hasAllData) {
+    isOrgWorking = isCurrentTimeInRange(currentWorkTime);
+    isOrgClosing = isTimeAfterRange(deliveryWorkTime!);
+  }
+
   useEffect(() => {
     if (!hasAllData || !isWork) {
       return;
     }
 
-    if (!isCurrentTimeInRange(currentWorkTime)) {
+    if (!isOrgWorking) {
       const getAlertMessage = () => {
-        const timeAfterRange = isTimeAfterRange(currentWorkTime);
+        const timeAfterRange = isOrgClosing;
 
         const takeAwayTimeMessage = `Самовывоз доступен ${
           timeAfterRange ? nextWorkTime : currentWorkTime
@@ -59,6 +67,8 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
     deliveryWorkTime,
     isWork,
     nextWorkTime,
+    isOrgClosing,
+    isOrgWorking,
   ]);
 
   useEffect(() => {
@@ -66,10 +76,7 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
       return;
     }
 
-    if (
-      isCurrentTimeInRange(currentWorkTime) &&
-      isTimeAfterRange(deliveryWorkTime!)
-    ) {
+    if (isOrgWorking && isOrgClosing) {
       const getAlertMessage = () => {
         const takeAwayTimeMessage = `Самовывоз доступен до ${getToTime(
           currentWorkTime,
@@ -85,7 +92,15 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
         {text: 'Хорошо'},
       ]);
     }
-  }, [currentWorkTime, isWork, hasAllData, delivery, deliveryWorkTime]);
+  }, [
+    currentWorkTime,
+    isWork,
+    hasAllData,
+    delivery,
+    deliveryWorkTime,
+    isOrgWorking,
+    isOrgClosing,
+  ]);
 
   useEffect(() => {
     if (

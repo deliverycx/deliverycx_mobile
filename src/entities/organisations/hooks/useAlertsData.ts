@@ -6,7 +6,7 @@ import {hasDelivery} from '../utils/hasDelivery';
 import {useOrgStatusQuery} from '../queries/orgStatusQueries';
 import {useOrganisationData} from './useOrganisationData';
 
-const ORG_STATUS_REFETCH_INTERVAL = 1000 * 60 * 60; // 1min
+const ORG_STATUS_REFETCH_INTERVAL = 1000 * 60; // 1min
 
 export const useAlertsData = (cityId: string, orgId: string) => {
   const {data: orgStatusData} = useOrgStatusQuery(
@@ -16,6 +16,7 @@ export const useAlertsData = (cityId: string, orgId: string) => {
     {
       refetchIntervalInBackground: true,
       refetchInterval: ORG_STATUS_REFETCH_INTERVAL,
+      notifyOnChangeProps: 'all',
     },
   );
   const {data: orgData} = useOrganisationData(cityId, orgId);

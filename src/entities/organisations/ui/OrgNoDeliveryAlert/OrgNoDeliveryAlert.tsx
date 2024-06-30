@@ -17,23 +17,35 @@ export const OrgNoDeliveryAlert: FC<Props> = ({cityId, orgId}) => {
   const isWork = organizationStatus === OrganisationStatus.Work;
   const hasAllData = !!(organizationStatus && currentWorkTime);
 
+  let isOrgWorking: boolean | undefined;
+  let isOrgClosing: boolean | undefined;
+
+  if (hasAllData) {
+    isOrgWorking = isCurrentTimeInRange(currentWorkTime);
+    isOrgClosing = isTimeAfterRange(deliveryWorkTime!);
+  }
+
   useEffect(() => {
     if (!hasAllData || !isWork) {
       return;
     }
 
-    if (
-      isCurrentTimeInRange(currentWorkTime) &&
-      !isTimeAfterRange(deliveryWorkTime!) &&
-      !delivery
-    ) {
+    if (isOrgWorking && !isOrgClosing && !delivery) {
       Alert.alert(
         'В этом завдении доступен только самовывоз',
         'Если вы хотите оформить доставку курьером - попробуйте выбрать другое ближайшее заведение',
         [{text: 'Хорошо'}],
       );
     }
-  }, [hasAllData, isWork, currentWorkTime, delivery, deliveryWorkTime]);
+  }, [
+    hasAllData,
+    isWork,
+    currentWorkTime,
+    delivery,
+    deliveryWorkTime,
+    isOrgWorking,
+    isOrgClosing,
+  ]);
 
   return null;
 };

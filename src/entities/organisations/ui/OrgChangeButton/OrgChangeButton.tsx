@@ -1,4 +1,4 @@
-import {useCurrentOrgIds} from '../../stores/useCurrentOrgIds.ts';
+import {useCurrentOrgIds} from '../../stores/useCurrentOrgIds';
 import React, {FC} from 'react';
 import {
   Text,
@@ -15,7 +15,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-export const ChangeOrganisationButton: FC<Props> = ({style}) => {
+export const OrgChangeButton: FC<Props> = ({style}) => {
   const organisation = useCurrentOrg();
   const deleteOrgInfo = useCurrentOrgIds(state => state.deleteOrgInfo);
 

@@ -22,9 +22,9 @@ import {OrgPhone} from '../OrgPhone';
 import {OrgFilters} from '../OrgFilters';
 import {useOrgStatusAlerts} from '../../providers/OrgStatusAlertsProvider';
 import {OrgNoDeliveryAlert} from '../OrgNoDeliveryAlert';
+import {OrgSelectButton} from '../OrgSelectButton';
 
 type Props = {
-  onRenderSelectButton: (org: Organisation) => ReactNode;
   onCloseRequest: () => void;
   data: Organisation;
 };
@@ -34,11 +34,7 @@ const CONTENT_WITHOUT_FILTERS_HEIGHT = 300;
 const FILTER_ITEM = 16;
 const FILTER_ITEM_ROW_GAP = 10;
 
-export const OrgInfo: FC<Props> = ({
-  onCloseRequest,
-  data,
-  onRenderSelectButton,
-}) => {
+export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
   useOrgStatusAlerts(data.cityid, data.guid);
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
@@ -64,7 +60,7 @@ export const OrgInfo: FC<Props> = ({
         onDismiss={onCloseRequest}
         footerComponent={() => (
           <Container style={{marginBottom: insets.bottom}}>
-            {onRenderSelectButton(data)}
+            <OrgSelectButton orgId={data.guid} cityId={data.cityid} />
           </Container>
         )}
         ref={modalRef}

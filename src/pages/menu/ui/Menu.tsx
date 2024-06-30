@@ -2,7 +2,7 @@ import React from 'react';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {MenuList} from '../../../entities/products';
-import {useCurrentOrgIds} from '../../../features/organisations';
+import {useCurrentOrgIds} from '../../../entities/organisations';
 
 export const Menu = () => {
   const bottomTabBarHeight = useBottomTabBarHeight();
