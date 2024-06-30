@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, ReactNode, useContext} from 'react';
+import React, {FC, useEffect, useRef, ReactNode} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {OrgGallery} from '../OrgGallery';
 import {
@@ -20,7 +20,8 @@ import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
 import {OrgWorkTime} from '../OrgWorkTime';
 import {OrgPhone} from '../OrgPhone';
 import {OrgFilters} from '../OrgFilters';
-import {useOrgStatus} from '../../providers/OrgStatusProvider';
+import {useOrgStatusAlerts} from '../../providers/OrgStatusAlertsProvider';
+import {OrgNoDeliveryAlert} from '../OrgNoDeliveryAlert';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -33,7 +34,7 @@ export const OrgInfo: FC<Props> = ({
   data,
   onRenderSelectButton,
 }) => {
-  const {startOrgStatusCheck, stopOrgStatusCheck} = useOrgStatus();
+  useOrgStatusAlerts(data.cityid, data.guid);
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -42,55 +43,53 @@ export const OrgInfo: FC<Props> = ({
     modalRef.current?.present();
   }, []);
 
-  useEffect(() => {
-    startOrgStatusCheck(data.cityid, data.guid);
-    return () => stopOrgStatusCheck();
-  }, [startOrgStatusCheck, stopOrgStatusCheck, data]);
-
   return (
-    <Modal
-      handleStyle={styles.handle}
-      handleIndicatorStyle={styles.handleStyle}
-      onDismiss={onCloseRequest}
-      footerComponent={() => (
-        <Container style={{marginBottom: insets.bottom}}>
-          {onRenderSelectButton(data)}
-        </Container>
-      )}
-      ref={modalRef}
-      snapPoints={data.gallery.length ? [640] : [450]}>
-      {!!data.gallery.length && (
-        <View style={styles.gallery}>
-          <OrgGallery style={styles.orgGallery} data={data.gallery} />
-        </View>
-      )}
-      <ScrollView>
-        <Container style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>
-              {data.city}, {data.address}
-            </Text>
-            <TouchableOpacity onPress={onCloseRequest}>
-              <Icon style={styles.icon} name="close" />
-            </TouchableOpacity>
+    <>
+      <Modal
+        handleStyle={styles.handle}
+        handleIndicatorStyle={styles.handleStyle}
+        onDismiss={onCloseRequest}
+        footerComponent={() => (
+          <Container style={{marginBottom: insets.bottom}}>
+            {onRenderSelectButton(data)}
+          </Container>
+        )}
+        ref={modalRef}
+        snapPoints={data.gallery.length ? [640] : [450]}>
+        {!!data.gallery.length && (
+          <View style={styles.gallery}>
+            <OrgGallery style={styles.orgGallery} data={data.gallery} />
           </View>
-          <OrgRating orgId={data.guid} />
-          <OrgKhinkaliCounter
-            style={styles.khinkaliCounter}
-            orgId={data.guid}
-          />
-          <View style={styles.mainInfo}>
-            <View style={styles.orgWorkTime}>
-              <OrgWorkTime workTime={data.workTime} />
+        )}
+        <ScrollView>
+          <Container style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>
+                {data.city}, {data.address}
+              </Text>
+              <TouchableOpacity onPress={onCloseRequest}>
+                <Icon style={styles.icon} name="close" />
+              </TouchableOpacity>
             </View>
-            <View style={styles.orgPhone}>
-              <OrgPhone phone={data.phone} />
+            <OrgRating orgId={data.guid} />
+            <OrgKhinkaliCounter
+              style={styles.khinkaliCounter}
+              orgId={data.guid}
+            />
+            <View style={styles.mainInfo}>
+              <View style={styles.orgWorkTime}>
+                <OrgWorkTime workTime={data.workTime} />
+              </View>
+              <View style={styles.orgPhone}>
+                <OrgPhone phone={data.phone} />
+              </View>
             </View>
-          </View>
-          <OrgFilters style={styles.orgFilters} data={data.filters} />
-        </Container>
-      </ScrollView>
-    </Modal>
+            <OrgFilters style={styles.orgFilters} data={data.filters} />
+          </Container>
+        </ScrollView>
+      </Modal>
+      <OrgNoDeliveryAlert cityId={data.cityid} orgId={data.guid} />
+    </>
   );
 };
 

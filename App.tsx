@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -16,10 +17,12 @@ import {
   Contacts,
   screenOptions as contactsScreenOptions,
 } from './src/pages/contacts';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {useCurrentOrgIds} from './src/features/organisations';
-import {OrgStatusProvider} from './src/entities/organisations';
+import {
+  OrgStatusAlertsProvider,
+  OrgStatusAlerts,
+} from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 
 const Stack = createNativeStackNavigator();
@@ -29,31 +32,34 @@ const queryClient = new QueryClient();
 
 const App = (): React.JSX.Element => {
   const currentOrgId = useCurrentOrgIds(state => state.orgId);
+  const currentCityId = useCurrentOrgIds(state => state.cityId);
 
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={styles.gestureHandlerRootView}>
         <BottomSheetModalProvider>
-          <OrgStatusProvider>
+          <OrgStatusAlertsProvider>
             <NavigationContainer>
               {currentOrgId ? (
-                <Tab.Navigator screenOptions={tabNavigatorOptions}>
-                  <Tab.Screen
-                    name={Routes.Menu}
-                    options={menuScreenOptions}
-                    component={Menu}
-                  />
-                  <Tab.Screen
-                    options={contactsScreenOptions}
-                    name={Routes.Contacts}
-                    component={Contacts}
-                  />
-                  <Tab.Screen
-                    options={cartScreenOptions}
-                    name={Routes.Cart}
-                    component={Cart}
-                  />
-                </Tab.Navigator>
+                <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
+                  <Tab.Navigator screenOptions={tabNavigatorOptions}>
+                    <Tab.Screen
+                      name={Routes.Menu}
+                      options={menuScreenOptions}
+                      component={Menu}
+                    />
+                    <Tab.Screen
+                      options={contactsScreenOptions}
+                      name={Routes.Contacts}
+                      component={Contacts}
+                    />
+                    <Tab.Screen
+                      options={cartScreenOptions}
+                      name={Routes.Cart}
+                      component={Cart}
+                    />
+                  </Tab.Navigator>
+                </OrgStatusAlerts>
               ) : (
                 <Stack.Navigator initialRouteName={Routes.Cities}>
                   <Stack.Screen
@@ -69,7 +75,7 @@ const App = (): React.JSX.Element => {
                 </Stack.Navigator>
               )}
             </NavigationContainer>
-          </OrgStatusProvider>
+          </OrgStatusAlertsProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

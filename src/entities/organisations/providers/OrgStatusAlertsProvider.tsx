@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {
   createContext,
   FC,
@@ -18,13 +18,40 @@ type Ids = {
   cityId: string;
 };
 
+type OrgStatusAlertsProps = PropsWithChildren<{
+  cityId: string;
+  orgId: string;
+}>;
+
 export const OrgStatusContext = createContext<ContextProps | null>(null);
 
-export const useOrgStatus = () => {
-  return useContext<ContextProps | null>(OrgStatusContext)!;
+export const useOrgStatusAlerts = (cityId: string, orgId: string) => {
+  const {startOrgStatusCheck, stopOrgStatusCheck} =
+    useContext<ContextProps | null>(OrgStatusContext)!;
+
+  useEffect(() => {
+    startOrgStatusCheck(cityId, orgId);
+    return () => stopOrgStatusCheck();
+  }, [startOrgStatusCheck, stopOrgStatusCheck, cityId, orgId]);
 };
 
-export const OrgStatusProvider: FC<PropsWithChildren> = ({children}) => {
+export const OrgStatusAlerts: FC<OrgStatusAlertsProps> = ({
+  cityId,
+  orgId,
+  children,
+}) => {
+  const {startOrgStatusCheck, stopOrgStatusCheck} =
+    useContext<ContextProps | null>(OrgStatusContext)!;
+
+  useEffect(() => {
+    startOrgStatusCheck(cityId, orgId);
+    return () => stopOrgStatusCheck();
+  }, [startOrgStatusCheck, stopOrgStatusCheck, cityId, orgId]);
+
+  return <>{children}</>;
+};
+
+export const OrgStatusAlertsProvider: FC<PropsWithChildren> = ({children}) => {
   const [ids, setIds] = useState<Ids | null>(null);
 
   const startOrgStatusCheck = useCallback((cityId: string, orgId: string) => {
