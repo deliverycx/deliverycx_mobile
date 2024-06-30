@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, ReactNode} from 'react';
+import React, {FC, useEffect, useRef, ReactNode, useMemo} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {OrgGallery} from '../OrgGallery';
 import {
@@ -29,6 +29,11 @@ type Props = {
   data: Organisation;
 };
 
+const IMAGE_HEIGHT = 250;
+const CONTENT_WITHOUT_FILTERS_HEIGHT = 300;
+const FILTER_ITEM = 16;
+const FILTER_ITEM_ROW_GAP = 10;
+
 export const OrgInfo: FC<Props> = ({
   onCloseRequest,
   data,
@@ -43,6 +48,14 @@ export const OrgInfo: FC<Props> = ({
     modalRef.current?.present();
   }, []);
 
+  const contentHeight = useMemo(() => {
+    const filtersLen = data.filters.length;
+    const rows = Math.ceil(filtersLen / 2);
+    const filtersHeight = rows * FILTER_ITEM + (rows - 1) * FILTER_ITEM_ROW_GAP;
+
+    return CONTENT_WITHOUT_FILTERS_HEIGHT + filtersHeight;
+  }, [data]);
+
   return (
     <>
       <Modal
@@ -55,7 +68,9 @@ export const OrgInfo: FC<Props> = ({
           </Container>
         )}
         ref={modalRef}
-        snapPoints={data.gallery.length ? [640] : [450]}>
+        snapPoints={
+          data.gallery.length ? [contentHeight + IMAGE_HEIGHT] : [contentHeight]
+        }>
         {!!data.gallery.length && (
           <View style={styles.gallery}>
             <OrgGallery style={styles.orgGallery} data={data.gallery} />
