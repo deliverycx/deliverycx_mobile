@@ -1,5 +1,5 @@
 import React, {type FC, useRef, useState} from 'react';
-import FastImage from 'react-native-fast-image';
+import FastImage, {Priority} from 'react-native-fast-image';
 import {
   type StyleProp,
   StyleSheet,
@@ -22,9 +22,10 @@ import {Counter} from '../../../../shared/ui/Counter';
 interface Props {
   data: Product;
   style?: StyleProp<ViewStyle>;
+  imagePriority?: Priority;
 }
 
-export const ProductPreviewCard: FC<Props> = ({data, style}) => {
+export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
   const {name, price, image, weight, measureUnit} = data;
 
   const [count, setCount] = useState(0);
@@ -77,6 +78,7 @@ export const ProductPreviewCard: FC<Props> = ({data, style}) => {
                 style={styles.img}
                 source={{
                   uri: image,
+                  priority: imagePriority,
                 }}
               />
               <View style={styles.body}>

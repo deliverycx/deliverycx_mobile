@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
-import {getWeekdayIndexFromMonday} from '../utils/getWeekdayIndexFromMonday';
+import {getNextTimeRange} from '../utils/getNextTimeRange';
+import {getCurrentTimeRange} from '../utils/getCurrentTimeRange';
 import {getCurrentLocalHour} from '../../../shared/utils/getCurrentLocalHour';
 
 const timeToMinutes = (time: string) => {
@@ -8,9 +9,8 @@ const timeToMinutes = (time: string) => {
 };
 
 export const useWorkTimeStatusMessage = (workTime: string[]) => {
-  const currentWeekDayIndex = getWeekdayIndexFromMonday(new Date());
-  const todayWorkTime = workTime[currentWeekDayIndex];
-  const nextDayWorkTime = workTime[(currentWeekDayIndex + 1) % 7];
+  const todayWorkTime = getCurrentTimeRange(workTime);
+  const nextDayWorkTime = getNextTimeRange(workTime);
 
   const currentLocalHour = getCurrentLocalHour();
 

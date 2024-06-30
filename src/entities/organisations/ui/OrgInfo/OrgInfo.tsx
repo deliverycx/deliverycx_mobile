@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, ReactNode} from 'react';
+import React, {FC, useEffect, useRef, ReactNode, useContext} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {OrgGallery} from '../OrgGallery';
 import {
@@ -20,6 +20,7 @@ import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
 import {OrgWorkTime} from '../OrgWorkTime';
 import {OrgPhone} from '../OrgPhone';
 import {OrgFilters} from '../OrgFilters';
+import {useOrgStatus} from '../../providers/OrgStatusProvider';
 
 type Props = {
   onRenderSelectButton: (org: Organisation) => ReactNode;
@@ -32,6 +33,7 @@ export const OrgInfo: FC<Props> = ({
   data,
   onRenderSelectButton,
 }) => {
+  const {startOrgStatusCheck, stopOrgStatusCheck} = useOrgStatus();
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -39,6 +41,11 @@ export const OrgInfo: FC<Props> = ({
   useEffect(() => {
     modalRef.current?.present();
   }, []);
+
+  useEffect(() => {
+    startOrgStatusCheck(data.cityid, data.guid);
+    return () => stopOrgStatusCheck();
+  }, [startOrgStatusCheck, stopOrgStatusCheck, data]);
 
   return (
     <Modal
@@ -51,7 +58,7 @@ export const OrgInfo: FC<Props> = ({
         </Container>
       )}
       ref={modalRef}
-      snapPoints={data.gallery.length ? [750] : [450]}>
+      snapPoints={data.gallery.length ? [640] : [450]}>
       {!!data.gallery.length && (
         <View style={styles.gallery}>
           <OrgGallery style={styles.orgGallery} data={data.gallery} />

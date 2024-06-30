@@ -7,12 +7,13 @@ import {
   Text,
   VirtualizedList,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {ProductPreviewCard} from '../ProductPreviewCard';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useProductsQuery} from '../../queries/productsQueries';
 import {CategoryList} from '../CategoryList';
-import {useSyncList} from '../../hooks/useSyncList.ts';
-import {INDENTS} from '../../../../shared/styles.ts';
+import {useSyncList} from '../../hooks/useSyncList';
+import {INDENTS} from '../../../../shared/styles';
 
 type Props = {
   orgId: string;
@@ -103,6 +104,7 @@ export const MenuList: FC<Props> = ({
         keyExtractor={(_, index) => `${index}`}
         renderItem={({
           item,
+          index,
         }: {
           item: (typeof sectionProducts)[number];
           index: number;
@@ -112,7 +114,14 @@ export const MenuList: FC<Props> = ({
             <View style={styles.itemsList}>
               {item.data.map(product => (
                 <View style={styles.productPreviewCard} key={product.id}>
-                  <ProductPreviewCard data={product} />
+                  <ProductPreviewCard
+                    data={product}
+                    imagePriority={
+                      index === 0
+                        ? FastImage.priority.high
+                        : FastImage.priority.normal
+                    }
+                  />
                 </View>
               ))}
             </View>

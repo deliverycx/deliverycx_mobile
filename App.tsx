@@ -13,16 +13,13 @@ import {
 } from './src/pages/organisations';
 import {Cart, screenOptions as cartScreenOptions} from './src/pages/cart';
 import {
-  Profile,
-  screenOptions as profileScreenOptions,
-} from './src/pages/profile';
-import {
   Contacts,
   screenOptions as contactsScreenOptions,
 } from './src/pages/contacts';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {useCurrentOrgIds} from './src/features/organisations';
+import {OrgStatusProvider} from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 
 const Stack = createNativeStackNavigator();
@@ -37,45 +34,42 @@ const App = (): React.JSX.Element => {
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={styles.gestureHandlerRootView}>
         <BottomSheetModalProvider>
-          <NavigationContainer>
-            {currentOrgId ? (
-              <Tab.Navigator screenOptions={tabNavigatorOptions}>
-                <Tab.Screen
-                  name={Routes.Menu}
-                  options={menuScreenOptions}
-                  component={Menu}
-                />
-                {/*<Tab.Screen*/}
-                {/*  options={profileScreenOptions}*/}
-                {/*  name={Routes.Profile}*/}
-                {/*  component={Profile}*/}
-                {/*/>*/}
-                <Tab.Screen
-                  options={contactsScreenOptions}
-                  name={Routes.Contacts}
-                  component={Contacts}
-                />
-                <Tab.Screen
-                  options={cartScreenOptions}
-                  name={Routes.Cart}
-                  component={Cart}
-                />
-              </Tab.Navigator>
-            ) : (
-              <Stack.Navigator initialRouteName={Routes.Cities}>
-                <Stack.Screen
-                  options={citiesScreenOptions}
-                  name={Routes.Cities}
-                  component={Cities}
-                />
-                <Stack.Screen
-                  options={organisationsScreenOptions}
-                  name={Routes.Organisations}
-                  component={Organisations}
-                />
-              </Stack.Navigator>
-            )}
-          </NavigationContainer>
+          <OrgStatusProvider>
+            <NavigationContainer>
+              {currentOrgId ? (
+                <Tab.Navigator screenOptions={tabNavigatorOptions}>
+                  <Tab.Screen
+                    name={Routes.Menu}
+                    options={menuScreenOptions}
+                    component={Menu}
+                  />
+                  <Tab.Screen
+                    options={contactsScreenOptions}
+                    name={Routes.Contacts}
+                    component={Contacts}
+                  />
+                  <Tab.Screen
+                    options={cartScreenOptions}
+                    name={Routes.Cart}
+                    component={Cart}
+                  />
+                </Tab.Navigator>
+              ) : (
+                <Stack.Navigator initialRouteName={Routes.Cities}>
+                  <Stack.Screen
+                    options={citiesScreenOptions}
+                    name={Routes.Cities}
+                    component={Cities}
+                  />
+                  <Stack.Screen
+                    options={organisationsScreenOptions}
+                    name={Routes.Organisations}
+                    component={Organisations}
+                  />
+                </Stack.Navigator>
+              )}
+            </NavigationContainer>
+          </OrgStatusProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

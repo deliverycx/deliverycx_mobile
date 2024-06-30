@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {SvgUri} from 'react-native-svg';
 import {Filter} from '../../types/organisationsTypes';
 import {API_URL} from '../../../../shared/consts';
 
@@ -19,11 +19,9 @@ export const OrgFilters: FC<Props> = ({data, style}) => {
             index % 2 === 0 ? styles.paddingRight : styles.paddingLeft,
           ]}
           key={index}>
-          <FastImage
+          <SvgUri
             style={styles.img}
-            source={{
-              uri: `${API_URL}/static/shop/${images[0]}`,
-            }}
+            uri={`${API_URL}/static/shop/${images[0]}`}
           />
           <Text>{name}</Text>
         </View>

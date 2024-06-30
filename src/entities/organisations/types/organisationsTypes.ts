@@ -7,6 +7,7 @@ export interface Filter {
 export interface Organisation {
   address: string;
   city: string;
+  cityid: string;
   cords: string[];
   id: string;
   isHidden: boolean;

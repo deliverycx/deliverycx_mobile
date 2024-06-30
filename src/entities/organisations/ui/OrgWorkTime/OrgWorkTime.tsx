@@ -15,7 +15,9 @@ export const OrgWorkTime: FC<Props> = ({workTime, style}) => {
   const workTimeStatusMessage = useWorkTimeStatusMessage(workTime);
 
   const handlePress = () => {
-    Alert.alert('', workTimeTemplate, [{text: 'OK'}]);
+    Alert.alert('График работы организации', workTimeTemplate, [
+      {text: 'Хорошо'},
+    ]);
   };
 
   return (

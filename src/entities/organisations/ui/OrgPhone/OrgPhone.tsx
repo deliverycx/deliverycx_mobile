@@ -1,8 +1,9 @@
 import React, {FC, useMemo} from 'react';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
-import {Linking, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
+import {phoneByNumber} from '../../../../shared/utils/phoneByNumber.ts';
 
 type Props = {
   phone: string;
@@ -15,7 +16,7 @@ export const OrgPhone: FC<Props> = ({phone, style}) => {
   }, [phone]);
 
   const handlePhonePress = () => {
-    Linking.openURL(`tel:${phone}`);
+    phoneByNumber(phone);
   };
 
   return (

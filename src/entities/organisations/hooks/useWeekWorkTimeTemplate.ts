@@ -6,7 +6,7 @@ export const useWeekWorkTimeTemplate = (workTime: string[]) => {
 
     return workTime
       .map((time, index) => {
-        return `${days[index]}: ${time}`;
+        return `${index === 0 ? '\n' : ''}${days[index]}:  ${time}`;
       })
       .join('\n');
   }, [workTime]);
