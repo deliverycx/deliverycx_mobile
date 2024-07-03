@@ -1,11 +1,11 @@
 import {useEffect} from 'react';
-import {useCurrentOrgIds} from '../stores/useCurrentOrgIds';
+import {useCurrentOrgStore} from '../stores/useCurrentOrgStore.ts';
 import {useOrganisationData} from './useOrganisationData';
 
 export const useCurrentOrg = () => {
-  const cityId = useCurrentOrgIds(state => state.cityId)!;
-  const orgId = useCurrentOrgIds(state => state.orgId)!;
-  const deleteOrgInfo = useCurrentOrgIds(state => state.deleteOrgInfo);
+  const cityId = useCurrentOrgStore(state => state.cityId)!;
+  const orgId = useCurrentOrgStore(state => state.orgId)!;
+  const deleteOrgInfo = useCurrentOrgStore(state => state.deleteOrgInfo);
 
   const {data, isFetched} = useOrganisationData(cityId, orgId);
 

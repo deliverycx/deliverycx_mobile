@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 import {Button} from '../../../../shared/ui/Button';
-import {useCurrentOrgIds} from '../../stores/useCurrentOrgIds';
+import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore.ts';
 import {fetchProducts} from '../../../products';
 
 type Props = {
@@ -13,7 +13,7 @@ export const OrgSelectButton: FC<Props> = ({orgId, cityId}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
-  const setOrgInfo = useCurrentOrgIds(state => state.setOrgInfo);
+  const setOrgInfo = useCurrentOrgStore(state => state.setOrgInfo);
 
   const handleOrgChange = async () => {
     setLoading(true);

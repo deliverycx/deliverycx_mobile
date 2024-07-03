@@ -1,4 +1,4 @@
-import {useCurrentOrgIds} from '../../stores/useCurrentOrgIds';
+import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore.ts';
 import React, {FC} from 'react';
 import {
   Text,
@@ -17,7 +17,7 @@ type Props = {
 
 export const OrgChangeButton: FC<Props> = ({style}) => {
   const organisation = useCurrentOrg();
-  const deleteOrgInfo = useCurrentOrgIds(state => state.deleteOrgInfo);
+  const deleteOrgInfo = useCurrentOrgStore(state => state.deleteOrgInfo);
 
   return (
     <TouchableOpacity

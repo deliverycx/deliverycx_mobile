@@ -8,10 +8,9 @@ import {
   VirtualizedList,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {useProductsQuery, CategoryList} from '../../../../entities/products';
 import {ProductPreviewCard} from '../ProductPreviewCard';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
-import {useProductsQuery} from '../../queries/productsQueries';
-import {CategoryList} from '../CategoryList';
 import {useSyncList} from '../../hooks/useSyncList';
 import {INDENTS} from '../../../../shared/styles';
 

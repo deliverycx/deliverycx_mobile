@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {FlatList, VirtualizedList} from 'react-native';
-import {Category, Product} from '../types/productsTypes';
+import {Category, Product} from '../../../entities/products';
 
 type SectionProduct = {
   title: string;

@@ -11,7 +11,7 @@ type Actions = {
   deleteOrgInfo: () => void;
 };
 
-export const useCurrentOrgIds = create<State & Actions>()(
+export const useCurrentOrgStore = create<State & Actions>()(
   immer(set => ({
     orgId: null,
     cityId: null,

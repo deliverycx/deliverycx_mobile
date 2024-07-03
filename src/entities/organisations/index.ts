@@ -8,4 +8,4 @@ export {
 export {OrgChangeButton} from './ui/OrgChangeButton';
 export {OrgCallButton} from './ui/OrgCallButton';
 export type {Organisation} from './types/organisationsTypes';
-export {useCurrentOrgIds} from './stores/useCurrentOrgIds';
+export {useCurrentOrgStore} from './stores/useCurrentOrgStore.ts';

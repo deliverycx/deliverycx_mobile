@@ -1,2 +1,7 @@
-export {MenuList} from './ui/MenuList';
-export {fetchProducts} from './queries/productsQueries';
+export {CategoryList} from './ui/CategoryList';
+export {fetchProducts, useProductsQuery} from './queries/productsQueries';
+export type {
+  Category,
+  Product,
+  ProductsResponseModel,
+} from './types/productsTypes';

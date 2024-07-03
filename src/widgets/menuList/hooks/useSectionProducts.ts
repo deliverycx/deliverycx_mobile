@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {Product, ProductsResponseModel} from '../types/productsTypes';
+import {ProductsResponseModel, Product} from '../../../entities/products';
 
 export const useSectionProducts = (data: ProductsResponseModel) => {
   return useMemo(() => {

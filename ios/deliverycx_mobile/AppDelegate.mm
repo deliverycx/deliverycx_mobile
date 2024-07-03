@@ -1,9 +1,14 @@
 #import "AppDelegate.h"
 #import <YandexMapsMobile/YMKMapKitFactory.h>
-
+#import "Orientation.h"
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+  return [Orientation getOrientation];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

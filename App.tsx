@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -12,7 +13,7 @@ import {
   Organisations,
   screenOptions as organisationsScreenOptions,
 } from './src/pages/organisations';
-import {Cart, screenOptions as cartScreenOptions} from './src/pages/cart';
+import {Cart, ScreenOptions as CartScreenOptions} from './src/pages/cart';
 import {
   Contacts,
   screenOptions as contactsScreenOptions,
@@ -21,7 +22,7 @@ import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {
   OrgStatusAlertsProvider,
   OrgStatusAlerts,
-  useCurrentOrgIds,
+  useCurrentOrgStore,
 } from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 
@@ -31,8 +32,12 @@ const Tab = createBottomTabNavigator();
 const queryClient = new QueryClient();
 
 const App = (): React.JSX.Element => {
-  const currentOrgId = useCurrentOrgIds(state => state.orgId);
-  const currentCityId = useCurrentOrgIds(state => state.cityId);
+  const currentOrgId = useCurrentOrgStore(state => state.orgId);
+  const currentCityId = useCurrentOrgStore(state => state.cityId);
+
+  useEffect(() => {
+    Orientation.lockToPortrait();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -54,7 +59,7 @@ const App = (): React.JSX.Element => {
                       component={Contacts}
                     />
                     <Tab.Screen
-                      options={cartScreenOptions}
+                      options={CartScreenOptions}
                       name={Routes.Cart}
                       component={Cart}
                     />

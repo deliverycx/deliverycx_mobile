@@ -14,10 +14,11 @@ import {COLORS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {ProductCard} from '../ProductCard';
-import {Product} from '../../types/productsTypes';
+import {Product} from '../../../../entities/products';
 import {Button} from '../../../../shared/ui/Button';
 import {getProductWeightText} from '../../utils/getProductWeightText';
 import {Counter} from '../../../../shared/ui/Counter';
+import {useCartStore} from '../../../../entities/cart';
 
 interface Props {
   data: Product;
@@ -28,7 +29,9 @@ interface Props {
 export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
   const {name, price, image, weight, measureUnit} = data;
 
-  const [count, setCount] = useState(0);
+  const updateItemInCart = useCartStore(state => state.updateItem);
+  const cartCount = useCartStore(state => state.getCountById(data.id));
+
   const [isProductModalShown, setIsProductModalShown] = useState(false);
 
   const scaleRef = useRef(new Animated.Value(1)).current;
@@ -53,7 +56,7 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
 
   const handleFastBuyPress = () => {
     hapticFeedback('impactHeavy');
-    setCount(1);
+    updateItemInCart(data.id, 1);
   };
 
   const handleItemPress = () => {
@@ -62,6 +65,10 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
 
   const handleProductCardClosed = () => {
     setIsProductModalShown(false);
+  };
+
+  const handleCountChange = (nextValue: number) => {
+    updateItemInCart(data.id, nextValue);
   };
 
   return (
@@ -94,8 +101,12 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
                 </Text>
                 <Text style={styles.price}>{getFormatPrice(price)}</Text>
               </View>
-              {count > 0 ? (
-                <Counter size="sm" value={count} onChange={setCount} />
+              {cartCount > 0 ? (
+                <Counter
+                  size="sm"
+                  value={cartCount}
+                  onChange={handleCountChange}
+                />
               ) : (
                 <Button
                   onPress={handleFastBuyPress}
@@ -108,11 +119,7 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
           </View>
         </Pressable>
         {isProductModalShown && (
-          <ProductCard
-            onBuyPress={() => {}}
-            data={data}
-            onClosed={handleProductCardClosed}
-          />
+          <ProductCard data={data} onClosed={handleProductCardClosed} />
         )}
       </Animated.View>
     </>
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   img: {
-    height: 160,
+    height: 150,
   },
   body: {
     paddingHorizontal: 10,

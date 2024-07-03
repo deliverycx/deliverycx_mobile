@@ -1,2 +1,2 @@
 export {Cart} from './ui/cart';
-export {screenOptions} from './configs/screenOptions';
+export {ScreenOptions} from './configs/ScreenOptions';

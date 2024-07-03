@@ -11,13 +11,12 @@ import {COLORS, INDENTS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {getProductWeightText} from '../../utils/getProductWeightText';
-import {Product} from '../../types/productsTypes';
+import {Product} from '../../../../entities/products';
+import {useCartStore} from '../../../../entities/cart';
 
 interface Props {
   data: Product;
   onClosed: () => void;
-  onBuyPress: (id: string, count: number) => void;
-  count?: number;
 }
 
 const INITIAL_COUNT = 1;
@@ -25,11 +24,12 @@ const SNAP_POINTS = ['100%'];
 
 export const ProductCard: FC<Props> = ({
   onClosed,
-  onBuyPress,
-  count: outerCount = 1,
   data: {name, description, price, weight, image, id, measureUnit},
 }) => {
-  const [count, setCount] = useState(outerCount ?? INITIAL_COUNT);
+  const updateItemInCart = useCartStore(state => state.updateItem);
+  const cartCount = useCartStore(state => state.getCountById(id));
+
+  const [count, setCount] = useState(1);
 
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
@@ -43,7 +43,7 @@ export const ProductCard: FC<Props> = ({
 
   const handleBuyPress = () => {
     hapticFeedback('impactHeavy');
-    onBuyPress(id, count);
+    updateItemInCart(id, cartCount + count);
     onClosed();
   };
 
