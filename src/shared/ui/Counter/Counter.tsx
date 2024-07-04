@@ -1,5 +1,12 @@
 import React, {type FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {COLORS} from '../../styles';
 import {hapticFeedback} from '../../utils/hapticFeedback';
 import {Icon} from '../Icon';
@@ -13,9 +20,15 @@ interface Props {
   value: number;
   onChange: (nextValue: number) => void;
   size?: keyof typeof Size;
+  style?: StyleProp<ViewStyle>;
 }
 
-export const Counter: FC<Props> = ({value = 1, onChange, size = Size.sm}) => {
+export const Counter: FC<Props> = ({
+  value = 1,
+  onChange,
+  size = Size.sm,
+  style,
+}) => {
   const runLightHaptics = () => {
     hapticFeedback('impactLight');
   };
@@ -31,7 +44,7 @@ export const Counter: FC<Props> = ({value = 1, onChange, size = Size.sm}) => {
   };
 
   return (
-    <View style={[styles.wrapper, sizeWrapperStyles[size]]}>
+    <View style={[styles.wrapper, sizeWrapperStyles[size], style]}>
       <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleDec}>
         <Icon name="remove" size={size} />
       </TouchableOpacity>
@@ -48,12 +61,14 @@ const sizeWrapperStyles = StyleSheet.create({
     gap: 5,
     paddingVertical: 0,
     paddingHorizontal: 10,
+    minWidth: 100,
   },
 
   md: {
     gap: 10,
     paddingVertical: 4,
     paddingHorizontal: 15,
+    minWidth: 140,
   },
 });
 
@@ -75,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.backgroundTertiary,
     borderRadius: 30,
-    minWidth: 140,
   },
   text: {
     color: COLORS.textSecondary,

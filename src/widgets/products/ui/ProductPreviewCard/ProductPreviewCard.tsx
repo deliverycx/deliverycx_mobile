@@ -14,9 +14,8 @@ import {COLORS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {ProductCard} from '../ProductCard';
-import {Product} from '../../../../entities/products';
+import {Product, getProductWeightText} from '../../../../entities/products';
 import {Button} from '../../../../shared/ui/Button';
-import {getProductWeightText} from '../../utils/getProductWeightText';
 import {Counter} from '../../../../shared/ui/Counter';
 import {useCartStore} from '../../../../entities/cart';
 

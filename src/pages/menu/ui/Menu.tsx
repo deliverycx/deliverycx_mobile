@@ -1,20 +1,18 @@
 import React from 'react';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {MenuList} from '../../../widgets/menuList';
+import {ProductMenuList} from '../../../widgets/products';
 import {useCurrentOrgStore} from '../../../entities/organisations';
+import {useListInsets} from '../../../shared/hooks/useListInsets.ts';
 
 export const Menu = () => {
-  const bottomTabBarHeight = useBottomTabBarHeight();
-  const insets = useSafeAreaInsets();
+  const {scrollIndicatorInsets, contentInset} = useListInsets();
 
   const orgId = useCurrentOrgStore(state => state.orgId);
 
   return (
-    <MenuList
+    <ProductMenuList
       orgId={orgId!}
-      scrollIndicatorInsets={{bottom: bottomTabBarHeight - insets.bottom}}
-      contentInset={{bottom: bottomTabBarHeight}}
+      scrollIndicatorInsets={scrollIndicatorInsets}
+      contentInset={contentInset}
     />
   );
 };

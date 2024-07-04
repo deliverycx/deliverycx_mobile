@@ -22,7 +22,7 @@ type Props = {
 
 const SHIFT = INDENTS.main / 2;
 
-export const MenuList: FC<Props> = ({
+export const ProductMenuList: FC<Props> = ({
   orgId,
   contentInset,
   scrollIndicatorInsets,

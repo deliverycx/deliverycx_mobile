@@ -5,3 +5,4 @@ export type {
   Product,
   ProductsResponseModel,
 } from './types/productsTypes';
+export {getProductWeightText} from './utils/getProductWeightText';

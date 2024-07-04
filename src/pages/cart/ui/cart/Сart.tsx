@@ -1,6 +1,14 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {CartList} from '../../../../widgets/cart';
+import {useListInsets} from '../../../../shared/hooks/useListInsets';
 
 export const Cart = () => {
-  return <Text>cart page</Text>;
+  const {scrollIndicatorInsets, contentInset} = useListInsets();
+
+  return (
+    <CartList
+      scrollIndicatorInsets={scrollIndicatorInsets}
+      contentInset={contentInset}
+    />
+  );
 };

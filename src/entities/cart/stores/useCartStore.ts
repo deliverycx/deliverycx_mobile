@@ -19,6 +19,7 @@ type Actions = {
   deleteItem: (productId: string) => void;
   getCountById: (productId: string) => number;
   getAllItems: () => CartItemReturnValue[];
+  clearAllItems: () => void;
 };
 
 export const useCartStore = create<State & Actions>()(
@@ -56,6 +57,11 @@ export const useCartStore = create<State & Actions>()(
         productId,
         count,
       }));
+    },
+    clearAllItems: () => {
+      set({
+        data: {},
+      });
     },
   })),
 );

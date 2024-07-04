@@ -4,13 +4,17 @@ import {SadKhinkal} from '../CustomIcons/SadKhinkal';
 
 type Props = {
   text: string;
+  desc?: string;
 };
 
-export const SomethingWrong: FC<Props> = ({text}) => {
+export const SomethingWrong: FC<Props> = ({text, desc}) => {
   return (
     <View style={styles.wrapper}>
       <SadKhinkal />
-      <Text style={styles.text}>{text}</Text>
+      <View>
+        <Text style={styles.text}>{text}</Text>
+        {desc && <Text style={styles.desc}>{desc}</Text>}
+      </View>
     </View>
   );
 };
@@ -25,5 +29,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+  },
+  desc: {
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 16,
+    maxWidth: 350,
+    paddingTop: 10,
   },
 });

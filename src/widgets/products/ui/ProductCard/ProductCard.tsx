@@ -10,8 +10,7 @@ import {Modal} from '../../../../shared/ui/Modal';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
-import {getProductWeightText} from '../../utils/getProductWeightText';
-import {Product} from '../../../../entities/products';
+import {Product, getProductWeightText} from '../../../../entities/products';
 import {useCartStore} from '../../../../entities/cart';
 
 interface Props {
