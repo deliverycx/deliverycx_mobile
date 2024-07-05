@@ -9,6 +9,7 @@ export const COLORS = {
   backgroundTertiary: '#edeef3',
   iconPrimary: '#bebebe',
   border: '#f5f5f5',
+  accent: '#fdcb3d',
 };
 
 export const INDENTS = {

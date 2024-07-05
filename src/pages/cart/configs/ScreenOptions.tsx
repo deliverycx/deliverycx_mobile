@@ -16,6 +16,9 @@ export const ScreenOptions = (): BottomTabNavigationOptions => {
     title: '',
     tabBarLabel: 'Корзина',
     headerTitle: 'Корзина',
+    tabBarStyle: {
+      borderTopWidth: 0,
+    },
     tabBarBadge: totalPrice > 0 ? formattedTotalPrice : undefined,
     headerBackgroundContainerStyle: {
       shadowOffset: {width: -1, height: 1},
@@ -25,7 +28,7 @@ export const ScreenOptions = (): BottomTabNavigationOptions => {
     headerRight: () => <ClearCartButton />,
     tabBarBadgeStyle: {
       fontSize: 10,
-      backgroundColor: COLORS.main,
+      backgroundColor: COLORS.accent,
       fontWeight: '500',
     },
   };
