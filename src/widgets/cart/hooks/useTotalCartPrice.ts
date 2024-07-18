@@ -1,20 +1,26 @@
 import {useMemo} from 'react';
 import {getFormatPrice} from '../../../shared/utils/getFormatPrice';
-import {useCartProducts} from './useCartProducts.ts';
+import {useCartItemsQuery} from '../../../entities/cart';
+import {useCurrentOrgStore} from '../../../entities/organisations';
+import {useUserStore} from '../../../entities/user/stores/useUserStore';
 
 export const useTotalCartPrice = () => {
-  const cartProducts = useCartProducts();
+  const orgId = useCurrentOrgStore(state => state.orgId);
+  const user = useUserStore(state => state.user);
+
+  const {data} = useCartItemsQuery({organization: orgId!, userid: user?.id!});
 
   const totalPrice = useMemo(() => {
-    return cartProducts.reduce((acc, cur) => {
-      return acc + cur.price * cur.count;
-    }, 0);
-  }, [cartProducts]);
+    if (!data) {
+      return 0;
+    }
 
-  const formattedTotalPrice = useMemo(
-    () => getFormatPrice(totalPrice),
-    [totalPrice],
-  );
+    return data.fullPrice;
+  }, [data]);
+
+  const formattedTotalPrice = useMemo(() => {
+    return getFormatPrice(totalPrice);
+  }, [totalPrice]);
 
   return {
     totalPrice,

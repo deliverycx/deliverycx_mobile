@@ -15,7 +15,7 @@ export const fetchKhinkaliCounter = (
   params: OrgKhinkaliCounterRequestModel,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getKhinkaliCounter(params),
   });
 };
@@ -24,7 +24,7 @@ export const useKhinkaliCounterQuery = (
   params: OrgKhinkaliCounterRequestModel,
 ) => {
   return useQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getKhinkaliCounter(params),
   });
 };

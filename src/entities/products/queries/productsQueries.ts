@@ -20,7 +20,7 @@ export const fetchProducts = (
   params: ProductsRequestModel,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getProducts(params),
     initialData: INITIAL_DATA,
   });
@@ -28,7 +28,7 @@ export const fetchProducts = (
 
 export const useProductsQuery = (params: ProductsRequestModel) => {
   return useQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getProducts(params),
     initialData: INITIAL_DATA,
   });

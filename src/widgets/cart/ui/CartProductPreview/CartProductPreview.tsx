@@ -1,25 +1,52 @@
 import React, {FC} from 'react';
 import {Text, View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Product, getProductWeightText} from '../../../../entities/products';
 import {Counter} from '../../../../shared/ui/Counter';
 import {COLORS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {useCartStore} from '../../../../entities/cart';
+import {useCartUpdate, useCartRemove} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {CartItem} from '../../../../entities/cart';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 type Props = {
-  data: Product;
-  count: number;
+  data: CartItem;
   style?: StyleProp<ViewStyle>;
 };
 
-export const CartProductPreview: FC<Props> = ({data, count, style}) => {
-  const {image, price, name, measureUnit, weight, productId} = data;
+export const CartProductPreview: FC<Props> = ({data, style}) => {
+  const {productImage, price, productName, productId, oneprice} = data;
 
-  const updateCartItem = useCartStore(state => state.updateItem);
+  const orgId = useCurrentOrgStore(state => state.orgId);
+  const user = useUserStore(state => state.user);
+
+  const {
+    update,
+    count,
+    controllerRef: updateControllerRef,
+  } = useCartUpdate({
+    orgId: orgId!,
+    userId: user?.id!,
+    productId: productId,
+  });
+
+  const {remove} = useCartRemove({
+    orgId: orgId!,
+    userId: user?.id!,
+    productId: productId,
+  });
 
   const handleCounterChange = (nextCount: number) => {
-    updateCartItem(productId, nextCount);
+    if (nextCount === 0) {
+      if (updateControllerRef.current) {
+        updateControllerRef.current.abort();
+      }
+      remove();
+    } else {
+      update(nextCount);
+    }
   };
 
   return (
@@ -27,20 +54,25 @@ export const CartProductPreview: FC<Props> = ({data, count, style}) => {
       <FastImage
         style={styles.img}
         resizeMode="contain"
-        source={{uri: image}}
+        source={{uri: productImage}}
       />
       <View style={styles.info}>
         <View style={styles.topInfo}>
           <Text numberOfLines={2} style={styles.name}>
-            {name}
+            {productName}
           </Text>
           <Text style={styles.price}>{getFormatPrice(price)}</Text>
         </View>
         <View style={styles.bottomInfo}>
-          <Text style={styles.unit}>
-            {getProductWeightText(measureUnit, weight)}
-          </Text>
-          <Counter value={count} onChange={handleCounterChange} />
+          <Text style={styles.unit}>{getFormatPrice(oneprice)} / шт.</Text>
+          {count === 0 ? (
+            <ShimmerPlaceHolder
+              style={styles.counterLoader}
+              LinearGradient={LinearGradient}
+            />
+          ) : (
+            <Counter value={count} onChange={handleCounterChange} />
+          )}
         </View>
       </View>
     </View>
@@ -48,6 +80,11 @@ export const CartProductPreview: FC<Props> = ({data, count, style}) => {
 };
 
 const styles = StyleSheet.create({
+  counterLoader: {
+    width: 100,
+    height: 30,
+    borderRadius: 30,
+  },
   wrapper: {
     padding: 10,
     backgroundColor: COLORS.backgroundPrimary,

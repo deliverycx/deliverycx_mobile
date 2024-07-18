@@ -8,26 +8,33 @@ import {
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Button} from '../../../../shared/ui/Button';
-import {useCartProducts} from '../../hooks/useCartProducts';
 import {Container} from '../../../../shared/ui/Container';
 import {SomethingWrong} from '../../../../shared/ui/SomethingWrong/SomethingWrong';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {CartProductPreview} from '../CartProductPreview';
-import {COLORS, INDENTS} from '../../../../shared/styles';
 import {useTotalCartPrice} from '../../hooks/useTotalCartPrice';
 import {getCountOfProductsAndSum} from '../../utils/getCountOfProductsAndSum';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
+import {useCartItems} from '../../hooks/useCartItems';
+import {COLORS, INDENTS} from '../../../../shared/styles';
 
 export const CartList: FC = () => {
   const tabBarHeight = useBottomTabBarHeight();
-  const products = useCartProducts();
+  const {data} = useCartItems();
   const {formattedTotalPrice} = useTotalCartPrice();
 
   const productsWithTitle = useMemo(() => {
-    const name = getCountOfProductsAndSum(products.length, formattedTotalPrice);
+    if (!data?.cart.length) {
+      return [];
+    }
 
-    return [{id: 'TITLE', name}, ...products];
-  }, [products, formattedTotalPrice]);
+    const name = getCountOfProductsAndSum(
+      data.cart.length,
+      formattedTotalPrice,
+    );
+
+    return [{id: 'TITLE', name}, ...data.cart];
+  }, [data, formattedTotalPrice]);
 
   const getItemLayout = useCallback((_: unknown, index: number) => {
     const itemHeight = index === 0 ? 71.5 : 120;
@@ -41,13 +48,13 @@ export const CartList: FC = () => {
 
   const renderItem = useCallback(
     ({item}: ListRenderItemInfo<(typeof productsWithTitle)[number]>) => {
-      if (!('count' in item)) {
+      if (!('amount' in item)) {
         return <Text style={styles.totalHeader}>{item.name}</Text>;
       }
 
       return (
         <View style={styles.cartProductPreview}>
-          <CartProductPreview data={item} count={item?.count} />
+          <CartProductPreview data={item} />
         </View>
       );
     },
@@ -65,7 +72,7 @@ export const CartList: FC = () => {
     };
   }, [tabBarHeight]);
 
-  if (products.length === 0) {
+  if (productsWithTitle.length === 0) {
     return (
       <Container style={[styles.noProducts, {paddingBottom: tabBarHeight}]}>
         <SomethingWrong

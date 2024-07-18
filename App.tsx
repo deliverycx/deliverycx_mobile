@@ -9,6 +9,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Routes} from './src/shared/routes';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Cities, screenOptions as citiesScreenOptions} from './src/pages/cities';
+import {CreateUserManager} from './src/entities/user';
 import {
   Organisations,
   screenOptions as organisationsScreenOptions,
@@ -25,6 +26,8 @@ import {
   useCurrentOrgStore,
 } from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
+import {CartStateManager} from './src/entities/cart';
+import {useUserStore} from './src/entities/user/stores/useUserStore';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +37,7 @@ const queryClient = new QueryClient();
 const App = (): React.JSX.Element => {
   const currentOrgId = useCurrentOrgStore(state => state.orgId);
   const currentCityId = useCurrentOrgStore(state => state.cityId);
+  const userId = useUserStore(state => state.user?.id);
 
   useEffect(() => {
     Orientation.lockToPortrait();
@@ -41,30 +45,33 @@ const App = (): React.JSX.Element => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <CreateUserManager />
       <GestureHandlerRootView style={styles.gestureHandlerRootView}>
         <BottomSheetModalProvider>
           <OrgStatusAlertsProvider>
             <NavigationContainer>
-              {currentOrgId ? (
-                <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
-                  <Tab.Navigator screenOptions={tabNavigatorOptions}>
-                    <Tab.Screen
-                      name={Routes.Menu}
-                      options={menuScreenOptions}
-                      component={Menu}
-                    />
-                    <Tab.Screen
-                      options={contactsScreenOptions}
-                      name={Routes.Contacts}
-                      component={Contacts}
-                    />
-                    <Tab.Screen
-                      options={CartScreenOptions}
-                      name={Routes.Cart}
-                      component={Cart}
-                    />
-                  </Tab.Navigator>
-                </OrgStatusAlerts>
+              {currentOrgId && userId ? (
+                <CartStateManager orgId={currentOrgId} userId={userId}>
+                  <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
+                    <Tab.Navigator screenOptions={tabNavigatorOptions}>
+                      <Tab.Screen
+                        name={Routes.Menu}
+                        options={menuScreenOptions}
+                        component={Menu}
+                      />
+                      <Tab.Screen
+                        options={contactsScreenOptions}
+                        name={Routes.Contacts}
+                        component={Contacts}
+                      />
+                      <Tab.Screen
+                        options={CartScreenOptions}
+                        name={Routes.Cart}
+                        component={Cart}
+                      />
+                    </Tab.Navigator>
+                  </OrgStatusAlerts>
+                </CartStateManager>
               ) : (
                 <Stack.Navigator initialRouteName={Routes.Cities}>
                   <Stack.Screen

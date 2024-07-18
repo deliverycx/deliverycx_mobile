@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
-import {ProductsResponseModel, Product} from '../../../entities/products';
+import {Product} from '../../../shared/types/productTypes';
+import {ProductsResponseModel} from '../../../entities/products';
 
 export const useSectionProducts = (data: ProductsResponseModel) => {
   return useMemo(() => {

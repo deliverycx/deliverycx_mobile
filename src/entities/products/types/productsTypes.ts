@@ -1,18 +1,4 @@
-export interface Product {
-  additionalInfo: null;
-  category: string;
-  code: string;
-  description: string;
-  id: string;
-  image: string;
-  measureUnit: string;
-  name: string;
-  order: number;
-  price: number;
-  productId: string;
-  tags: string[];
-  weight: number;
-}
+import {Product} from '../../../shared/types/productTypes';
 
 export interface Category {
   description: string;

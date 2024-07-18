@@ -15,14 +15,14 @@ export const fetchOrgYaPlace = (
   params: OrgYaPlaceRequestModel,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getYaPlace(params),
   });
 };
 
 export const useOrgYaPlaceQuery = (params: OrgYaPlaceRequestModel) => {
   return useQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getYaPlace(params),
   });
 };

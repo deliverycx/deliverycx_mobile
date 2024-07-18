@@ -2,13 +2,23 @@ import React from 'react';
 import {TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Icon} from '../../../../shared/ui/Icon';
 import {COLORS, INDENTS} from '../../../../shared/styles';
-import {useCartStore} from '../../stores/useCartStore';
+import {useCartItemsRemove} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {useCartItems} from '../../hooks/useCartItems';
 
 export const ClearCartButton = () => {
-  const clearAllItems = useCartStore(state => state.clearAllItems);
-  const items = useCartStore(state => state.getAllItems());
+  const orgId = useCurrentOrgStore(state => state.orgId);
+  const userId = useUserStore(state => state.user?.id);
 
-  if (!items.length) {
+  const {data} = useCartItems();
+
+  const cartRemove = useCartItemsRemove({
+    organization: orgId!,
+    userid: userId!,
+  });
+
+  if (!data?.cart?.length) {
     return null;
   }
 
@@ -20,7 +30,7 @@ export const ClearCartButton = () => {
       {
         style: 'destructive',
         text: 'Очистить',
-        onPress: clearAllItems,
+        onPress: cartRemove,
       },
     ]);
   };

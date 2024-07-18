@@ -14,10 +14,13 @@ import {COLORS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {ProductCard} from '../ProductCard';
-import {Product, getProductWeightText} from '../../../../entities/products';
+import {Product} from '../../../../shared/types/productTypes';
+import {getProductWeightText} from '../../../../entities/products';
 import {Button} from '../../../../shared/ui/Button';
 import {Counter} from '../../../../shared/ui/Counter';
-import {useCartStore} from '../../../../entities/cart';
+import {useCartManager} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useUserStore} from '../../../../entities/user/stores/useUserStore';
 
 interface Props {
   data: Product;
@@ -26,10 +29,16 @@ interface Props {
 }
 
 export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
-  const {name, price, image, weight, measureUnit} = data;
+  const {name, price, image, weight, measureUnit, productId} = data;
 
-  const updateItemInCart = useCartStore(state => state.updateItem);
-  const cartCount = useCartStore(state => state.getCountById(data.id));
+  const orgId = useCurrentOrgStore(state => state.orgId);
+  const user = useUserStore(state => state.user);
+
+  const {manage, count} = useCartManager({
+    orgId: orgId!,
+    userId: user?.id!,
+    product: data,
+  });
 
   const [isProductModalShown, setIsProductModalShown] = useState(false);
 
@@ -53,9 +62,9 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
     }).start();
   };
 
-  const handleFastBuyPress = () => {
+  const handleFastBuyPress = async () => {
     hapticFeedback('impactHeavy');
-    updateItemInCart(data.id, 1);
+    await manage(1);
   };
 
   const handleItemPress = () => {
@@ -66,8 +75,8 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
     setIsProductModalShown(false);
   };
 
-  const handleCountChange = (nextValue: number) => {
-    updateItemInCart(data.id, nextValue);
+  const handleCountChange = async (nextValue: number) => {
+    await manage(nextValue);
   };
 
   return (
@@ -100,12 +109,8 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
                 </Text>
                 <Text style={styles.price}>{getFormatPrice(price)}</Text>
               </View>
-              {cartCount > 0 ? (
-                <Counter
-                  size="sm"
-                  value={cartCount}
-                  onChange={handleCountChange}
-                />
+              {count > 0 ? (
+                <Counter size="sm" value={count} onChange={handleCountChange} />
               ) : (
                 <Button
                   onPress={handleFastBuyPress}

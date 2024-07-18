@@ -1,2 +1,10 @@
+export {CartStateManager} from './ui/CartStateManager';
+export type {CartItem} from './types/cartTypes';
+export {useCartItemsQuery} from './queries/cartAllItemsQueries';
+export {useDeleteAllItems} from './queries/cartDeleteAllItemsQueries';
+export {useCartManager} from './hooks/useCartManager';
+export {useCartUpdate} from './hooks/useCartUpdate';
+export {useCartRemove} from './hooks/useCartRemove';
+export {useCartItemsRemove} from './hooks/useCartItemsRemove';
+export {useCartAdd} from './hooks/useCartAdd';
 export {useCartStore} from './stores/useCartStore';
-export {ClearCartButton} from './ui/ClearCartButton';

@@ -10,8 +10,11 @@ import {Modal} from '../../../../shared/ui/Modal';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
-import {Product, getProductWeightText} from '../../../../entities/products';
-import {useCartStore} from '../../../../entities/cart';
+import {Product} from '../../../../shared/types/productTypes';
+import {getProductWeightText} from '../../../../entities/products';
+import {useCartAdd} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useUserStore} from '../../../../entities/user/stores/useUserStore';
 
 interface Props {
   data: Product;
@@ -21,12 +24,17 @@ interface Props {
 const INITIAL_COUNT = 1;
 const SNAP_POINTS = ['100%'];
 
-export const ProductCard: FC<Props> = ({
-  onClosed,
-  data: {name, description, price, weight, image, id, measureUnit},
-}) => {
-  const updateItemInCart = useCartStore(state => state.updateItem);
-  const cartCount = useCartStore(state => state.getCountById(id));
+export const ProductCard: FC<Props> = ({onClosed, data}) => {
+  const {name, description, price, weight, image, measureUnit} = data;
+
+  const orgId = useCurrentOrgStore(state => state.orgId);
+  const user = useUserStore(state => state.user);
+
+  const {add} = useCartAdd({
+    orgId: orgId!,
+    userId: user?.id!,
+    product: data,
+  });
 
   const [count, setCount] = useState(1);
 
@@ -40,10 +48,12 @@ export const ProductCard: FC<Props> = ({
     setCount(Math.max(INITIAL_COUNT, nextCount));
   };
 
-  const handleBuyPress = () => {
+  const handleBuyPress = async () => {
     hapticFeedback('impactHeavy');
-    updateItemInCart(id, cartCount + count);
+
     onClosed();
+
+    await add(count);
   };
 
   const handleBottomSheetModalChange = (index: number) => {
@@ -85,7 +95,7 @@ export const ProductCard: FC<Props> = ({
               {getProductWeightText(measureUnit, weight)}
             </Text>
             <View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={styles.counter}>
                 <Counter
                   size="md"
                   value={count}
@@ -101,6 +111,9 @@ export const ProductCard: FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
+  counter: {
+    flexDirection: 'row',
+  },
   indicatorStyles: {
     display: 'none',
   },

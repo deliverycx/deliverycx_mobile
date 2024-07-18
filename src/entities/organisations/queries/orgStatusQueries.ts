@@ -18,7 +18,7 @@ export const fetchOrgStatus = (
   params: OrgStatusRequestModel,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getOrgStatus(params),
   });
 };
@@ -28,7 +28,7 @@ export const useOrgStatusQuery = (
   config?: Partial<UseQueryOptions<OrgStatusResponseModel>>,
 ) => {
   return useQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.organization],
     queryFn: () => getOrgStatus(params),
     ...config,
   });

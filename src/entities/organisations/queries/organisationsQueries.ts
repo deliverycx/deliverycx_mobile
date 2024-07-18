@@ -15,14 +15,14 @@ export const fetchOrganisations = (
   params: OrganisationsRequestModel,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.cityId],
     queryFn: () => getOrganisations(params),
   });
 };
 
 export const useOrganisationsQuery = (params: OrganisationsRequestModel) => {
   return useQuery({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params.cityId],
     queryFn: () => getOrganisations(params),
   });
 };
