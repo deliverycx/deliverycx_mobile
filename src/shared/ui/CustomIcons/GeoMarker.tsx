@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import Svg, { Path } from 'react-native-svg';
+import React, {FC} from 'react';
+import Svg, {Path} from 'react-native-svg';
 
-export const GeoMarker: FC = (props) => {
+export const GeoMarker: FC = props => {
   return (
     <Svg width={30} height={40} viewBox="0 0 30 40" fill="none" {...props}>
       <Path

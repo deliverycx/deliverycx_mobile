@@ -7,9 +7,11 @@ export const COLORS = {
   backgroundPrimary: '#ffffff',
   backgroundSecondary: '#fefefe',
   backgroundTertiary: '#edeef3',
+  backgroundQuaternary: '#132a3e',
   iconPrimary: '#bebebe',
   border: '#f5f5f5',
   accent: '#fdcb3d',
+  success: '#558950',
 };
 
 export const INDENTS = {

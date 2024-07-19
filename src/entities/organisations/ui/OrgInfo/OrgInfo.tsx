@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, ReactNode, useMemo} from 'react';
+import React, {FC, useEffect, useRef, useMemo} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {OrgGallery} from '../OrgGallery';
 import {

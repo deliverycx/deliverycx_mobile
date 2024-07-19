@@ -17,6 +17,17 @@ import {getCountOfProductsAndSum} from '../../utils/getCountOfProductsAndSum';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {useCartItems} from '../../hooks/useCartItems';
 import {COLORS, INDENTS} from '../../../../shared/styles';
+import {CartItem, DozenCounter} from '../../../../entities/cart';
+
+const enum ListCustomIds {
+  Title = 'TITLE',
+  Dozen = 'Dozen',
+}
+
+type CustomListItem = {
+  id: ListCustomIds;
+  value?: number | string;
+};
 
 export const CartList: FC = () => {
   const tabBarHeight = useBottomTabBarHeight();
@@ -33,7 +44,11 @@ export const CartList: FC = () => {
       formattedTotalPrice,
     );
 
-    return [{id: 'TITLE', name}, ...data.cart];
+    return [
+      {id: ListCustomIds.Title, value: name} as CustomListItem,
+      ...data.cart,
+      {id: ListCustomIds.Dozen, value: 1} as CustomListItem,
+    ];
   }, [data, formattedTotalPrice]);
 
   const getItemLayout = useCallback((_: unknown, index: number) => {
@@ -48,17 +63,27 @@ export const CartList: FC = () => {
 
   const renderItem = useCallback(
     ({item}: ListRenderItemInfo<(typeof productsWithTitle)[number]>) => {
-      if (!('amount' in item)) {
-        return <Text style={styles.totalHeader}>{item.name}</Text>;
+      if (item.id === ListCustomIds.Title) {
+        return (
+          <Text style={styles.totalHeader}>
+            {(item as CustomListItem).value}
+          </Text>
+        );
+      } else if (item.id === ListCustomIds.Dozen) {
+        return (
+          <View style={styles.dozenCounter}>
+            <DozenCounter data={data!} />
+          </View>
+        );
       }
 
       return (
         <View style={styles.cartProductPreview}>
-          <CartProductPreview data={item} />
+          <CartProductPreview data={item as CartItem} />
         </View>
       );
     },
-    [],
+    [data],
   );
 
   const {scrollIndicatorInsets, contentInset} = useMemo(() => {
@@ -91,6 +116,7 @@ export const CartList: FC = () => {
         getItemLayout={getItemLayout}
         data={productsWithTitle}
         renderItem={renderItem}
+        extraData={data}
         keyExtractor={item => item.id}
       />
       <View style={styles.buttonContainer}>
@@ -131,6 +157,10 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingTop: 28,
   },
+  dozenCounter: {
+    marginVertical: 16,
+    paddingHorizontal: INDENTS.main,
+  },
   wrapper: {
     flex: 1,
   },
@@ -139,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartProductPreview: {
-    marginVertical: 8,
+    marginVertical: 4,
     paddingHorizontal: INDENTS.main,
   },
 });

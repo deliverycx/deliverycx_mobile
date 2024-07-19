@@ -4,10 +4,19 @@ export interface Filter {
   images: string;
 }
 
+export interface OrgCity {
+  createdAt: string;
+  isHidden: boolean;
+  name: string;
+  organizations: string[];
+  updatedAt: string;
+  _id: string;
+}
+
 export interface Organisation {
   address: string;
   city: string;
-  cityid: string;
+  cityid: OrgCity;
   cords: string[];
   id: string;
   isHidden: boolean;

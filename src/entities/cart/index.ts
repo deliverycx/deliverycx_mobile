@@ -1,4 +1,5 @@
 export {CartStateManager} from './ui/CartStateManager';
+export {DozenCounter} from './ui/DozenCounter';
 export type {CartItem} from './types/cartTypes';
 export {useCartItemsQuery} from './queries/cartAllItemsQueries';
 export {useDeleteAllItems} from './queries/cartDeleteAllItemsQueries';

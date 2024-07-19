@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 import {Button} from '../../../../shared/ui/Button';
-import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore.ts';
+import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 import {fetchProducts} from '../../../products';
 
 type Props = {

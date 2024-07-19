@@ -1,7 +1,7 @@
 import {StyleProp, ViewStyle} from 'react-native';
 import {Marker, YaMap} from 'react-native-yamap';
 import {GeoMarker} from '../../../../shared/ui/CustomIcons/GeoMarker.tsx';
-import React, {FC, useMemo, useRef, memo, useEffect} from 'react';
+import React, {FC, useMemo, useRef, memo} from 'react';
 import {
   Organisation,
   OrganisationsResponseModel,
