@@ -1,11 +1,5 @@
-import React, {FC, useCallback, useMemo} from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {FC, useMemo, useState} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
@@ -17,74 +11,23 @@ import {getCountOfProductsAndSum} from '../../utils/getCountOfProductsAndSum';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {useCartItems} from '../../hooks/useCartItems';
 import {COLORS, INDENTS} from '../../../../shared/styles';
-import {CartItem, DozenCounter} from '../../../../entities/cart';
-
-const enum ListCustomIds {
-  Title = 'TITLE',
-  Dozen = 'Dozen',
-}
-
-type CustomListItem = {
-  id: ListCustomIds;
-  value?: number | string;
-};
+import {DozenCounter, CutlerySwitcher} from '../../../../entities/cart';
 
 export const CartList: FC = () => {
   const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
   const {formattedTotalPrice} = useTotalCartPrice();
 
-  const productsWithTitle = useMemo(() => {
+  const [cutleryCount, setCutleryCount] = useState(1);
+  const [cutleryChecked, setCutleryChecked] = useState(false);
+
+  const totalHeader = useMemo(() => {
     if (!data?.cart.length) {
-      return [];
+      return null;
     }
 
-    const name = getCountOfProductsAndSum(
-      data.cart.length,
-      formattedTotalPrice,
-    );
-
-    return [
-      {id: ListCustomIds.Title, value: name} as CustomListItem,
-      ...data.cart,
-      {id: ListCustomIds.Dozen, value: 1} as CustomListItem,
-    ];
+    return getCountOfProductsAndSum(data.cart.length, formattedTotalPrice);
   }, [data, formattedTotalPrice]);
-
-  const getItemLayout = useCallback((_: unknown, index: number) => {
-    const itemHeight = index === 0 ? 71.5 : 120;
-
-    return {
-      length: itemHeight,
-      offset: itemHeight * index,
-      index,
-    };
-  }, []);
-
-  const renderItem = useCallback(
-    ({item}: ListRenderItemInfo<(typeof productsWithTitle)[number]>) => {
-      if (item.id === ListCustomIds.Title) {
-        return (
-          <Text style={styles.totalHeader}>
-            {(item as CustomListItem).value}
-          </Text>
-        );
-      } else if (item.id === ListCustomIds.Dozen) {
-        return (
-          <View style={styles.dozenCounter}>
-            <DozenCounter data={data!} />
-          </View>
-        );
-      }
-
-      return (
-        <View style={styles.cartProductPreview}>
-          <CartProductPreview data={item as CartItem} />
-        </View>
-      );
-    },
-    [data],
-  );
 
   const {scrollIndicatorInsets, contentInset} = useMemo(() => {
     return {
@@ -97,7 +40,7 @@ export const CartList: FC = () => {
     };
   }, [tabBarHeight]);
 
-  if (productsWithTitle.length === 0) {
+  if (!data?.cart.length) {
     return (
       <Container style={[styles.noProducts, {paddingBottom: tabBarHeight}]}>
         <SomethingWrong
@@ -110,15 +53,27 @@ export const CartList: FC = () => {
 
   return (
     <View style={styles.wrapper}>
-      <FlatList
+      <ScrollView
         scrollIndicatorInsets={scrollIndicatorInsets}
-        contentInset={contentInset}
-        getItemLayout={getItemLayout}
-        data={productsWithTitle}
-        renderItem={renderItem}
-        extraData={data}
-        keyExtractor={item => item.id}
-      />
+        contentInset={contentInset}>
+        <Text style={styles.totalHeader}>{totalHeader}</Text>
+        {data.cart.map(product => (
+          <View key={product.productId} style={styles.cartProductPreview}>
+            <CartProductPreview data={product} />
+          </View>
+        ))}
+        <View style={styles.cutlerySwitcher}>
+          <CutlerySwitcher
+            count={cutleryCount}
+            onSwitcherChange={setCutleryChecked}
+            onCountChange={setCutleryCount}
+            checked={cutleryChecked}
+          />
+        </View>
+        <View style={styles.dozenCounter}>
+          <DozenCounter data={data} />
+        </View>
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <BlurView
           blurType="light"
@@ -138,6 +93,16 @@ export const CartList: FC = () => {
 };
 
 const styles = StyleSheet.create({
+  cutlerySwitcher: {
+    marginTop: 12,
+    marginBottom: 22,
+    paddingHorizontal: INDENTS.main,
+  },
+  dozenCounter: {
+    marginTop: 4,
+    marginBottom: 10,
+    paddingHorizontal: INDENTS.main,
+  },
   blurView: {
     paddingVertical: 16,
     backgroundColor: hexToRgba(COLORS.backgroundSecondary, 0.6),
@@ -157,10 +122,6 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingTop: 28,
   },
-  dozenCounter: {
-    marginVertical: 16,
-    paddingHorizontal: INDENTS.main,
-  },
   wrapper: {
     flex: 1,
   },
@@ -169,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartProductPreview: {
-    marginVertical: 4,
+    marginVertical: 8,
     paddingHorizontal: INDENTS.main,
   },
 });

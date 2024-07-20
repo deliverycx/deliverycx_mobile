@@ -11,12 +11,16 @@ type Props = {
 };
 
 const DOZEN = 12;
-const KHINKALI_ID = 'HI-7654';
+const KHINKALI_START_ID = 'HI';
 
 export const DozenCounter: FC<Props> = ({style, data}) => {
   const totalKhinkali = useMemo(() => {
     return data.cart.reduce((acc, cur) => {
-      if (!cur.productTags.includes(KHINKALI_ID)) {
+      const tag = cur.productTags.find(tag =>
+        tag.toUpperCase().startsWith(KHINKALI_START_ID),
+      );
+
+      if (!tag) {
         return acc;
       }
 
@@ -88,7 +92,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   wrapper: {
-    padding: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
     backgroundColor: COLORS.backgroundQuaternary,
     borderRadius: 17,
     flexDirection: 'row',

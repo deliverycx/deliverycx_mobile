@@ -16,11 +16,17 @@ const enum Size {
   sm = 'sm',
 }
 
+const enum Variant {
+  primary = 'primary',
+  secondary = 'secondary',
+}
+
 interface Props {
   value: number;
   onChange: (nextValue: number) => void;
   size?: keyof typeof Size;
   style?: StyleProp<ViewStyle>;
+  variant?: keyof typeof Variant;
 }
 
 export const Counter: FC<Props> = ({
@@ -28,6 +34,7 @@ export const Counter: FC<Props> = ({
   onChange,
   size = Size.sm,
   style,
+  variant = Variant.primary,
 }) => {
   const runLightHaptics = () => {
     hapticFeedback('impactLight');
@@ -44,7 +51,13 @@ export const Counter: FC<Props> = ({
   };
 
   return (
-    <View style={[styles.wrapper, sizeWrapperStyles[size], style]}>
+    <View
+      style={[
+        styles.wrapper,
+        sizeWrapperStyles[size],
+        variantWrapperStyles[variant],
+        style,
+      ]}>
       <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleDec}>
         <Icon name="remove" size={size} />
       </TouchableOpacity>
@@ -54,6 +67,15 @@ export const Counter: FC<Props> = ({
       </TouchableOpacity>
     </View>
   );
+};
+
+const variantWrapperStyles = {
+  primary: {
+    backgroundColor: COLORS.backgroundTertiary,
+  },
+  secondary: {
+    backgroundColor: COLORS.backgroundSecondary,
+  },
 };
 
 const sizeWrapperStyles = StyleSheet.create({
