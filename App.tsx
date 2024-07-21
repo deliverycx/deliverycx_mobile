@@ -17,7 +17,7 @@ import {
 import {Cart, ScreenOptions as CartScreenOptions} from './src/pages/cart';
 import {
   Contacts,
-  screenOptions as contactsScreenOptions,
+  ScreenOptions as ContactsScreenOptions,
 } from './src/pages/contacts';
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {
@@ -60,7 +60,7 @@ const App = (): React.JSX.Element => {
                         component={Menu}
                       />
                       <Tab.Screen
-                        options={contactsScreenOptions}
+                        options={ContactsScreenOptions}
                         name={Routes.Contacts}
                         component={Contacts}
                       />

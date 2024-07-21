@@ -1,2 +1,2 @@
-export {Contacts} from './ui/contacts';
-export {screenOptions} from './configs/screenOptions';
+export {Contacts} from './ui/Contacts';
+export {ScreenOptions} from './configs/ScreenOptions';

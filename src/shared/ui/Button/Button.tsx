@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   View,
 } from 'react-native';
-import {Icon} from '../Icon';
 import {COLORS} from '../../styles';
 import {hexToRgba} from '../../utils/hexToRgba';
 
@@ -15,6 +14,7 @@ const enum Variant {
   primary = 'primary',
   secondary = 'secondary',
   tertiary = 'tertiary',
+  quaternary = 'quaternary',
 }
 
 const enum Size {
@@ -88,6 +88,9 @@ const textStyles = StyleSheet.create({
   tertiary: {
     color: COLORS.textPrimary,
   },
+  quaternary: {
+    color: COLORS.success,
+  },
 });
 
 const sizeStyles = StyleSheet.create({
@@ -124,6 +127,10 @@ const wrapperStyles = {
   tertiary: {
     backgroundColor: COLORS.backgroundTertiary,
   },
+
+  quaternary: {
+    backgroundColor: hexToRgba(COLORS.success, 0.2),
+  },
 };
 
 const styles = StyleSheet.create({
@@ -140,7 +147,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   textWrapper: {
-    gap: 4,
+    gap: 6,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

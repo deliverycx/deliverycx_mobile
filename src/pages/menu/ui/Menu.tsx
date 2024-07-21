@@ -8,8 +8,6 @@ export const Menu = () => {
 
   const orgId = useCurrentOrgStore(state => state.orgId);
 
-  console.log(10);
-
   return (
     <ProductMenuList
       orgId={orgId!}

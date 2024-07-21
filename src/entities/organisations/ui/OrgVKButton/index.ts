@@ -1,0 +1,1 @@
+export {OrgVKButton} from './OrgVKButton';

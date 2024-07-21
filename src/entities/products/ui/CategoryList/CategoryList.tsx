@@ -2,7 +2,7 @@ import React, {forwardRef} from 'react';
 import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Chip} from '../../../../shared/ui/Сhip';
 import {COLORS} from '../../../../shared/styles';
-import {MAIN_INDENT} from '../../../../shared/styles/indents';
+import {INDENTS} from '../../../../shared/styles';
 import {Category} from '../../types/productsTypes';
 
 interface Props {
@@ -23,12 +23,12 @@ export const CategoryList = forwardRef<FlatList, Props>(
     const getMargin = (index: number) => {
       if (index === 0) {
         return {
-          marginLeft: MAIN_INDENT,
+          marginLeft: INDENTS.main,
           marginRight: DEFAULT_MARGIN,
         };
       } else if (index === data.length - 1) {
         return {
-          marginRight: MAIN_INDENT,
+          marginRight: INDENTS.main,
         };
       }
 

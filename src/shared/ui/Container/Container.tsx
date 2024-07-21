@@ -1,6 +1,6 @@
 import React, {type FC, type PropsWithChildren} from 'react';
 import {View, StyleSheet, type ViewStyle, type StyleProp} from 'react-native';
-import {MAIN_INDENT} from '../../styles/indents';
+import {INDENTS} from '../../styles';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -12,7 +12,7 @@ export const Container: FC<Props> = ({children, style}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingRight: MAIN_INDENT,
-    paddingLeft: MAIN_INDENT,
+    paddingRight: INDENTS.main,
+    paddingLeft: INDENTS.main,
   },
 });
