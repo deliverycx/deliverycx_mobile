@@ -10,7 +10,7 @@ const getStopList = async (params: StopListRequestModel) => {
   return data;
 };
 
-export const fetchProducts = (
+export const fetchStopList = (
   queryClient: QueryClient,
   params: StopListRequestModel,
 ) => {

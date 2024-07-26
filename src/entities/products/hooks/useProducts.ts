@@ -1,10 +1,12 @@
 import {useMemo} from 'react';
 import {useProductsQuery} from '../queries/productsQueries';
 import {useStopListQuery} from '../queries/stopListQueries';
+import {useHiddenProductsQuery} from '../queries/hiddenProductsQueries';
 
 export const useProducts = (orgId: string) => {
   const {data: products} = useProductsQuery({organization: orgId});
   const {data: stopList} = useStopListQuery({organizationId: orgId});
+  const {data: hiddenProducts} = useHiddenProductsQuery({organization: orgId});
 
   const stopListMap = useMemo(() => {
     if (!stopList) {
@@ -16,6 +18,19 @@ export const useProducts = (orgId: string) => {
     );
   }, [stopList]);
 
+  const hiddenMap = useMemo(() => {
+    if (!hiddenProducts) {
+      return null;
+    }
+
+    return Object.fromEntries(
+      Object.entries(hiddenProducts.hiddenProduct).map(([_, productId]) => [
+        productId,
+        true,
+      ]),
+    );
+  }, [hiddenProducts]);
+
   const nextProducts = useMemo(() => {
     const productList = products?.products;
 
@@ -23,11 +38,13 @@ export const useProducts = (orgId: string) => {
       return null;
     }
 
-    return productList.map(item => ({
-      ...item,
-      stopped: stopListMap?.[item.id] ?? false,
-    }));
-  }, [products, stopListMap]);
+    return productList
+      .filter(item => !hiddenMap?.[item.productId]) // Remove item from list
+      .map(item => ({
+        ...item,
+        stopped: stopListMap?.[item.id] ?? false, // Add stop flag
+      }));
+  }, [products, stopListMap, hiddenMap]);
 
   return {
     products: nextProducts,
