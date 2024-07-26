@@ -1,21 +1,30 @@
 import {useMemo} from 'react';
-import {Product} from '../../../shared/types/productTypes';
-import {ProductsResponseModel} from '../../../entities/products';
+import {FullProduct} from '../../../shared/types/productTypes';
+import {Category} from '../../../entities/products';
 
-export const useSectionProducts = (data: ProductsResponseModel) => {
+export const useSectionProducts = (
+  products: FullProduct[] | null,
+  categories: Category[] | null,
+) => {
   return useMemo(() => {
-    const getMapOfCategories = data.products.reduce((acc, product) => {
+    if (products === null || categories === null) {
+      return [];
+    }
+
+    const getMapOfCategories = products.reduce((acc, product) => {
       if (!acc[product.category]) {
         acc[product.category] = [];
       }
       acc[product.category].push(product);
       return acc;
-    }, {} as Record<string, Product[]>);
+    }, {} as Record<string, FullProduct[]>);
 
-    return Object.entries(getMapOfCategories).map(([category, products]) => ({
-      title: data.categoryes.find(({id}) => id === category)?.name ?? category,
-      id: category,
-      data: products,
-    }));
-  }, [data]);
+    return Object.entries(getMapOfCategories).map(
+      ([category, productList]) => ({
+        title: categories.find(({id}) => id === category)?.name ?? category,
+        id: category,
+        data: productList,
+      }),
+    );
+  }, [products, categories]);
 };

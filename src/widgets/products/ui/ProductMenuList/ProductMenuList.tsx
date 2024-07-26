@@ -8,7 +8,7 @@ import {
   VirtualizedList,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useProductsQuery, CategoryList} from '../../../../entities/products';
+import {CategoryList, useProducts} from '../../../../entities/products';
 import {ProductPreviewCard} from '../ProductPreviewCard';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useSyncList} from '../../hooks/useSyncList';
@@ -27,9 +27,9 @@ export const ProductMenuList: FC<Props> = ({
   contentInset,
   scrollIndicatorInsets,
 }) => {
-  const {data} = useProductsQuery({organization: orgId});
+  const {products, categories} = useProducts(orgId);
 
-  const sectionProducts = useSectionProducts(data);
+  const sectionProducts = useSectionProducts(products, categories);
 
   const {
     menuListRef,
@@ -37,7 +37,7 @@ export const ProductMenuList: FC<Props> = ({
     setMenuListCategoryId,
     setCategoryListCategoryId,
     visibleCategoryId,
-  } = useSyncList(sectionProducts, data.categoryes);
+  } = useSyncList(sectionProducts, categories);
 
   const viewabilityConfigCallbackPairs = useRef([
     {
@@ -86,7 +86,7 @@ export const ProductMenuList: FC<Props> = ({
       <CategoryList
         ref={categoryListRef}
         style={styles.categoryList}
-        data={data.categoryes}
+        data={categories}
         visibleCategoryId={visibleCategoryId}
         onItemPress={setCategoryListCategoryId}
       />

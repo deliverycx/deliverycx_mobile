@@ -1,5 +1,5 @@
 import React, {type FC, useRef, useState} from 'react';
-import FastImage, {Priority} from 'react-native-fast-image';
+import {Priority} from 'react-native-fast-image';
 import {
   type StyleProp,
   StyleSheet,
@@ -13,8 +13,9 @@ import {
 import {COLORS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
+import {ProductImage} from '../ProductImage';
 import {ProductCard} from '../ProductCard';
-import {Product} from '../../../../shared/types/productTypes';
+import {FullProduct} from '../../../../shared/types/productTypes';
 import {getProductWeightText} from '../../../../entities/products';
 import {Button} from '../../../../shared/ui/Button';
 import {Counter} from '../../../../shared/ui/Counter';
@@ -23,13 +24,13 @@ import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useUserStore} from '../../../../entities/user/stores/useUserStore';
 
 interface Props {
-  data: Product;
+  data: FullProduct;
   style?: StyleProp<ViewStyle>;
   imagePriority?: Priority;
 }
 
 export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
-  const {name, price, image, weight, measureUnit, productId} = data;
+  const {name, price, image, weight, measureUnit, stopped} = data;
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const user = useUserStore(state => state.user);
@@ -68,6 +69,10 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
   };
 
   const handleItemPress = () => {
+    if (stopped) {
+      return;
+    }
+
     setIsProductModalShown(true);
   };
 
@@ -81,28 +86,21 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
 
   return (
     <>
-      <Animated.View style={[{transform: [{scale: scaleRef}]}]}>
+      <Animated.View style={[!stopped && {transform: [{scale: scaleRef}]}]}>
         <Pressable
           onPress={handleItemPress}
           onPressOut={onPressOut}
           onPressIn={onPressIn}>
           <View style={[styles.wrapper, style]}>
             <View>
-              <FastImage
-                resizeMode="contain"
-                style={styles.img}
-                source={{
-                  uri: image,
-                  priority: imagePriority,
-                }}
-              />
-              <View style={styles.body}>
+              <ProductImage imagePriority={imagePriority} data={data} />
+              <View style={[styles.body, stopped && styles.stopped]}>
                 <Text numberOfLines={2} style={styles.name}>
                   {name}
                 </Text>
               </View>
             </View>
-            <View style={styles.buttonWrapper}>
+            <View style={[styles.buttonWrapper, stopped && styles.stopped]}>
               <View style={styles.priceAndUnit}>
                 <Text style={styles.unit}>
                   {getProductWeightText(measureUnit, weight)}
@@ -113,10 +111,11 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
                 <Counter size="sm" value={count} onChange={handleCountChange} />
               ) : (
                 <Button
+                  disabled={stopped}
                   onPress={handleFastBuyPress}
                   size="sm"
                   variant="tertiary"
-                  text="+ Добавить"
+                  text={stopped ? 'Будет позже' : '+ Добавить'}
                 />
               )}
             </View>
@@ -144,9 +143,6 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     marginTop: 5,
   },
-  img: {
-    height: 150,
-  },
   body: {
     paddingHorizontal: 10,
   },
@@ -166,5 +162,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  stopped: {
+    opacity: 0.8,
   },
 });

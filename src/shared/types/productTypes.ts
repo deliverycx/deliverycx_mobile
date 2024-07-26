@@ -13,3 +13,7 @@ export type Product = {
   tags: string[];
   weight: number;
 };
+
+export type FullProduct = Product & {
+  stopped: boolean;
+};
