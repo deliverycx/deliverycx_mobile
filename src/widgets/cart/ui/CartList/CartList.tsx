@@ -13,7 +13,11 @@ import {useCartItems} from '../../hooks/useCartItems';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {DozenCounter, CutlerySwitcher} from '../../../../entities/cart';
 
-export const CartList: FC = () => {
+type Props = {
+  onSubmit: () => void;
+};
+
+export const CartList: FC<Props> = ({onSubmit}) => {
   const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
   const {formattedTotalPrice} = useTotalCartPrice();
@@ -82,7 +86,7 @@ export const CartList: FC = () => {
           reducedTransparencyFallbackColor="white">
           <Container>
             <Button
-              onPress={() => {}}
+              onPress={onSubmit}
               text={`Оформить заказ на ${formattedTotalPrice}`}
             />
           </Container>

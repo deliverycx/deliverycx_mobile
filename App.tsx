@@ -28,11 +28,51 @@ import {
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 import {CartStateManager} from './src/entities/cart';
 import {useUserStore} from './src/entities/user/stores/useUserStore';
+import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const queryClient = new QueryClient();
+
+const TabScreens = () => {
+  return (
+    <Tab.Navigator screenOptions={tabNavigatorOptions}>
+      <Tab.Screen
+        name={Routes.Menu}
+        options={menuScreenOptions}
+        component={Menu}
+      />
+      <Tab.Screen
+        options={ContactsScreenOptions}
+        name={Routes.Contacts}
+        component={Contacts}
+      />
+      <Tab.Screen
+        options={CartScreenOptions}
+        name={Routes.Cart}
+        component={Cart}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const OrganisationsScreens = () => {
+  return (
+    <Stack.Navigator initialRouteName={Routes.Cities}>
+      <Stack.Screen
+        options={citiesScreenOptions}
+        name={Routes.Cities}
+        component={Cities}
+      />
+      <Stack.Screen
+        options={organisationsScreenOptions}
+        name={Routes.Organisations}
+        component={Organisations}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const App = (): React.JSX.Element => {
   const currentOrgId = useCurrentOrgStore(state => state.orgId);
@@ -53,38 +93,22 @@ const App = (): React.JSX.Element => {
               {currentOrgId && userId ? (
                 <CartStateManager orgId={currentOrgId} userId={userId}>
                   <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
-                    <Tab.Navigator screenOptions={tabNavigatorOptions}>
-                      <Tab.Screen
-                        name={Routes.Menu}
-                        options={menuScreenOptions}
-                        component={Menu}
+                    <Stack.Navigator initialRouteName={Routes.TabScreens}>
+                      <Stack.Screen
+                        options={{headerShown: false}}
+                        name={Routes.TabScreens}
+                        component={TabScreens}
                       />
-                      <Tab.Screen
-                        options={ContactsScreenOptions}
-                        name={Routes.Contacts}
-                        component={Contacts}
+                      <Stack.Screen
+                        name={Routes.Order}
+                        options={orderScreenOptions}
+                        component={Order}
                       />
-                      <Tab.Screen
-                        options={CartScreenOptions}
-                        name={Routes.Cart}
-                        component={Cart}
-                      />
-                    </Tab.Navigator>
+                    </Stack.Navigator>
                   </OrgStatusAlerts>
                 </CartStateManager>
               ) : (
-                <Stack.Navigator initialRouteName={Routes.Cities}>
-                  <Stack.Screen
-                    options={citiesScreenOptions}
-                    name={Routes.Cities}
-                    component={Cities}
-                  />
-                  <Stack.Screen
-                    options={organisationsScreenOptions}
-                    name={Routes.Organisations}
-                    component={Organisations}
-                  />
-                </Stack.Navigator>
+                <OrganisationsScreens />
               )}
             </NavigationContainer>
           </OrgStatusAlertsProvider>

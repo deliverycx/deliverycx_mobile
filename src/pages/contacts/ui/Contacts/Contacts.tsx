@@ -1,12 +1,6 @@
 import React from 'react';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {ListButton} from '../../../../shared/ui/ListButton';
 import {Tg} from '../../../../shared/ui/CustomIcons/Tg';
 import {
