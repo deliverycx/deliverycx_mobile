@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Routes} from './src/shared/routes';
+import {Routes, STACK_NAVIGATOR_OPTIONS} from './src/shared/routes';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Cities, screenOptions as citiesScreenOptions} from './src/pages/cities';
 import {CreateUserManager} from './src/entities/user';
@@ -59,7 +59,9 @@ const TabScreens = () => {
 
 const OrganisationsScreens = () => {
   return (
-    <Stack.Navigator initialRouteName={Routes.Cities}>
+    <Stack.Navigator
+      screenOptions={STACK_NAVIGATOR_OPTIONS}
+      initialRouteName={Routes.Cities}>
       <Stack.Screen
         options={citiesScreenOptions}
         name={Routes.Cities}
@@ -93,7 +95,9 @@ const App = (): React.JSX.Element => {
               {currentOrgId && userId ? (
                 <CartStateManager orgId={currentOrgId} userId={userId}>
                   <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
-                    <Stack.Navigator initialRouteName={Routes.TabScreens}>
+                    <Stack.Navigator
+                      screenOptions={STACK_NAVIGATOR_OPTIONS}
+                      initialRouteName={Routes.TabScreens}>
                       <Stack.Screen
                         options={{headerShown: false}}
                         name={Routes.TabScreens}

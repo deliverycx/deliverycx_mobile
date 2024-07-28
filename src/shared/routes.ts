@@ -1,3 +1,5 @@
+import {COLORS} from './styles.ts';
+
 export const enum Routes {
   Cities = 'Cities',
   Organisations = 'Organisations',
@@ -17,4 +19,13 @@ export type StackParamList = {
   [Routes.Organisations]: {
     cityId: string;
   };
+};
+
+export const STACK_NAVIGATOR_OPTIONS = {
+  headerTitleStyle: {
+    color: COLORS.textPrimary,
+  },
+  headerTintColor: COLORS.main,
+  headerShadowVisible: false,
+  headerBackTitle: '',
 };
