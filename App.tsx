@@ -29,6 +29,10 @@ import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScr
 import {CartStateManager} from './src/entities/cart';
 import {useUserStore} from './src/entities/user/stores/useUserStore';
 import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
+import {
+  Address,
+  screenOptions as addressScreenOptions,
+} from './src/pages/address';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +111,11 @@ const App = (): React.JSX.Element => {
                         name={Routes.Order}
                         options={orderScreenOptions}
                         component={Order}
+                      />
+                      <Stack.Screen
+                        options={addressScreenOptions}
+                        name={Routes.Address}
+                        component={Address}
                       />
                     </Stack.Navigator>
                   </OrgStatusAlerts>

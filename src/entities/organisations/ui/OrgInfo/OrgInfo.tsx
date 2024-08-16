@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   handle: {
-    backgroundColor: 'red',
     height: 0,
     padding: 0,
   },

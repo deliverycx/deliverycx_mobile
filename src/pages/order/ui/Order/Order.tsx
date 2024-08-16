@@ -1,36 +1,31 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
 import {OrderDeliveryType} from '../OrderDeliveryType';
 import {Container} from '../../../../shared/ui/Container';
-import {COLORS} from '../../../../shared/styles';
-import {OrderDeliveryTime} from '../OrderDeliveryTime';
-import {OrderInputButton} from '../OrderInputButton';
-import {Label} from '../../../../shared/ui/Label';
 import {Button} from '../../../../shared/ui/Button';
-import {hexToRgba} from '../../../../shared/utils/hexToRgba.ts';
+import {hexToRgba} from '../../../../shared/utils/hexToRgba';
+import {COLORS} from '../../../../shared/styles';
+import {OrderDelivery} from '../OrderDelivery';
 
-export const Order = () => {
+export const Order: FC = () => {
   return (
-    <View style={styles.wrapper}>
-      <Container style={styles.container}>
-        <OrderDeliveryType style={styles.deliveryType} />
-        <OrderInputButton text="Лобня, улица Победы 18" />
-        <OrderDeliveryTime />
-        <View>
-          <Label text="Оплата" />
-          <OrderInputButton iconName="payments" text="Наличными" />
-        </View>
-      </Container>
-      <SafeAreaView style={styles.footer}>
-        <Container>
-          <View style={styles.footerInfo}>
-            <Text style={styles.footerText}>Стоимость заказа</Text>
-            <Text style={styles.footerText}>15 582 Р</Text>
-          </View>
-          <Button text="Оформить заказ" />
+    <>
+      <View style={styles.wrapper}>
+        <Container style={styles.container}>
+          <OrderDeliveryType />
+          <OrderDelivery />
         </Container>
-      </SafeAreaView>
-    </View>
+        <SafeAreaView style={styles.footer}>
+          <Container>
+            <View style={styles.footerInfo}>
+              <Text style={styles.footerText}>Стоимость заказа</Text>
+              <Text style={styles.footerText}>15 582 Р</Text>
+            </View>
+            <Button text="Оформить заказ" />
+          </Container>
+        </SafeAreaView>
+      </View>
+    </>
   );
 };
 
@@ -40,7 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'space-between',
   },
-  deliveryType: {},
   container: {
     gap: 16,
     marginVertical: 16,

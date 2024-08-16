@@ -48,6 +48,7 @@ export const OrgMap: FC<Props> = memo(({data, style, onOrgPress}) => {
 
   return (
     <YaMap
+      showUserPosition={false}
       initialRegion={{
         ...regions[0].coords,
         zoom: isOnlyOnePlace ? 15 : 10,

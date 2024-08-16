@@ -1,17 +1,23 @@
 import React, {FC} from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+  TextInputProps,
+} from 'react-native';
 import {Input} from '../Input';
 import {COLORS} from '../../styles';
 
 type Props = {
   label: string;
-  value: string;
-  onPress: () => void;
-};
+  style?: StyleProp<ViewStyle>;
+} & TextInputProps;
 
-export const InputButton: FC<Props> = ({label, value, onPress}) => {
+export const InputButton: FC<Props> = ({label, value, onPress, style}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.wrapper}>
+    <TouchableOpacity onPress={onPress} style={[styles.wrapper, style]}>
       <Text style={styles.text}>{label}</Text>
       <Input
         editable={false}

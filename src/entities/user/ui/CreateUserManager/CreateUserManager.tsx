@@ -1,15 +1,27 @@
+import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import {useUserStore} from '../../stores/useUserStore';
 import {useCreateUser} from '../../queries/userQueries';
-import {useEffect} from 'react';
-import {Alert} from 'react-native';
 
 export const CreateUserManager = () => {
   const user = useUserStore(state => state.user);
   const setUser = useUserStore(state => state.setUser);
   const {mutateAsync} = useCreateUser();
 
+  const [hydrated, setHydrated] = useState(false);
+
   useEffect(() => {
-    if (user || !useUserStore.persist.hasHydrated()) {
+    const unsubscribe = useUserStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (user || !hydrated) {
       return;
     }
 
@@ -25,7 +37,7 @@ export const CreateUserManager = () => {
         );
       }
     })();
-  }, [user, setUser, mutateAsync]);
+  }, [user, setUser, mutateAsync, hydrated]);
 
   return null;
 };

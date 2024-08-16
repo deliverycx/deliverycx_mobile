@@ -6,11 +6,12 @@ import {Icon} from '../../../../shared/ui/Icon';
 type Props = {
   text: string;
   iconName?: string;
+  onPress?: () => void;
 };
 
-export const OrderInputButton: FC<Props> = ({text, iconName}) => {
+export const OrderInputButton: FC<Props> = ({text, iconName, onPress}) => {
   return (
-    <TouchableOpacity style={styles.wrapper}>
+    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
       <View style={styles.left}>
         {iconName && <Icon name={iconName} />}
         <Text>{text}</Text>

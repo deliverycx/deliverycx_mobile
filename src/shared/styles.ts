@@ -25,4 +25,5 @@ export const ICON_SIZES = {
   md: 22,
   lg: 28,
   xl: 32,
+  xxl: 64,
 };

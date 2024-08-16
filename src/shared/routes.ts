@@ -1,4 +1,4 @@
-import {COLORS} from './styles.ts';
+import {COLORS} from './styles';
 
 export const enum Routes {
   Cities = 'Cities',
@@ -9,6 +9,7 @@ export const enum Routes {
   Profile = 'Profile',
   Contacts = 'Contacts',
   Order = 'Order',
+  Address = 'Address',
 }
 
 export type StackParamList = {
@@ -16,6 +17,7 @@ export type StackParamList = {
   [Routes.Menu]: undefined;
   [Routes.Cities]: undefined;
   [Routes.Order]: undefined;
+  [Routes.Address]: undefined;
   [Routes.Organisations]: {
     cityId: string;
   };
