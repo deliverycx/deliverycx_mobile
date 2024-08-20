@@ -5,25 +5,24 @@ import {
   TouchableOpacity,
   StyleProp,
   ViewStyle,
-  TextInputProps,
 } from 'react-native';
-import {Input} from '../Input';
+import {Input, Props as InputProps} from '../Input';
 import {COLORS} from '../../styles';
 
 type Props = {
   label: string;
   style?: StyleProp<ViewStyle>;
-} & TextInputProps;
+} & Omit<InputProps, 'pointerEvents'>;
 
-export const InputButton: FC<Props> = ({label, value, onPress, style}) => {
+export const InputButton: FC<Props> = ({label, onPress, style, ...props}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.wrapper, style]}>
       <Text style={styles.text}>{label}</Text>
       <Input
+        {...props}
         editable={false}
         pointerEvents="none"
         style={styles.input}
-        value={value}
       />
     </TouchableOpacity>
   );

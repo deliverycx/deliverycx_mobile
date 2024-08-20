@@ -7,11 +7,20 @@ type Props = {
   text: string;
   iconName?: string;
   onPress?: () => void;
+  disabled?: boolean;
 };
 
-export const OrderInputButton: FC<Props> = ({text, iconName, onPress}) => {
+export const OrderInputButton: FC<Props> = ({
+  text,
+  iconName,
+  onPress,
+  disabled,
+}) => {
   return (
-    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.wrapper}
+      onPress={onPress}
+      disabled={disabled}>
       <View style={styles.left}>
         {iconName && <Icon name={iconName} />}
         <Text>{text}</Text>

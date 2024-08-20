@@ -3,7 +3,11 @@ export {
   fetchYandexData,
   useIsYandexDataFetching,
 } from './queries/yandexQueries';
-export {useStreetDataQuery, fetchStreetData} from './queries/streetQueries';
+export {
+  useStreetDataQuery,
+  fetchStreetData,
+  useIsStreetFetching,
+} from './queries/streetQueries';
 export {Kind} from './types/yandexTypes';
 export type {
   GeocoderMetaData,

@@ -1,4 +1,4 @@
-import {QueryClient, useQuery} from '@tanstack/react-query';
+import {QueryClient, useIsFetching, useQuery} from '@tanstack/react-query';
 import {getStreetApi} from '../api/streetApi';
 import {StreetRequestModel} from '../types/streetTypes';
 
@@ -25,4 +25,8 @@ export const useStreetDataQuery = (params: StreetRequestModel) => {
     queryKey: [QUERY_KEY, params.organizationId],
     queryFn: () => getStreetData(params),
   });
+};
+
+export const useIsStreetFetching = () => {
+  return useIsFetching({queryKey: [QUERY_KEY]}) > 0;
 };

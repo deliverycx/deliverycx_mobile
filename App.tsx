@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
+import Toast from 'react-native-toast-message';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -10,6 +11,7 @@ import {Routes, STACK_NAVIGATOR_OPTIONS} from './src/shared/routes';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Cities, screenOptions as citiesScreenOptions} from './src/pages/cities';
 import {CreateUserManager} from './src/entities/user';
+import {ToastProvider} from './src/shared/providers/ToastProvider';
 import {
   Organisations,
   screenOptions as organisationsScreenOptions,
@@ -127,6 +129,7 @@ const App = (): React.JSX.Element => {
           </OrgStatusAlertsProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
+      <ToastProvider />
     </QueryClientProvider>
   );
 };

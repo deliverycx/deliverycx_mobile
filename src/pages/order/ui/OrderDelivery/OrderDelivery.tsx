@@ -5,10 +5,12 @@ import {OrderInputButton} from '../OrderInputButton';
 import {OrderDeliveryTime} from '../OrderDeliveryTime';
 import {Label} from '../../../../shared/ui/Label';
 import {Routes, StackParamList} from '../../../../shared/routes';
+import {useStreets} from '../../../address/hooks/useStreets';
 
 type AddressScreenNavigationProp = NavigationProp<StackParamList, Routes.Order>;
 
 export const OrderDelivery = () => {
+  const streets = useStreets();
   const navigation = useNavigation<AddressScreenNavigationProp>();
 
   const handleAddressPress = () => {
@@ -18,6 +20,7 @@ export const OrderDelivery = () => {
   return (
     <View style={styles.wrapper}>
       <OrderInputButton
+        disabled={!streets.length}
         onPress={handleAddressPress}
         text="Лобня, улица Победы 18"
       />

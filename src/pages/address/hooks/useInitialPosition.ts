@@ -4,7 +4,7 @@ import {
   useOrganisationData,
 } from '../../../entities/organisations';
 import {Position} from '../../../shared/types/map';
-import {getUserPosition} from '../utils/getUserPosition.ts';
+import {getUserPosition} from '../utils/getUserPosition';
 
 const useOrgPosition = () => {
   const currentOrgId = useCurrentOrgStore(state => state.orgId);
@@ -49,22 +49,13 @@ const useUserPosition = () => {
   };
 };
 
-export const usePosition = () => {
+export const useInitialPosition = () => {
   const orgPosition = useOrgPosition();
   const {userPosition, loaded: userPositionLoaded} = useUserPosition();
 
-  const [position, setPosition] = useState<Position | null>(null);
+  if (!userPositionLoaded) {
+    return null;
+  }
 
-  useEffect(() => {
-    if (!userPositionLoaded) {
-      return;
-    }
-
-    setPosition(userPosition || orgPosition);
-  }, [orgPosition, userPositionLoaded, userPosition]);
-
-  return {
-    position,
-    setPosition,
-  };
+  return userPosition || orgPosition;
 };

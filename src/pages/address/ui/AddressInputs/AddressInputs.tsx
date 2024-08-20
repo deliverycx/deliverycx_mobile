@@ -19,14 +19,18 @@ export const AddressInputs: FC<Props> = ({control, onHouseInputBlur}) => {
       <View style={styles.row}>
         <Controller
           name="street"
+          rules={{
+            required: true,
+          }}
           control={control}
-          render={({field: {onChange, value}}) => (
+          render={({field: {onChange, value}, formState}) => (
             <InputButton
               value={value}
-              label="Улица"
+              label="Улица *"
               style={styles.largeInput}
               onChangeText={onChange}
               editable={!isYandexDataFetching}
+              color={formState.errors.street ? 'danger' : undefined}
             />
           )}
         />
@@ -34,15 +38,19 @@ export const AddressInputs: FC<Props> = ({control, onHouseInputBlur}) => {
       <View style={styles.row}>
         <Controller
           name="house"
+          rules={{
+            required: true,
+          }}
           control={control}
-          render={({field: {onChange, value}}) => (
+          render={({field: {onChange, value}, formState}) => (
             <Input
               style={styles.mediumInput}
               value={value}
-              placeholder="Дом"
+              placeholder="Дом *"
               onBlur={onHouseInputBlur}
               onChangeText={onChange}
               editable={!isYandexDataFetching}
+              color={formState.errors.house ? 'danger' : undefined}
             />
           )}
         />

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {
   KeyboardAvoidingView,
@@ -6,48 +6,74 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {debouncePromise} from '../../../../shared/utils/debouncePromise';
 import {AddressMap, AddressMapRef} from '../AddressMap';
 import {AddressInputs} from '../AddressInputs';
 import {COLORS} from '../../../../shared/styles';
-import {useIsYandexDataFetching} from '../../../../entities/geo';
 import {MAP_POSITION_CHANGE_DELAY} from '../../../../shared/consts';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
 import {Inputs} from '../../types/form';
 import {useGetPositionByStreetAndHouse} from '../../hooks/useGetPositionByStreetAndHouse';
 import {useGetStreetAndHouseByPosition} from '../../hooks/useGetStreetAndHouseByPosition';
-import {usePosition} from '../../hooks/usePosition';
+
+import {useInitialPosition} from '../../hooks/useInitialPosition';
 import {Position} from '../../../../shared/types/map';
 
 export const Address = () => {
   const getPositionByAddress = useGetPositionByStreetAndHouse();
   const getStreetAndHouseByPosition = useGetStreetAndHouseByPosition();
-  const isYandexDataFetching = useIsYandexDataFetching();
+
+  const [isAddressFetching, setIsAddressFetching] = useState(false);
 
   const mapRef = useRef<AddressMapRef | null>(null);
 
-  const {position, setPosition} = usePosition();
+  const initialPosition = useInitialPosition();
 
-  const {handleSubmit, setValue, control, getValues} = useForm<Inputs>({
-    defaultValues: {
-      street: '',
-      house: '',
-      floor: '',
-      entrance: '',
-      flat: '',
-    },
-  });
+  const {handleSubmit, setValue, control, getValues, formState} =
+    useForm<Inputs>({
+      defaultValues: {
+        street: '',
+        house: '',
+        floor: '',
+        entrance: '',
+        flat: '',
+      },
+    });
 
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
+  const updateStreetAndHouseByPosition = useCallback(
+    async (pos: Position) => {
+      const streetAndHouse = await getStreetAndHouseByPosition(pos);
+
+      if (!streetAndHouse) {
+        Toast.show({
+          topOffset: 100,
+          visibilityTime: 5000,
+          type: 'custom',
+          text1: 'Не можем найти адрес на карте, введите его вручную',
+        });
+
+        return;
+      }
+
+      setValue('street', streetAndHouse.street);
+      setValue('house', streetAndHouse.house ?? '');
+    },
+    [setValue, getStreetAndHouseByPosition],
+  );
+
   useEffect(() => {
-    if (!position) {
+    if (!initialPosition) {
       return;
     }
 
+    mapRef.current?.setCenter(initialPosition);
+
     (async function () {
-      const streetAndHouse = await getStreetAndHouseByPosition(position);
+      const streetAndHouse = await getStreetAndHouseByPosition(initialPosition);
 
       if (!streetAndHouse) {
         return;
@@ -56,13 +82,22 @@ export const Address = () => {
       setValue('street', streetAndHouse.street);
       setValue('house', streetAndHouse.house ?? '');
     })();
-  }, [position, setValue, getStreetAndHouseByPosition]);
+  }, [initialPosition, setValue, getStreetAndHouseByPosition]);
 
-  const handlePositionChange = useMemo(() => {
-    return debouncePromise(async (nextPosition: Position) => {
-      setPosition(nextPosition);
+  const positionChange = useMemo(() => {
+    return debouncePromise(async (pos: Position) => {
+      await updateStreetAndHouseByPosition(pos);
     }, MAP_POSITION_CHANGE_DELAY);
-  }, [setPosition]);
+  }, [updateStreetAndHouseByPosition]);
+
+  const handlePositionChange = useCallback(
+    async (pos: Position) => {
+      setIsAddressFetching(true);
+      await positionChange(pos);
+      setIsAddressFetching(false);
+    },
+    [positionChange],
+  );
 
   const handleHouseInputBlur = useCallback(async () => {
     const streetValue = getValues('street');
@@ -78,19 +113,27 @@ export const Address = () => {
     );
 
     if (!positionByAddress) {
+      setValue('house', '');
       return;
     }
 
     mapRef.current?.setCenter(positionByAddress);
-    setPosition(positionByAddress);
-  }, [getPositionByAddress, getValues, setPosition]);
+
+    await updateStreetAndHouseByPosition(positionByAddress);
+  }, [
+    getPositionByAddress,
+    getValues,
+    updateStreetAndHouseByPosition,
+    setValue,
+  ]);
 
   return (
     <View style={styles.wrapper}>
       <AddressMap
-        ref={mapRef}
-        onPositionChange={handlePositionChange}
         style={styles.map}
+        ref={mapRef}
+        loading={isAddressFetching}
+        onPositionChange={handlePositionChange}
       />
       <KeyboardAvoidingView keyboardVerticalOffset={110} behavior="padding">
         <SafeAreaView>
@@ -100,7 +143,7 @@ export const Address = () => {
               control={control}
             />
             <Button
-              loading={isYandexDataFetching}
+              loading={isAddressFetching}
               onPress={handleSubmit(onSubmit)}
               style={styles.button}
               text="Доставить сюда"
