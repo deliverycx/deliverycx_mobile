@@ -2,6 +2,7 @@ export {OrgMapLayout} from './ui/OrgMapLayout';
 export {useOrganisationsQuery} from './queries/organisationsQueries';
 export {useOrganisationData} from './hooks/useOrganisationData';
 export {useCurrentOrg} from './hooks/useCurrentOrg';
+export {useOrgCity} from './hooks/useOrgCity';
 export {
   OrgStatusAlertsProvider,
   OrgStatusAlerts,

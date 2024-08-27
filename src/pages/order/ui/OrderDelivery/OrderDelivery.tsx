@@ -1,28 +1,43 @@
-import React from 'react';
+import React, {FC, useMemo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {OrderInputButton} from '../OrderInputButton';
 import {OrderDeliveryTime} from '../OrderDeliveryTime';
 import {Label} from '../../../../shared/ui/Label';
-import {Routes, StackParamList} from '../../../../shared/routes';
+import {Address, Routes, StackParamList} from '../../../../shared/routes';
 import {useStreets} from '../../../address/hooks/useStreets';
+import {useOrgCity} from '../../../../entities/organisations';
+
+type Props = {
+  data: Address | undefined;
+};
 
 type AddressScreenNavigationProp = NavigationProp<StackParamList, Routes.Order>;
 
-export const OrderDelivery = () => {
+export const OrderDelivery: FC<Props> = ({data}) => {
   const streets = useStreets();
   const navigation = useNavigation<AddressScreenNavigationProp>();
+
+  const org = useOrgCity();
 
   const handleAddressPress = () => {
     navigation.navigate(Routes.Address);
   };
+
+  const addressText = useMemo(() => {
+    if (!data) {
+      return 'Выберите адрес';
+    }
+
+    return `${org}, ${data.street}, ${data.house}`;
+  }, [data, org]);
 
   return (
     <View style={styles.wrapper}>
       <OrderInputButton
         disabled={!streets.length}
         onPress={handleAddressPress}
-        text="Лобня, улица Победы 18"
+        text={addressText}
       />
       <OrderDeliveryTime />
       <View>

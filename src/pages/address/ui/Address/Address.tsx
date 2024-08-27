@@ -1,5 +1,13 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -14,14 +22,19 @@ import {COLORS} from '../../../../shared/styles';
 import {MAP_POSITION_CHANGE_DELAY} from '../../../../shared/consts';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
-import {Inputs} from '../../types/form';
+import {Address as AddressFormValues} from '../../../../shared/routes';
 import {useGetPositionByStreetAndHouse} from '../../hooks/useGetPositionByStreetAndHouse';
 import {useGetStreetAndHouseByPosition} from '../../hooks/useGetStreetAndHouseByPosition';
 
 import {useInitialPosition} from '../../hooks/useInitialPosition';
 import {Position} from '../../../../shared/types/map';
+import {Routes, StackParamList} from '../../../../shared/routes';
 
-export const Address = () => {
+type Props = {
+  navigation: NativeStackNavigationProp<StackParamList, Routes.Address>;
+};
+
+export const Address: FC<Props> = ({navigation}) => {
   const getPositionByAddress = useGetPositionByStreetAndHouse();
   const getStreetAndHouseByPosition = useGetStreetAndHouseByPosition();
 
@@ -32,7 +45,7 @@ export const Address = () => {
   const initialPosition = useInitialPosition();
 
   const {handleSubmit, setValue, control, getValues, formState} =
-    useForm<Inputs>({
+    useForm<AddressFormValues>({
       defaultValues: {
         street: '',
         house: '',
@@ -42,7 +55,9 @@ export const Address = () => {
       },
     });
 
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  const onSubmit: SubmitHandler<AddressFormValues> = data => {
+    navigation.navigate(Routes.Order, data);
+  };
 
   const updateStreetAndHouseByPosition = useCallback(
     async (pos: Position) => {

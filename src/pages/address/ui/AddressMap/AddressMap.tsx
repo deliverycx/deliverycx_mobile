@@ -10,11 +10,16 @@ import {
   NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import {Position} from '../../../../shared/types/map';
 import {AddressJumperMarker} from '../AddressJumperMarker';
+import {Icon} from '../../../../shared/ui/Icon';
+import {COLORS} from '../../../../shared/styles.ts';
+import {hexToRgba} from '../../../../shared/utils/hexToRgba';
+import {getUserPosition} from '../../utils/getUserPosition';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -63,6 +68,23 @@ export const AddressMap = memo(
         [onPositionChange],
       );
 
+      const handleMyPositionPress = async () => {
+        try {
+          const {coords} = await getUserPosition();
+
+          ref.current?.setCenter(
+            {
+              lat: coords.latitude,
+              lon: coords.longitude,
+              zoom: AUTO_ZOOM,
+            },
+            AUTO_ZOOM,
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
       return (
         <View style={style}>
           <AddressJumperMarker style={styles.icon} animated={loading} />
@@ -72,7 +94,15 @@ export const AddressMap = memo(
             mapType="vector"
             showUserPosition={false}
             ref={ref}
+            logoPosition={{
+              horizontal: 'left',
+            }}
           />
+          <TouchableOpacity
+            style={styles.myPosButton}
+            onPress={handleMyPositionPress}>
+            <Icon name="near-me" />
+          </TouchableOpacity>
         </View>
       );
     },
@@ -90,5 +120,20 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  myPosButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 40,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.backgroundPrimary,
+    shadowColor: hexToRgba(COLORS.backgroundPrimaryInvert, 0.4),
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
   },
 });

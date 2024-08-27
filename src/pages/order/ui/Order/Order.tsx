@@ -1,19 +1,27 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
+import type {RouteProp} from '@react-navigation/native';
 import {OrderDeliveryType} from '../OrderDeliveryType';
 import {Container} from '../../../../shared/ui/Container';
 import {Button} from '../../../../shared/ui/Button';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {COLORS} from '../../../../shared/styles';
 import {OrderDelivery} from '../OrderDelivery';
+import {Routes, StackParamList} from '../../../../shared/routes';
 
-export const Order: FC = () => {
+type Props = {
+  route: RouteProp<StackParamList, Routes.Order>;
+};
+
+export const Order: FC<Props> = ({route}) => {
+  const address = route.params;
+
   return (
     <>
       <View style={styles.wrapper}>
         <Container style={styles.container}>
           <OrderDeliveryType />
-          <OrderDelivery />
+          <OrderDelivery data={address} />
         </Container>
         <SafeAreaView style={styles.footer}>
           <Container>

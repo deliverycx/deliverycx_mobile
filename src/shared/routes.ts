@@ -12,11 +12,19 @@ export const enum Routes {
   Address = 'Address',
 }
 
+export type Address = {
+  street: string;
+  house: string;
+  floor: string;
+  entrance: string;
+  flat: string;
+};
+
 export type StackParamList = {
   [Routes.Cart]: undefined;
   [Routes.Menu]: undefined;
   [Routes.Cities]: undefined;
-  [Routes.Order]: undefined;
+  [Routes.Order]: Address | undefined;
   [Routes.Address]: undefined;
   [Routes.Organisations]: {
     cityId: string;

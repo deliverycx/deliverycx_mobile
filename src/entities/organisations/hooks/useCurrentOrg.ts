@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useCurrentOrgStore} from '../stores/useCurrentOrgStore.ts';
+import {useCurrentOrgStore} from '../stores/useCurrentOrgStore';
 import {useOrganisationData} from './useOrganisationData';
 
 export const useCurrentOrg = () => {

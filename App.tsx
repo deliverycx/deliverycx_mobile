@@ -109,16 +109,18 @@ const App = (): React.JSX.Element => {
                         name={Routes.TabScreens}
                         component={TabScreens}
                       />
-                      <Stack.Screen
-                        name={Routes.Order}
-                        options={orderScreenOptions}
-                        component={Order}
-                      />
-                      <Stack.Screen
-                        options={addressScreenOptions}
-                        name={Routes.Address}
-                        component={Address}
-                      />
+                      <Stack.Group>
+                        <Stack.Screen
+                          name={Routes.Order}
+                          options={orderScreenOptions}
+                          component={Order}
+                        />
+                        <Stack.Screen
+                          options={addressScreenOptions}
+                          name={Routes.Address}
+                          component={Address}
+                        />
+                      </Stack.Group>
                     </Stack.Navigator>
                   </OrgStatusAlerts>
                 </CartStateManager>

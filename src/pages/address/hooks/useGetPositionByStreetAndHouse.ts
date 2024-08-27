@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {getCoordsByYandex} from '../utils/getCoordsByYandex';
 import {useFetchYandexGeo} from './useFetchYandexGeo';
-import {useOrgCity} from './useOrgCity';
+import {useOrgCity} from '../../../entities/organisations';
 
 export const useGetPositionByStreetAndHouse = () => {
   const fetchYandexGeo = useFetchYandexGeo();

@@ -4,16 +4,24 @@ import {Kind} from '../../../entities/geo';
 import {useFetchYandexGeo} from './useFetchYandexGeo';
 import {useGetKladr} from './useGetKladr';
 import {Position} from '../../../shared/types/map';
+import {useOrgCity} from '../../../entities/organisations';
 
 export const useGetStreetAndHouseByPosition = () => {
   const fetchYandexGeo = useFetchYandexGeo();
   const getKladr = useGetKladr();
+  const orgCity = useOrgCity();
 
   return useCallback(
     async ({lon, lat}: Position) => {
       const geoData = await fetchYandexGeo(`${lon},${lat}`);
 
       if (!geoData) {
+        return;
+      }
+
+      const city = getYandexComponentName(geoData, Kind.locality);
+
+      if (city !== orgCity) {
         return;
       }
 
@@ -30,6 +38,6 @@ export const useGetStreetAndHouseByPosition = () => {
         house,
       };
     },
-    [getKladr, fetchYandexGeo],
+    [getKladr, fetchYandexGeo, orgCity],
   );
 };

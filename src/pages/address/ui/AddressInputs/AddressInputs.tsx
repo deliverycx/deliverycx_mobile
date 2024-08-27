@@ -4,10 +4,10 @@ import {Control, Controller} from 'react-hook-form';
 import {Input} from '../../../../shared/ui/Input';
 import {InputButton} from '../../../../shared/ui/InputButton';
 import {useIsYandexDataFetching} from '../../../../entities/geo';
-import {Inputs} from '../../types/form';
+import {Address as AddressFormValues} from '../../../../shared/routes';
 
 type Props = {
-  control: Control<Inputs>;
+  control: Control<AddressFormValues>;
   onHouseInputBlur: () => void;
 };
 
