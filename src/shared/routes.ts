@@ -10,6 +10,8 @@ export const enum Routes {
   Contacts = 'Contacts',
   Order = 'Order',
   Address = 'Address',
+  Payment = 'Payment',
+  Streets = 'Streets',
 }
 
 export type Address = {
@@ -20,12 +22,23 @@ export type Address = {
   flat: string;
 };
 
+export interface OrderParams {
+  address?: Address;
+  paymentMethod?: any;
+}
+
+export interface AddressParams {
+  classifierId?: string;
+}
+
 export type StackParamList = {
   [Routes.Cart]: undefined;
   [Routes.Menu]: undefined;
   [Routes.Cities]: undefined;
-  [Routes.Order]: Address | undefined;
-  [Routes.Address]: undefined;
+  [Routes.Order]: OrderParams | undefined;
+  [Routes.Address]: AddressParams | undefined;
+  [Routes.Payment]: undefined;
+  [Routes.Streets]: undefined;
   [Routes.Organisations]: {
     cityId: string;
   };

@@ -3,17 +3,19 @@ import {View, StyleSheet} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
 import {Input} from '../../../../shared/ui/Input';
 import {InputButton} from '../../../../shared/ui/InputButton';
-import {useIsYandexDataFetching} from '../../../../entities/geo';
-import {Address as AddressFormValues} from '../../../../shared/routes';
+import {FormValues} from '../../hooks/useAddressForm';
 
 type Props = {
-  control: Control<AddressFormValues>;
+  control: Control<FormValues>;
   onHouseInputBlur: () => void;
+  onStreetPress: () => void;
 };
 
-export const AddressInputs: FC<Props> = ({control, onHouseInputBlur}) => {
-  const isYandexDataFetching = useIsYandexDataFetching();
-
+export const AddressInputs: FC<Props> = ({
+  control,
+  onHouseInputBlur,
+  onStreetPress,
+}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.row}>
@@ -25,11 +27,12 @@ export const AddressInputs: FC<Props> = ({control, onHouseInputBlur}) => {
           control={control}
           render={({field: {onChange, value}, formState}) => (
             <InputButton
+              onPress={onStreetPress}
               value={value}
               label="Улица *"
               style={styles.largeInput}
               onChangeText={onChange}
-              editable={!isYandexDataFetching}
+              editable={true}
               color={formState.errors.street ? 'danger' : undefined}
             />
           )}
@@ -49,7 +52,7 @@ export const AddressInputs: FC<Props> = ({control, onHouseInputBlur}) => {
               placeholder="Дом *"
               onBlur={onHouseInputBlur}
               onChangeText={onChange}
-              editable={!isYandexDataFetching}
+              editable={true}
               color={formState.errors.house ? 'danger' : undefined}
             />
           )}

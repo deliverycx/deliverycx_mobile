@@ -10,11 +10,12 @@ import {useOrgCity} from '../../../../entities/organisations';
 
 type Props = {
   data: Address | undefined;
+  paymentMethod: string;
 };
 
 type AddressScreenNavigationProp = NavigationProp<StackParamList, Routes.Order>;
 
-export const OrderDelivery: FC<Props> = ({data}) => {
+export const OrderDelivery: FC<Props> = ({data, paymentMethod}) => {
   const streets = useStreets();
   const navigation = useNavigation<AddressScreenNavigationProp>();
 
@@ -22,6 +23,10 @@ export const OrderDelivery: FC<Props> = ({data}) => {
 
   const handleAddressPress = () => {
     navigation.navigate(Routes.Address);
+  };
+
+  const handlePaymentPress = () => {
+    navigation.navigate(Routes.Payment);
   };
 
   const addressText = useMemo(() => {
@@ -42,7 +47,11 @@ export const OrderDelivery: FC<Props> = ({data}) => {
       <OrderDeliveryTime />
       <View>
         <Label text="Оплата" />
-        <OrderInputButton iconName="payments" text="Наличными" />
+        <OrderInputButton
+          onPress={handlePaymentPress}
+          iconName="payments"
+          text={paymentMethod}
+        />
       </View>
     </View>
   );

@@ -22,13 +22,12 @@ export const AddressJumperMarker: FC<Props> = ({style, animated = false}) => {
       Animated.sequence([
         Animated.timing(bounceValueRef, {
           toValue: -20,
-          duration: 350,
+          duration: 300,
           useNativeDriver: true,
-          delay: 500,
         }),
         Animated.timing(bounceValueRef, {
           toValue: 0,
-          duration: 350,
+          duration: 300,
           useNativeDriver: true,
         }),
       ]).start(() => {

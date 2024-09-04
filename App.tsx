@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
-import Toast from 'react-native-toast-message';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -21,6 +20,15 @@ import {
   Contacts,
   ScreenOptions as ContactsScreenOptions,
 } from './src/pages/contacts';
+import {
+  PaymentList,
+  screenOptions as PaymentScreenOptions,
+} from './src/pages/payment';
+import {
+  StreetsList,
+  screenOptions as StreetsScreenOptions,
+} from './src/pages/streets';
+
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
 import {
   OrgStatusAlertsProvider,
@@ -109,18 +117,26 @@ const App = (): React.JSX.Element => {
                         name={Routes.TabScreens}
                         component={TabScreens}
                       />
-                      <Stack.Group>
-                        <Stack.Screen
-                          name={Routes.Order}
-                          options={orderScreenOptions}
-                          component={Order}
-                        />
-                        <Stack.Screen
-                          options={addressScreenOptions}
-                          name={Routes.Address}
-                          component={Address}
-                        />
-                      </Stack.Group>
+                      <Stack.Screen
+                        name={Routes.Order}
+                        options={orderScreenOptions}
+                        component={Order}
+                      />
+                      <Stack.Screen
+                        options={addressScreenOptions}
+                        name={Routes.Address}
+                        component={Address}
+                      />
+                      <Stack.Screen
+                        options={PaymentScreenOptions}
+                        name={Routes.Payment}
+                        component={PaymentList}
+                      />
+                      <Stack.Screen
+                        options={StreetsScreenOptions}
+                        name={Routes.Streets}
+                        component={StreetsList}
+                      />
                     </Stack.Navigator>
                   </OrgStatusAlerts>
                 </CartStateManager>

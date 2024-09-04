@@ -14,14 +14,15 @@ type Props = {
 };
 
 export const Order: FC<Props> = ({route}) => {
-  const address = route.params;
+  const address = route.params?.address;
+  const paymentMethod = route.params?.paymentMethod ?? 'Наличными';
 
   return (
     <>
       <View style={styles.wrapper}>
         <Container style={styles.container}>
           <OrderDeliveryType />
-          <OrderDelivery data={address} />
+          <OrderDelivery paymentMethod={paymentMethod} data={address} />
         </Container>
         <SafeAreaView style={styles.footer}>
           <Container>

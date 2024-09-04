@@ -1,12 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {useForm, SubmitHandler} from 'react-hook-form';
+import React, {FC, useEffect, useRef, useCallback} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   KeyboardAvoidingView,
@@ -14,105 +6,105 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
+import {SubmitHandler} from 'react-hook-form';
 import Toast from 'react-native-toast-message';
-import {debouncePromise} from '../../../../shared/utils/debouncePromise';
 import {AddressMap, AddressMapRef} from '../AddressMap';
 import {AddressInputs} from '../AddressInputs';
 import {COLORS} from '../../../../shared/styles';
-import {MAP_POSITION_CHANGE_DELAY} from '../../../../shared/consts';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
-import {Address as AddressFormValues} from '../../../../shared/routes';
-import {useGetPositionByStreetAndHouse} from '../../hooks/useGetPositionByStreetAndHouse';
-import {useGetStreetAndHouseByPosition} from '../../hooks/useGetStreetAndHouseByPosition';
-
 import {useInitialPosition} from '../../hooks/useInitialPosition';
-import {Position} from '../../../../shared/types/map';
 import {Routes, StackParamList} from '../../../../shared/routes';
+import type {RouteProp} from '@react-navigation/native';
+import {useAddressForm, FormValues} from '../../hooks/useAddressForm';
+import {useGeoData} from '../../hooks/useGeoData';
+import {useOrgCity} from '../../../../entities/organisations';
 
 type Props = {
+  route: RouteProp<StackParamList, Routes.Address>;
   navigation: NativeStackNavigationProp<StackParamList, Routes.Address>;
 };
 
-export const Address: FC<Props> = ({navigation}) => {
-  const getPositionByAddress = useGetPositionByStreetAndHouse();
-  const getStreetAndHouseByPosition = useGetStreetAndHouseByPosition();
-
-  const [isAddressFetching, setIsAddressFetching] = useState(false);
+export const Address: FC<Props> = ({navigation, route}) => {
+  const classifierIdParam = route.params?.classifierId;
 
   const mapRef = useRef<AddressMapRef | null>(null);
 
+  const {handleSubmit, setValue, control, getValues, reset} = useAddressForm();
   const initialPosition = useInitialPosition();
+  const cityName = useOrgCity();
 
-  const {handleSubmit, setValue, control, getValues, formState} =
-    useForm<AddressFormValues>({
-      defaultValues: {
-        street: '',
-        house: '',
-        floor: '',
-        entrance: '',
-        flat: '',
-      },
-    });
+  const {
+    requestKladrByQuery,
+    requestKladrById,
+    requestKladrByPosition,
+    geoData,
+    isFetching,
+  } = useGeoData();
 
-  const onSubmit: SubmitHandler<AddressFormValues> = data => {
-    navigation.navigate(Routes.Order, data);
-  };
+  useEffect(() => {
+    if (!geoData) {
+      return;
+    }
 
-  const updateStreetAndHouseByPosition = useCallback(
-    async (pos: Position) => {
-      const streetAndHouse = await getStreetAndHouseByPosition(pos);
+    if (!geoData.classifierId) {
+      Toast.show({
+        topOffset: 100,
+        visibilityTime: 5000,
+        type: 'custom',
+        text1: 'Доставка по указанному адресу невозможна',
+      });
 
-      if (!streetAndHouse) {
-        Toast.show({
-          topOffset: 100,
-          visibilityTime: 5000,
-          type: 'custom',
-          text1: 'Не можем найти адрес на карте, введите его вручную',
-        });
+      return;
+    }
 
+    setValue('street', geoData.name);
+    setValue('house', geoData.house ?? '');
+  }, [reset, geoData, setValue]);
+
+  useEffect(() => {
+    if (!classifierIdParam) {
+      return;
+    }
+
+    (async function () {
+      const data = await requestKladrById(classifierIdParam);
+
+      if (!data?.lon || !data?.lat) {
         return;
       }
 
-      setValue('street', streetAndHouse.street);
-      setValue('house', streetAndHouse.house ?? '');
-    },
-    [setValue, getStreetAndHouseByPosition],
-  );
+      mapRef.current?.setCenter({
+        lat: Number(data.lat),
+        lon: Number(data.lon),
+      });
+    })();
+  }, [classifierIdParam, requestKladrById]);
 
   useEffect(() => {
     if (!initialPosition) {
       return;
     }
 
-    mapRef.current?.setCenter(initialPosition);
+    mapRef.current?.setCenter({
+      lat: initialPosition.lat,
+      lon: initialPosition.lon,
+    });
+  }, [initialPosition]);
 
-    (async function () {
-      const streetAndHouse = await getStreetAndHouseByPosition(initialPosition);
+  const handleStreetPress = () => {
+    navigation.push(Routes.Streets);
+  };
 
-      if (!streetAndHouse) {
-        return;
-      }
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    const state = navigation.getState();
+    const previousRoute = state.routes[state.index - 1];
 
-      setValue('street', streetAndHouse.street);
-      setValue('house', streetAndHouse.house ?? '');
-    })();
-  }, [initialPosition, setValue, getStreetAndHouseByPosition]);
-
-  const positionChange = useMemo(() => {
-    return debouncePromise(async (pos: Position) => {
-      await updateStreetAndHouseByPosition(pos);
-    }, MAP_POSITION_CHANGE_DELAY);
-  }, [updateStreetAndHouseByPosition]);
-
-  const handlePositionChange = useCallback(
-    async (pos: Position) => {
-      setIsAddressFetching(true);
-      await positionChange(pos);
-      setIsAddressFetching(false);
-    },
-    [positionChange],
-  );
+    navigation.navigate(Routes.Order, {
+      ...previousRoute.params,
+      address: data,
+    });
+  };
 
   const handleHouseInputBlur = useCallback(async () => {
     const streetValue = getValues('street');
@@ -122,43 +114,38 @@ export const Address: FC<Props> = ({navigation}) => {
       return;
     }
 
-    const positionByAddress = await getPositionByAddress(
-      streetValue,
-      houseValue,
+    const data = await requestKladrByQuery(
+      `${cityName}, ${streetValue}, ${houseValue}`,
     );
 
-    if (!positionByAddress) {
-      setValue('house', '');
+    if (!data?.lon || !data?.lat) {
       return;
     }
 
-    mapRef.current?.setCenter(positionByAddress);
-
-    await updateStreetAndHouseByPosition(positionByAddress);
-  }, [
-    getPositionByAddress,
-    getValues,
-    updateStreetAndHouseByPosition,
-    setValue,
-  ]);
+    mapRef.current?.setCenter({
+      lat: Number(data.lat),
+      lon: Number(data.lon),
+    });
+  }, [cityName, getValues, requestKladrByQuery]);
 
   return (
     <View style={styles.wrapper}>
       <AddressMap
         style={styles.map}
         ref={mapRef}
-        loading={isAddressFetching}
-        onPositionChange={handlePositionChange}
+        loading={isFetching}
+        onPositionChange={requestKladrByPosition}
       />
       <KeyboardAvoidingView keyboardVerticalOffset={110} behavior="padding">
         <SafeAreaView>
           <Container style={styles.container}>
             <AddressInputs
               onHouseInputBlur={handleHouseInputBlur}
+              onStreetPress={handleStreetPress}
               control={control}
             />
             <Button
-              loading={isAddressFetching}
+              loading={isFetching}
               onPress={handleSubmit(onSubmit)}
               style={styles.button}
               text="Доставить сюда"

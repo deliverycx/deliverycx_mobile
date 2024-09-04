@@ -56,7 +56,14 @@ export const AddressMap = memo(
 
       const handleCameraPositionChangeEnd = useCallback(
         async ({nativeEvent}: NativeSyntheticEvent<CameraPosition>) => {
-          const {point, zoom, azimuth} = nativeEvent;
+          const {point, zoom, azimuth, reason} =
+            nativeEvent as CameraPosition & {
+              reason: string;
+            };
+
+          if (reason !== 'GESTURES') {
+            return;
+          }
 
           onPositionChange({
             lat: point.lat,
@@ -124,14 +131,14 @@ const styles = StyleSheet.create({
   myPosButton: {
     position: 'absolute',
     right: 20,
-    bottom: 40,
+    bottom: 20,
     width: 40,
     height: 40,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: COLORS.backgroundPrimary,
-    shadowColor: hexToRgba(COLORS.backgroundPrimaryInvert, 0.4),
+    shadowColor: hexToRgba(COLORS.backgroundPrimaryInvert, 0.2),
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 3,
