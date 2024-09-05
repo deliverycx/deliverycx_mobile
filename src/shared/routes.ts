@@ -1,4 +1,5 @@
 import {COLORS} from './styles';
+import {PaymentMethod} from './types/order';
 
 export const enum Routes {
   Cities = 'Cities',
@@ -24,7 +25,7 @@ export type Address = {
 
 export interface OrderParams {
   address?: Address;
-  paymentMethod?: any;
+  paymentMethod?: PaymentMethod;
 }
 
 export interface AddressParams {

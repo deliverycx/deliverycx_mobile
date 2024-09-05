@@ -1,4 +1,6 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
 import type {RouteProp} from '@react-navigation/native';
 import {OrderDeliveryType} from '../OrderDeliveryType';
@@ -6,29 +8,69 @@ import {Container} from '../../../../shared/ui/Container';
 import {Button} from '../../../../shared/ui/Button';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {COLORS} from '../../../../shared/styles';
-import {OrderDelivery} from '../OrderDelivery';
 import {Routes, StackParamList} from '../../../../shared/routes';
+import {OrderType, PaymentMethod} from '../../../../shared/types/order';
+import {OrderDeliveryTime} from '../OrderDeliveryTime';
+import {OrderAddress} from '../OrderAddress/OrderAddress';
+import {useCartItems} from '../../../../widgets/cart';
+import {getFormatPrice} from '../../../../shared/utils/getFormatPrice.ts';
+import {OrderPaymentMethod} from '../OrderPaymentMethod';
 
 type Props = {
   route: RouteProp<StackParamList, Routes.Order>;
+  navigation: NativeStackNavigationProp<StackParamList, Routes.Order>;
 };
 
-export const Order: FC<Props> = ({route}) => {
+type OrderForm = {
+  orderType: OrderType;
+};
+
+export const Order: FC<Props> = ({route, navigation}) => {
   const address = route.params?.address;
-  const paymentMethod = route.params?.paymentMethod ?? 'Наличными';
+  const paymentMethod = route.params?.paymentMethod ?? PaymentMethod.Cash;
+
+  const {control, watch} = useForm<OrderForm>({
+    defaultValues: {
+      orderType: OrderType.Pickup,
+    },
+  });
+
+  const {data} = useCartItems();
+
+  const watchField = watch('orderType');
 
   return (
     <>
       <View style={styles.wrapper}>
         <Container style={styles.container}>
-          <OrderDeliveryType />
-          <OrderDelivery paymentMethod={paymentMethod} data={address} />
+          <Controller
+            name="orderType"
+            control={control}
+            render={({field: {value, onChange}}) => {
+              return <OrderDeliveryType value={value} onChange={onChange} />;
+            }}
+          />
+          <View style={styles.actionsTop}>
+            {watchField === OrderType.Courier && (
+              <OrderAddress
+                address={address}
+                onAddressPress={() => navigation.push(Routes.Address)}
+              />
+            )}
+            <OrderDeliveryTime />
+            <OrderPaymentMethod
+              value={paymentMethod}
+              onPress={() => navigation.push(Routes.Payment)}
+            />
+          </View>
         </Container>
         <SafeAreaView style={styles.footer}>
           <Container>
             <View style={styles.footerInfo}>
               <Text style={styles.footerText}>Стоимость заказа</Text>
-              <Text style={styles.footerText}>15 582 Р</Text>
+              <Text style={styles.footerText}>
+                {getFormatPrice(data?.totalPrice ?? 0)}
+              </Text>
             </View>
             <Button text="Оформить заказ" />
           </Container>
@@ -66,5 +108,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: hexToRgba(COLORS.backgroundTertiary, 0.6),
+  },
+  actionsTop: {
+    marginTop: 10,
+    gap: 20,
   },
 });

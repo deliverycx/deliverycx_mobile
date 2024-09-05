@@ -15,7 +15,7 @@ import {
 import {
   CartDeleteAllItemsRequestModel,
   CartDeleteAllItemsResponseModel,
-} from '../types/cartDeleteAllTypes.ts';
+} from '../types/cartDeleteAllTypes';
 
 export const addApi = (data: CartAddRequestModel) => {
   return axiosInstance.post<CartAddResponseModel>('/cart/add', data);

@@ -1,22 +1,27 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {FlatList, StyleSheet, SafeAreaView} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {ListButton} from '../../../../shared/ui/ListButton';
-import {COLORS, INDENTS} from '../../../../shared/styles.ts';
+import {COLORS, INDENTS} from '../../../../shared/styles';
+import {PaymentMethod} from '../../../../shared/types/order';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Payment>;
 };
 
 export const PaymentList: FC<Props> = ({navigation}) => {
+  const options = useMemo(() => {
+    return [
+      {id: PaymentMethod.Cash, name: 'Наличными'},
+      {id: PaymentMethod.ByCard, name: 'Банковской картой'},
+    ];
+  }, []);
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
-        data={[
-          {id: 1, name: 'Наличными'},
-          {id: 2, name: 'Банковской картой'},
-        ]}
+        data={options}
         renderItem={({item}) => (
           <ListButton
             style={styles.button}
@@ -26,7 +31,7 @@ export const PaymentList: FC<Props> = ({navigation}) => {
 
               navigation.navigate(Routes.Order, {
                 ...previousRoute.params,
-                paymentMethod: item.name,
+                paymentMethod: item.id,
               });
             }}
             key={item.id}
