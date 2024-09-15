@@ -1,14 +1,15 @@
-import {TextInput, TextInputProps, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React, {FC} from 'react';
+import TextInputMask, {TextInputMaskProps} from 'react-native-text-input-mask';
 import {COLORS} from '../../styles';
 
 export type Props = {
   color?: 'danger';
-} & TextInputProps;
+} & TextInputMaskProps;
 
-export const Input: FC<Props> = ({style, color, ...props}) => {
+export const InputMask: FC<Props> = ({style, color, ...props}) => {
   return (
-    <TextInput
+    <TextInputMask
       {...props}
       style={[styles.wrapper, style, color && colorStyles[color]]}
     />

@@ -19,6 +19,7 @@ import type {RouteProp} from '@react-navigation/native';
 import {useAddressForm, FormValues} from '../../hooks/useAddressForm';
 import {useGeoData} from '../../hooks/useGeoData';
 import {useOrgCity} from '../../../../entities/organisations';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 type Props = {
   route: RouteProp<StackParamList, Routes.Address>;
@@ -33,6 +34,8 @@ export const Address: FC<Props> = ({navigation, route}) => {
   const {handleSubmit, setValue, control, getValues, reset} = useAddressForm();
   const initialPosition = useInitialPosition();
   const cityName = useOrgCity();
+
+  const headerHeight = useHeaderHeight();
 
   const {
     requestKladrByQuery,
@@ -90,7 +93,11 @@ export const Address: FC<Props> = ({navigation, route}) => {
       lat: initialPosition.lat,
       lon: initialPosition.lon,
     });
-  }, [initialPosition]);
+
+    (async function () {
+      await requestKladrByPosition(initialPosition);
+    })();
+  }, [requestKladrByPosition, initialPosition]);
 
   const handleStreetPress = () => {
     navigation.push(Routes.Streets);
@@ -136,7 +143,9 @@ export const Address: FC<Props> = ({navigation, route}) => {
         loading={isFetching}
         onPositionChange={requestKladrByPosition}
       />
-      <KeyboardAvoidingView keyboardVerticalOffset={110} behavior="padding">
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={headerHeight}
+        behavior="padding">
         <SafeAreaView>
           <Container style={styles.container}>
             <AddressInputs
