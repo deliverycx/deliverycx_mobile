@@ -15,23 +15,26 @@ import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
 import {useInitialPosition} from '../../hooks/useInitialPosition';
 import {Routes, StackParamList} from '../../../../shared/routes';
-import type {RouteProp} from '@react-navigation/native';
-import {useAddressForm, FormValues} from '../../hooks/useAddressForm';
 import {useGeoData} from '../../hooks/useGeoData';
 import {useOrgCity} from '../../../../entities/organisations';
 import {useHeaderHeight} from '@react-navigation/elements';
+import {useAddressFormContext, AddressForm} from '../../../../widgets/address';
+import {OrderForm, useOrderFormContext} from '../../../../entities/order';
 
 type Props = {
-  route: RouteProp<StackParamList, Routes.Address>;
   navigation: NativeStackNavigationProp<StackParamList, Routes.Address>;
 };
 
-export const Address: FC<Props> = ({navigation, route}) => {
-  const classifierIdParam = route.params?.classifierId;
-
+export const Address: FC<Props> = ({navigation}) => {
   const mapRef = useRef<AddressMapRef | null>(null);
 
-  const {handleSubmit, setValue, control, getValues, reset} = useAddressForm();
+  const {handleSubmit, setValue, control, getValues, watch, reset} =
+    useAddressFormContext<AddressForm>();
+
+  const {setValue: setOrderValues} = useOrderFormContext<OrderForm>();
+
+  const classifierId = watch('classifierId');
+
   const initialPosition = useInitialPosition();
   const cityName = useOrgCity();
 
@@ -57,21 +60,19 @@ export const Address: FC<Props> = ({navigation, route}) => {
         type: 'custom',
         text1: 'Доставка по указанному адресу невозможна',
       });
-
-      return;
     }
 
-    setValue('street', geoData.name);
+    setValue('street', geoData.name ?? '');
     setValue('house', geoData.house ?? '');
   }, [reset, geoData, setValue]);
 
   useEffect(() => {
-    if (!classifierIdParam) {
+    if (!classifierId) {
       return;
     }
 
     (async function () {
-      const data = await requestKladrById(classifierIdParam);
+      const data = await requestKladrById(classifierId);
 
       if (!data?.lon || !data?.lat) {
         return;
@@ -82,7 +83,7 @@ export const Address: FC<Props> = ({navigation, route}) => {
         lon: Number(data.lon),
       });
     })();
-  }, [classifierIdParam, requestKladrById]);
+  }, [classifierId, requestKladrById]);
 
   useEffect(() => {
     if (!initialPosition) {
@@ -103,14 +104,17 @@ export const Address: FC<Props> = ({navigation, route}) => {
     navigation.push(Routes.Streets);
   };
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    const state = navigation.getState();
-    const previousRoute = state.routes[state.index - 1];
+  const onSubmit: SubmitHandler<AddressForm> = values => {
+    navigation.goBack();
 
-    navigation.navigate(Routes.Order, {
-      ...previousRoute.params,
-      address: data,
-    });
+    setOrderValues('classifierId', values.classifierId);
+    setOrderValues('flat', values.flat);
+    setOrderValues('house', values.house);
+    setOrderValues('floor', values.floor);
+    setOrderValues('street', values.street);
+    setOrderValues('entrance', values.entrance);
+
+    reset();
   };
 
   const handleHouseInputBlur = useCallback(async () => {

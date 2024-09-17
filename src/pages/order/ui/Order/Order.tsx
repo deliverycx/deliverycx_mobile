@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, useFormContext} from 'react-hook-form';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   View,
@@ -10,14 +10,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {useHeaderHeight} from '@react-navigation/elements';
-import type {RouteProp} from '@react-navigation/native';
 import {OrderDeliveryType} from '../OrderDeliveryType';
 import {Container} from '../../../../shared/ui/Container';
 import {Button} from '../../../../shared/ui/Button';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {COLORS} from '../../../../shared/styles';
 import {Routes, StackParamList} from '../../../../shared/routes';
-import {OrderType, PaymentMethod} from '../../../../shared/types/order';
+import {OrderType} from '../../../../shared/types/order';
 import {OrderDeliveryTime} from '../OrderDeliveryTime';
 import {OrderAddress} from '../OrderAddress/OrderAddress';
 import {useCartItems} from '../../../../widgets/cart';
@@ -26,31 +25,16 @@ import {OrderPaymentMethod} from '../OrderPaymentMethod';
 import {Label} from '../../../../shared/ui/Label';
 import {Input} from '../../../../shared/ui/Input';
 import {InputMask} from '../../../../shared/ui/InputMask';
+import {useOrderFormContext} from '../../../../entities/order';
 
 type Props = {
-  route: RouteProp<StackParamList, Routes.Order>;
   navigation: NativeStackNavigationProp<StackParamList, Routes.Order>;
 };
 
-type OrderForm = {
-  orderType: OrderType;
-  deliveryDate?: Date;
-  phone: string;
-  comment: string;
-  name: string;
-};
-
-export const Order: FC<Props> = ({route, navigation}) => {
-  const address = route.params?.address;
-  const paymentMethod = route.params?.paymentMethod ?? PaymentMethod.Cash;
+export const Order: FC<Props> = ({navigation}) => {
+  const {control, watch} = useOrderFormContext();
 
   const headerHeight = useHeaderHeight();
-
-  const {control, watch} = useForm<OrderForm>({
-    defaultValues: {
-      orderType: OrderType.Pickup,
-    },
-  });
 
   const {data} = useCartItems();
 
@@ -81,25 +65,32 @@ export const Order: FC<Props> = ({route, navigation}) => {
             />
             <View style={styles.actionsTop}>
               {isDelivery && (
-                <OrderAddress
-                  address={address}
-                  onAddressPress={() => navigation.push(Routes.Address)}
-                />
+                <>
+                  <OrderAddress />
+                  <Controller
+                    name="deliveryDate"
+                    control={control}
+                    render={({field: {value, onChange}}) => {
+                      return (
+                        <OrderDeliveryTime value={value} onChange={onChange} />
+                      );
+                    }}
+                  />
+                </>
               )}
-              {isDelivery && (
-                <Controller
-                  name="deliveryDate"
-                  control={control}
-                  render={({field: {value, onChange}}) => {
-                    return (
-                      <OrderDeliveryTime value={value} onChange={onChange} />
-                    );
-                  }}
-                />
-              )}
-              <OrderPaymentMethod
-                value={paymentMethod}
-                onPress={() => navigation.push(Routes.Payment)}
+              <Controller
+                name="paymentMethod"
+                control={control}
+                render={({field: {value}}) => {
+                  return (
+                    <OrderPaymentMethod
+                      value={value}
+                      onPress={() => {
+                        navigation.push(Routes.Payment);
+                      }}
+                    />
+                  );
+                }}
               />
               <View>
                 <Label text="Получатель" />

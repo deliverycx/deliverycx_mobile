@@ -12,6 +12,7 @@ import {Routes, StackParamList} from '../../../../shared/routes';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useStreetDataQuery} from '../../../../entities/geo';
 import {COLORS, INDENTS} from '../../../../shared/styles';
+import {AddressForm, useAddressFormContext} from '../../../../widgets/address';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Streets>;
@@ -22,6 +23,8 @@ export const StreetsList: FC<Props> = ({navigation}) => {
   const {data} = useStreetDataQuery({organizationId: orgId!});
 
   const [searchValue, setSearchValue] = useState('');
+
+  const {setValue} = useAddressFormContext<AddressForm>();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -63,13 +66,8 @@ export const StreetsList: FC<Props> = ({navigation}) => {
           <ListButton
             style={styles.button}
             onPress={() => {
-              const state = navigation.getState();
-              const previousRoute = state.routes[state.index - 1];
-
-              navigation.navigate(Routes.Address, {
-                ...previousRoute.params,
-                classifierId: item.classifierId,
-              });
+              setValue('classifierId', item.classifierId);
+              navigation.goBack();
             }}
             key={item.id}
             text={item.name}

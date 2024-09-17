@@ -1,31 +1,36 @@
 import {OrderInputButton} from '../OrderInputButton';
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {useStreets} from '../../../../widgets/order';
+import {OrderForm, useOrderFormContext} from '../../../../entities/order';
 import {useOrgCity} from '../../../../entities/organisations';
-import {Address} from '../../../../shared/routes';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Routes, StackParamList} from '../../../../shared/routes';
 
-type Props = {
-  address: Address | undefined;
-  onAddressPress: () => void;
-};
+export const OrderAddress: FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
-export const OrderAddress: FC<Props> = ({address, onAddressPress}) => {
+  const {watch} = useOrderFormContext<OrderForm>();
+
   const streets = useStreets();
   const orgCity = useOrgCity();
 
-  const addressText = useMemo(() => {
-    if (!address) {
+  const street = watch('street');
+  const house = watch('house');
+
+  const getAddressInfo = () => {
+    if (!street || !house) {
       return 'Выберите адрес';
     }
 
-    return `${orgCity}, ${address.street}, ${address.house}`;
-  }, [address, orgCity]);
+    return `${orgCity}, ${street}, ${house}`;
+  };
 
   return (
     <OrderInputButton
       disabled={!streets.length}
-      onPress={onAddressPress}
-      text={addressText}
+      onPress={() => navigation.push(Routes.Address)}
+      text={getAddressInfo()}
     />
   );
 };

@@ -1,5 +1,6 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC, useMemo} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Controller} from 'react-hook-form';
 import {BlurView} from '@react-native-community/blur';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
@@ -12,6 +13,7 @@ import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {useCartItems} from '../../hooks/useCartItems';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {DozenCounter, CutlerySwitcher} from '../../../../entities/cart';
+import {useOrderFormContext} from '../../../../entities/order';
 
 type Props = {
   onSubmit: () => void;
@@ -22,8 +24,7 @@ export const CartList: FC<Props> = ({onSubmit}) => {
   const {data} = useCartItems();
   const {formattedTotalPrice} = useTotalCartPrice();
 
-  const [cutleryCount, setCutleryCount] = useState(1);
-  const [cutleryChecked, setCutleryChecked] = useState(false);
+  const {control} = useOrderFormContext();
 
   const totalHeader = useMemo(() => {
     if (!data?.cart.length) {
@@ -67,11 +68,12 @@ export const CartList: FC<Props> = ({onSubmit}) => {
           </View>
         ))}
         <View style={styles.cutlerySwitcher}>
-          <CutlerySwitcher
-            count={cutleryCount}
-            onSwitcherChange={setCutleryChecked}
-            onCountChange={setCutleryCount}
-            checked={cutleryChecked}
+          <Controller
+            name="devices"
+            control={control}
+            render={({field: {onChange, value}}) => (
+              <CutlerySwitcher count={value} onCountChange={onChange} />
+            )}
           />
         </View>
         <View style={styles.dozenCounter}>

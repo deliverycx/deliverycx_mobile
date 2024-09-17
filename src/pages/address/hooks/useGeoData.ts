@@ -145,6 +145,7 @@ export const useGeoData = () => {
 
     if (!kladrItem) {
       return {
+        name: null,
         classifierId: null,
         house: null,
         lat: null,

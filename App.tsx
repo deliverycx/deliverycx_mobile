@@ -26,7 +26,7 @@ import {
 } from './src/pages/payment';
 import {
   StreetsList,
-  screenOptions as StreetsScreenOptions,
+  screenOptions as streetsScreenOptions,
 } from './src/pages/streets';
 
 import {Menu, screenOptions as menuScreenOptions} from './src/pages/menu';
@@ -43,6 +43,8 @@ import {
   Address,
   screenOptions as addressScreenOptions,
 } from './src/pages/address';
+import {OrderFormProvider} from './src/entities/order';
+import {AddressFormProvider} from './src/widgets/address';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -109,35 +111,39 @@ const App = (): React.JSX.Element => {
               {currentOrgId && userId ? (
                 <CartStateManager orgId={currentOrgId} userId={userId}>
                   <OrgStatusAlerts orgId={currentOrgId} cityId={currentCityId!}>
-                    <Stack.Navigator
-                      screenOptions={STACK_NAVIGATOR_OPTIONS}
-                      initialRouteName={Routes.TabScreens}>
-                      <Stack.Screen
-                        options={{headerShown: false}}
-                        name={Routes.TabScreens}
-                        component={TabScreens}
-                      />
-                      <Stack.Screen
-                        name={Routes.Order}
-                        options={orderScreenOptions}
-                        component={Order}
-                      />
-                      <Stack.Screen
-                        options={addressScreenOptions}
-                        name={Routes.Address}
-                        component={Address}
-                      />
-                      <Stack.Screen
-                        options={PaymentScreenOptions}
-                        name={Routes.Payment}
-                        component={PaymentList}
-                      />
-                      <Stack.Screen
-                        options={StreetsScreenOptions}
-                        name={Routes.Streets}
-                        component={StreetsList}
-                      />
-                    </Stack.Navigator>
+                    <OrderFormProvider>
+                      <AddressFormProvider>
+                        <Stack.Navigator
+                          screenOptions={STACK_NAVIGATOR_OPTIONS}
+                          initialRouteName={Routes.TabScreens}>
+                          <Stack.Screen
+                            options={{headerShown: false}}
+                            name={Routes.TabScreens}
+                            component={TabScreens}
+                          />
+                          <Stack.Screen
+                            name={Routes.Order}
+                            options={orderScreenOptions}
+                            component={Order}
+                          />
+                          <Stack.Screen
+                            options={addressScreenOptions}
+                            name={Routes.Address}
+                            component={Address}
+                          />
+                          <Stack.Screen
+                            options={PaymentScreenOptions}
+                            name={Routes.Payment}
+                            component={PaymentList}
+                          />
+                          <Stack.Screen
+                            options={streetsScreenOptions}
+                            name={Routes.Streets}
+                            component={StreetsList}
+                          />
+                        </Stack.Navigator>
+                      </AddressFormProvider>
+                    </OrderFormProvider>
                   </OrgStatusAlerts>
                 </CartStateManager>
               ) : (

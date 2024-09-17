@@ -5,12 +5,15 @@ import {Routes, StackParamList} from '../../../../shared/routes';
 import {ListButton} from '../../../../shared/ui/ListButton';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {PaymentMethod} from '../../../../shared/types/order';
+import {useOrderFormContext} from '../../../../entities/order';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Payment>;
 };
 
 export const PaymentList: FC<Props> = ({navigation}) => {
+  const {setValue} = useOrderFormContext();
+
   const options = useMemo(() => {
     return [
       {id: PaymentMethod.Cash, name: 'Наличными'},
@@ -26,13 +29,8 @@ export const PaymentList: FC<Props> = ({navigation}) => {
           <ListButton
             style={styles.button}
             onPress={() => {
-              const state = navigation.getState();
-              const previousRoute = state.routes[state.index - 1];
-
-              navigation.navigate(Routes.Order, {
-                ...previousRoute.params,
-                paymentMethod: item.id,
-              });
+              setValue('paymentMethod', item.id);
+              navigation.goBack();
             }}
             key={item.id}
             text={item.name}

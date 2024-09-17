@@ -2,21 +2,14 @@ import React, {FC} from 'react';
 import {Text, View, Switch, StyleSheet} from 'react-native';
 import {Icon} from '../../../../shared/ui/Icon';
 import {Counter} from '../../../../shared/ui/Counter';
-import {COLORS} from '../../../../shared/styles.ts';
+import {COLORS} from '../../../../shared/styles';
 
 type Props = {
   count: number;
-  checked: boolean;
   onCountChange: (count: number) => void;
-  onSwitcherChange: (checked: boolean) => void;
 };
 
-export const CutlerySwitcher: FC<Props> = ({
-  count,
-  checked,
-  onCountChange,
-  onSwitcherChange,
-}) => {
+export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.left}>
@@ -24,13 +17,13 @@ export const CutlerySwitcher: FC<Props> = ({
         <Text style={styles.title}>Приборы</Text>
       </View>
       <View style={styles.right}>
-        {checked && (
+        {count > 0 && (
           <Counter variant="secondary" value={count} onChange={onCountChange} />
         )}
         <Switch
           trackColor={{true: COLORS.success}}
-          onValueChange={onSwitcherChange}
-          value={checked}
+          onValueChange={() => onCountChange(1)}
+          value={count > 0}
         />
       </View>
     </View>

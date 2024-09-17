@@ -17,3 +17,7 @@ export interface Order {
   timedelivery: string;
   userid: string;
 }
+
+export interface CheckOrderRequest extends Order {}
+
+export type CheckOrderResponse = string;

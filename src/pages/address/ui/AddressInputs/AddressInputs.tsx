@@ -3,10 +3,10 @@ import {View, StyleSheet} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
 import {Input} from '../../../../shared/ui/Input';
 import {InputButton} from '../../../../shared/ui/InputButton';
-import {FormValues} from '../../hooks/useAddressForm';
+import {AddressForm} from '../../../../widgets/address';
 
 type Props = {
-  control: Control<FormValues>;
+  control: Control<AddressForm>;
   onHouseInputBlur: () => void;
   onStreetPress: () => void;
 };
@@ -60,14 +60,16 @@ export const AddressInputs: FC<Props> = ({
         <Controller
           name="flat"
           control={control}
-          render={({field: {onChange, value}}) => (
-            <Input
-              style={styles.mediumInput}
-              value={value}
-              placeholder="Кв/офис"
-              onChangeText={onChange}
-            />
-          )}
+          render={({field: {onChange, value}}) => {
+            return (
+              <Input
+                style={styles.mediumInput}
+                value={value}
+                placeholder="Кв/офис"
+                onChangeText={onChange}
+              />
+            );
+          }}
         />
       </View>
       <View style={styles.row}>

@@ -1,5 +1,4 @@
 import {COLORS} from './styles';
-import {PaymentMethod} from './types/order';
 
 export const enum Routes {
   Cities = 'Cities',
@@ -15,29 +14,12 @@ export const enum Routes {
   Streets = 'Streets',
 }
 
-export type Address = {
-  street: string;
-  house: string;
-  floor: string;
-  entrance: string;
-  flat: string;
-};
-
-export interface OrderParams {
-  address?: Address;
-  paymentMethod?: PaymentMethod;
-}
-
-export interface AddressParams {
-  classifierId?: string;
-}
-
 export type StackParamList = {
   [Routes.Cart]: undefined;
   [Routes.Menu]: undefined;
   [Routes.Cities]: undefined;
-  [Routes.Order]: OrderParams | undefined;
-  [Routes.Address]: AddressParams | undefined;
+  [Routes.Order]: undefined;
+  [Routes.Address]: undefined;
   [Routes.Payment]: undefined;
   [Routes.Streets]: undefined;
   [Routes.Organisations]: {
