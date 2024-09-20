@@ -37,7 +37,7 @@ import {
 } from './src/entities/organisations';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
 import {CartStateManager} from './src/entities/cart';
-import {useUserStore} from './src/entities/user/stores/useUserStore';
+import {useUserStore} from './src/entities/user';
 import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
 import {
   Address,
@@ -45,6 +45,10 @@ import {
 } from './src/pages/address';
 import {OrderFormProvider} from './src/entities/order';
 import {AddressFormProvider} from './src/widgets/address';
+import {
+  OrderStatus,
+  screenOptions as orderStatusScreenOptions,
+} from './src/pages/orderStatus';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -140,6 +144,11 @@ const App = (): React.JSX.Element => {
                             options={streetsScreenOptions}
                             name={Routes.Streets}
                             component={StreetsList}
+                          />
+                          <Stack.Screen
+                            options={orderStatusScreenOptions}
+                            name={Routes.OrderStatus}
+                            component={OrderStatus}
                           />
                         </Stack.Navigator>
                       </AddressFormProvider>

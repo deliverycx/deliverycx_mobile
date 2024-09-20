@@ -25,6 +25,7 @@ export interface Organisation {
   gallery: string[];
   guid: string;
   filters: Filter[];
+  terminal: string;
 }
 
 export interface OrganisationsRequestModel {

@@ -19,6 +19,8 @@ export const OrgChangeButton: FC<Props> = ({style}) => {
   const organisation = useCurrentOrg();
   const deleteOrgInfo = useCurrentOrgStore(state => state.deleteOrgInfo);
 
+  console.log(8888, organisation);
+
   return (
     <TouchableOpacity
       style={[styles.btn, style]}

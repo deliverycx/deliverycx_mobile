@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   View,
@@ -25,18 +25,20 @@ import {OrderPaymentMethod} from '../OrderPaymentMethod';
 import {Label} from '../../../../shared/ui/Label';
 import {Input} from '../../../../shared/ui/Input';
 import {InputMask} from '../../../../shared/ui/InputMask';
-import {useOrderFormContext} from '../../../../entities/order';
+import {OrderForm, useOrderFormContext} from '../../../../entities/order';
+import {useOrderSubmit} from '../../hooks/useOrderSubmit';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Order>;
 };
 
 export const Order: FC<Props> = ({navigation}) => {
-  const {control, watch} = useOrderFormContext();
+  const {control, watch, handleSubmit} = useOrderFormContext<OrderForm>();
 
   const headerHeight = useHeaderHeight();
-
   const {data} = useCartItems();
+
+  const {onSubmit, isFetching} = useOrderSubmit();
 
   const watchField = watch('orderType');
 
@@ -156,7 +158,11 @@ export const Order: FC<Props> = ({navigation}) => {
             {getFormatPrice(data?.totalPrice ?? 0)}
           </Text>
         </View>
-        <Button text="Оформить заказ" />
+        <Button
+          text="Оформить заказ"
+          loading={isFetching}
+          onPress={handleSubmit(onSubmit)}
+        />
       </Container>
     </SafeAreaView>
   );

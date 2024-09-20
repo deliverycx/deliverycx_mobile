@@ -1,19 +1,24 @@
 import {axiosInstance} from '../../../shared/api/axios';
-import {CheckOrderResponse, CheckOrderRequest} from '../types/orderTypes';
+import {
+  CheckOrderResponse,
+  CheckOrderRequest,
+  GetOrderRequest,
+  GetOrderResponse,
+  CreateOrderResponse,
+  CreateOrderRequest,
+} from '../types/orderTypes';
 
 export const checkOrderApi = (params: CheckOrderRequest) => {
-  return axiosInstance.post<CheckOrderResponse>('/api/order/check', params);
+  return axiosInstance.post<CheckOrderResponse>('/order/check', params);
 };
 
-// export const getOrderApi = ({orderHash}: OrderInfoRequest) => {
-//   return axiosInstance.get<OrderInfoResponse>(
-//     `/api/order/getorder/${orderHash}`,
-//   );
-// };
-//
-// export const createOrderApi = (params: CreateOrderMicroRequest) => {
-//   return axiosInstance.post<CreateOrderMicroResponse>(
-//     '/api/order/createOrderMicro',
-//     params,
-//   );
-// };
+export const getOrderApi = ({hash}: GetOrderRequest) => {
+  return axiosInstance.get<GetOrderResponse>(`/order/getorder/${hash}`);
+};
+
+export const createOrderApi = (params: CreateOrderRequest) => {
+  return axiosInstance.post<CreateOrderResponse>(
+    '/order/createOrderMicro',
+    params,
+  );
+};

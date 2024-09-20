@@ -12,6 +12,7 @@ export const enum Routes {
   Address = 'Address',
   Payment = 'Payment',
   Streets = 'Streets',
+  OrderStatus = 'OrderStatus',
 }
 
 export type StackParamList = {
@@ -22,6 +23,9 @@ export type StackParamList = {
   [Routes.Address]: undefined;
   [Routes.Payment]: undefined;
   [Routes.Streets]: undefined;
+  [Routes.OrderStatus]: {
+    hash: string;
+  };
   [Routes.Organisations]: {
     cityId: string;
   };
