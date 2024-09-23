@@ -44,6 +44,8 @@ export const Order: FC<Props> = ({navigation}) => {
 
   const isDelivery = watchField === OrderType.Courier;
 
+  const displayedPrice = (isDelivery ? data?.totalPrice : data?.fullPrice) ?? 0;
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <KeyboardAvoidingView
@@ -155,7 +157,7 @@ export const Order: FC<Props> = ({navigation}) => {
         <View style={styles.footerInfo}>
           <Text style={styles.footerText}>Стоимость заказа</Text>
           <Text style={styles.footerText}>
-            {getFormatPrice(data?.totalPrice ?? 0)}
+            {getFormatPrice(displayedPrice)}
           </Text>
         </View>
         <Button

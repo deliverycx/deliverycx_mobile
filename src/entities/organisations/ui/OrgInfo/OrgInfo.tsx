@@ -35,7 +35,7 @@ const FILTER_ITEM = 16;
 const FILTER_ITEM_ROW_GAP = 10;
 
 export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
-  useOrgStatusAlerts(data.cityid, data.guid);
+  useOrgStatusAlerts(data.cityid._id, data.guid);
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -60,7 +60,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
         onDismiss={onCloseRequest}
         footerComponent={() => (
           <Container style={{marginBottom: insets.bottom}}>
-            <OrgSelectButton orgId={data.guid} cityId={data.cityid} />
+            <OrgSelectButton orgId={data.guid} cityId={data.cityid._id} />
           </Container>
         )}
         ref={modalRef}
@@ -99,7 +99,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
           </Container>
         </ScrollView>
       </Modal>
-      <OrgNoDeliveryAlert cityId={data.cityid} orgId={data.guid} />
+      <OrgNoDeliveryAlert cityId={data.cityid._id} orgId={data.guid} />
     </>
   );
 };

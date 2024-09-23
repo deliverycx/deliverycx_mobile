@@ -48,8 +48,6 @@ export const Address: FC<Props> = ({navigation}) => {
     isFetching,
   } = useGeoData();
 
-  console.log(555, geoData);
-
   useEffect(() => {
     if (!geoData) {
       return;

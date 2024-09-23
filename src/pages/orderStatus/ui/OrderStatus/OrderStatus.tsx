@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import type {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -13,7 +13,14 @@ type Props = {
 export const OrderStatus = ({navigation, route}: Props) => {
   const {hash} = route.params;
 
-  const {data} = useGetOrderQuery({hash});
+  const {data} = useGetOrderQuery(
+    {hash},
+    {
+      refetchInterval: 1000,
+    },
+  );
+
+  useLayoutEffect(() => {}, [data]);
 
   console.log(data, hash);
 

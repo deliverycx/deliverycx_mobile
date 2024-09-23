@@ -19,7 +19,7 @@ export interface AddressModel {
   kladrid: Kladr;
 }
 
-export interface OrderModel {
+export interface OrderCreateModel {
   comment: string;
   date: string;
   devises: string;
@@ -37,10 +37,17 @@ export interface OrderModel {
   terminal: string;
   timedelivery: string;
   userid: string;
-  address: AddressModel;
+  address?: AddressModel;
 }
 
-export interface CheckOrderRequest extends OrderModel {}
+export interface OrderModel {
+  user: string;
+  organization: string;
+  orderNumber: number;
+  orderHash: string;
+}
+
+export interface CheckOrderRequest extends OrderCreateModel {}
 
 export type CheckOrderResponse = string;
 
@@ -50,6 +57,6 @@ export interface GetOrderRequest {
 
 export interface GetOrderResponse extends OrderModel {}
 
-export interface CreateOrderRequest extends OrderModel {}
+export interface CreateOrderRequest extends OrderCreateModel {}
 
 export type CreateOrderResponse = boolean;
