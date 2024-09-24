@@ -122,8 +122,9 @@ export const Order: FC<Props> = ({navigation}) => {
                       placeholder="Номер телефона"
                       value={value}
                       onChangeText={(_, extracted) => {
-                        onChange(extracted);
+                        onChange(`+7${extracted}`);
                       }}
+                      keyboardType="phone-pad"
                       mask={'+7 ([000]) [000] [00] [00]'}
                     />
                   );

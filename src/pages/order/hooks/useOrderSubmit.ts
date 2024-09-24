@@ -17,6 +17,7 @@ import {formatTimeForOrder} from '../utils/formatTimeForOrder';
 import {OrderType} from '../../../shared/types/order';
 import {AxiosError} from 'axios';
 import {Alert} from 'react-native';
+import {showOrderAlertFail} from '../utils/showOrderAlertFail.ts';
 
 export const useOrderSubmit = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
@@ -34,6 +35,12 @@ export const useOrderSubmit = () => {
 
   const onSubmit = async (values: OrderForm) => {
     setIsFetching(true);
+
+    navigation.replace(Routes.OrderStatus, {
+      hash: '123',
+    });
+
+    return;
 
     const payload: OrderCreateModel = {
       comment: values.comment,
@@ -73,7 +80,15 @@ export const useOrderSubmit = () => {
     try {
       const {data: hash} = await checkOrder(payload);
 
-      await createOrder(payload);
+      const {data} = await createOrder({
+        ...payload,
+        hash,
+      });
+
+      if (!data) {
+        showOrderAlertFail();
+        return;
+      }
 
       navigation.replace(Routes.OrderStatus, {
         hash,
@@ -89,7 +104,7 @@ export const useOrderSubmit = () => {
         return;
       }
 
-      console.error('Unexpected error:', error);
+      showOrderAlertFail();
     } finally {
       setIsFetching(false);
     }

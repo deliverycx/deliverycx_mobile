@@ -23,6 +23,7 @@ export type StackParamList = {
   [Routes.Address]: undefined;
   [Routes.Payment]: undefined;
   [Routes.Streets]: undefined;
+  [Routes.TabScreens]: undefined;
   [Routes.OrderStatus]: {
     hash: string;
   };

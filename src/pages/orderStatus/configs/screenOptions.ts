@@ -4,4 +4,5 @@ export const screenOptions: NativeStackNavigationOptions = {
   headerBackTitle: 'Закрыть',
   title: 'Статус заказа',
   presentation: 'modal',
+  gestureEnabled: false,
 };

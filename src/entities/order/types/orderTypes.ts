@@ -45,6 +45,7 @@ export interface OrderModel {
   organization: string;
   orderNumber: number;
   orderHash: string;
+  orderError: string;
 }
 
 export interface CheckOrderRequest extends OrderCreateModel {}

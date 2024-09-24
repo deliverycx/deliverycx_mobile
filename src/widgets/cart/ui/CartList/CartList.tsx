@@ -4,7 +4,7 @@ import {Controller} from 'react-hook-form';
 import {BlurView} from '@react-native-community/blur';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
-import {SomethingWrong} from '../../../../shared/ui/SomethingWrong/SomethingWrong';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {CartProductPreview} from '../CartProductPreview';
 import {useTotalCartPrice} from '../../hooks/useTotalCartPrice';
@@ -48,7 +48,8 @@ export const CartList: FC<Props> = ({onSubmit}) => {
   if (!data?.cart.length) {
     return (
       <Container style={[styles.noProducts, {paddingBottom: tabBarHeight}]}>
-        <SomethingWrong
+        <InfoStatus
+          variant="sad"
           text="Ваша корзина пуста"
           desc="Чтобы совершить заказ, выберете себе что‑нибудь вкусное на главной странице"
         />

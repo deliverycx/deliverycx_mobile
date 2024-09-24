@@ -4,7 +4,7 @@ import {Icon} from '../../../../shared/ui/Icon';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {useCartItemsRemove} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
-import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {useUserStore} from '../../../../entities/user';
 import {useCartItems} from '../../hooks/useCartItems';
 
 export const ClearCartButton = () => {

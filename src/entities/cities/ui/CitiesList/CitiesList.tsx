@@ -11,7 +11,7 @@ import {useCityGroups} from '../../hooks/useCityGroups';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {ListButton} from '../../../../shared/ui/ListButton';
 import {City} from '../../types/citiesTypes';
-import {SomethingWrong} from '../../../../shared/ui/SomethingWrong/SomethingWrong.tsx';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 import {Container} from '../../../../shared/ui/Container';
 import {useCitiesQuery} from '../../queries/citiesQueries';
 
@@ -34,7 +34,10 @@ export const CitiesList: FC<Props> = ({
   if (cityGroups.length === 0 && isFetched) {
     return (
       <Container style={styles.notFoundOrg}>
-        <SomethingWrong text="К сожалению, у нас пока нет ресторана в вашем городе." />
+        <InfoStatus
+          variant="sad"
+          text="К сожалению, у нас пока нет ресторана в вашем городе."
+        />
       </Container>
     );
   }

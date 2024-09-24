@@ -1,16 +1,33 @@
 import React, {FC} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {SadKhinkal} from '../CustomIcons/SadKhinkal';
+import {HappyKhinkal} from '../CustomIcons/HappyKhinkal';
+
+const enum Variant {
+  sad = 'sad',
+  happy = 'happy',
+}
 
 type Props = {
   text: string;
   desc?: string;
+  variant: keyof typeof Variant;
 };
 
-export const SomethingWrong: FC<Props> = ({text, desc}) => {
+export const InfoStatus: FC<Props> = ({text, desc, variant}) => {
+  const getIcon = () => {
+    switch (variant) {
+      case Variant.sad:
+        return <SadKhinkal />;
+
+      case Variant.happy:
+        return <HappyKhinkal />;
+    }
+  };
+
   return (
     <View style={styles.wrapper}>
-      <SadKhinkal />
+      {getIcon()}
       <View>
         <Text style={styles.text}>{text}</Text>
         {desc && <Text style={styles.desc}>{desc}</Text>}

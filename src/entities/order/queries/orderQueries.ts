@@ -20,7 +20,7 @@ export const useOrderCheckQuery = () => {
 };
 
 export const useGetOrderQuery = (
-  data: GetOrderRequest,
+  payload: GetOrderRequest,
   options?: Omit<
     UseQueryOptions<unknown, DefaultError, GetOrderResponse>,
     'queryKey' | 'queryFn'
@@ -28,8 +28,11 @@ export const useGetOrderQuery = (
 ) => {
   return useQuery({
     ...options,
-    queryKey: [ORDER_GET_KEY, data.hash],
-    queryFn: () => getOrderApi(data),
+    queryKey: [ORDER_GET_KEY, payload.hash],
+    queryFn: async () => {
+      const {data} = await getOrderApi(payload);
+      return data;
+    },
   });
 };
 
@@ -42,10 +45,10 @@ export const useCreateOrderQuery = () => {
 
 export const fetchGetOrder = (
   queryClient: QueryClient,
-  data: GetOrderRequest,
+  payload: GetOrderRequest,
 ) => {
   return queryClient.fetchQuery({
-    queryKey: [ORDER_GET_KEY, data.hash],
-    queryFn: () => getOrderApi(data),
+    queryKey: [ORDER_GET_KEY, payload.hash],
+    queryFn: () => getOrderApi(payload),
   });
 };
