@@ -36,12 +36,6 @@ export const useOrderSubmit = () => {
   const onSubmit = async (values: OrderForm) => {
     setIsFetching(true);
 
-    navigation.replace(Routes.OrderStatus, {
-      hash: '123',
-    });
-
-    return;
-
     const payload: OrderCreateModel = {
       comment: values.comment,
       date: formatDateForOrder(new Date()),
