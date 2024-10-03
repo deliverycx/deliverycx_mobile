@@ -1,15 +1,19 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {
   useCurrentOrgStore,
-  useOrganisationData,
+  useOrganisationQuery,
 } from '../../../entities/organisations';
 import {Position} from '../../../shared/types/map';
 import {getUserPosition} from '../utils/getUserPosition';
 
 const useOrgPosition = () => {
   const currentOrgId = useCurrentOrgStore(state => state.orgId);
-  const currentCityId = useCurrentOrgStore(state => state.cityId);
-  const {data} = useOrganisationData(currentCityId!, currentOrgId!);
+  const {data} = useOrganisationQuery(
+    {organizationId: currentOrgId!},
+    {
+      enabled: !!currentOrgId,
+    },
+  );
 
   return useMemo(() => {
     if (!data?.cords) {

@@ -1,5 +1,5 @@
-import {DeliveryMethod} from '../types/orgOrgStatusTypes';
+import {OrderType} from '../../../shared/types/order';
 
-export const hasDelivery = (deliveryMethod: DeliveryMethod[]) => {
-  return deliveryMethod.includes(DeliveryMethod.Courier);
+export const hasDelivery = (deliveryMethod: OrderType[]) => {
+  return deliveryMethod.includes(OrderType.Courier);
 };

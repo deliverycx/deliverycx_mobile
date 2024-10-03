@@ -1,5 +1,5 @@
-import {useCallback} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import {fetchYandexData, YandexResponseModel} from '../../../entities/geo';
 
 export const useFetchYandexGeo = () => {

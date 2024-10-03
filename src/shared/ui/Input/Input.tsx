@@ -1,5 +1,5 @@
-import {TextInput, TextInputProps, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
+import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 import {COLORS} from '../../styles';
 
 export type Props = {

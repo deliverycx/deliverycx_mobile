@@ -1,5 +1,5 @@
 import React, {FC, PropsWithChildren, useContext} from 'react';
-import {useForm, FieldValues, UseFormReturn} from 'react-hook-form';
+import {FieldValues, UseFormReturn, useForm} from 'react-hook-form';
 import {OrderType, PaymentMethod} from '../../../../shared/types/order';
 
 type Props = PropsWithChildren;

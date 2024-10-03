@@ -1,7 +1,7 @@
+import {useQueryClient} from '@tanstack/react-query';
 import React, {FC, PropsWithChildren, useEffect} from 'react';
 import {fetchCartItems} from '../../queries/cartAllItemsQueries';
 import {useCartStore} from '../../stores/useCartStore';
-import {useQueryClient} from '@tanstack/react-query';
 
 type Props = PropsWithChildren<{
   orgId: string;

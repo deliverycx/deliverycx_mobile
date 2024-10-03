@@ -2562,6 +2562,8 @@ dir-glob@^3.0.1:
 
 doctrine@^2.1.0:
   version "2.1.0"
+  resolved "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz"
+  integrity sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==
   dependencies:
     esutils "^2.0.2"
 
@@ -3372,9 +3374,11 @@ is-ci@^2.0.0:
     ci-info "^2.0.0"
 
 is-core-module@^2.13.0:
-  version "2.13.1"
+  version "2.15.1"
+  resolved "https://registry.npmjs.org/is-core-module/-/is-core-module-2.15.1.tgz"
+  integrity sha512-z0vtXSwucUJtANQWldhbtbt7BnL0vxiFjIdDLAatwhDYty2bad6s+rijD6Ri4YuYJubLzIJLUidCh09e1djEVQ==
   dependencies:
-    hasown "^2.0.0"
+    hasown "^2.0.2"
 
 is-data-view@^1.0.1:
   version "1.0.1"
@@ -4632,7 +4636,12 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@>=2, prettier@>=2.0.0, prettier@2.8.8:
+prettier-plugin-organize-imports@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-4.1.0.tgz"
+  integrity sha512-5aWRdCgv645xaa58X8lOxzZoiHAldAPChljr/MT0crXVOWTZ+Svl4hIWlz+niYSlO6ikE5UXkN1JrRvIP2ut0A==
+
+prettier@>=2, prettier@>=2.0, prettier@>=2.0.0, prettier@2.8.8:
   version "2.8.8"
 
 pretty-format@^26.5.2:
@@ -4672,7 +4681,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2, prop-types@^15.8.1, prop-types@>=15.6.0:
+prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1, prop-types@>=15.6.0:
   version "15.8.1"
   dependencies:
     loose-envify "^1.4.0"
@@ -4775,6 +4784,13 @@ react-native-haptic-feedback@^2.2.0:
   resolved "https://registry.npmjs.org/react-native-haptic-feedback/-/react-native-haptic-feedback-2.2.0.tgz"
   integrity sha512-3tqJOjCguWhIrX0nkURn4yw6kXdsSDjjrvZCRjKXYGlL28hdQmoW2okAHduDTD9FWj9lA+lHgwFWgGs4aFNN7A==
 
+react-native-image-progress@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/react-native-image-progress/-/react-native-image-progress-1.2.0.tgz"
+  integrity sha512-RkQydqw3p0i30vHRFFhuGNT/BXWUDJtBR5/hxJbQsfI/Ziipjm5M64bpw3VQqxUcZC8HLLg+ZQtBq1mtUlWjww==
+  dependencies:
+    prop-types "^15.8.0"
+
 react-native-linear-gradient@^2.8.3, react-native-linear-gradient@>=2.4.0:
   version "2.8.3"
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz"
@@ -4817,6 +4833,11 @@ react-native-shimmer-placeholder@^2.0.9:
   resolved "https://registry.npmjs.org/react-native-shimmer-placeholder/-/react-native-shimmer-placeholder-2.0.9.tgz"
   integrity sha512-s2pfAAO6uaybREYM2KcaxP3c2XlZvLfHfzmhMlGEoOhSKaoM92KpA1Hx0BeC75yilkliJuowqO/hFzvLB0h7hg==
 
+react-native-splash-screen@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz"
+  integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
+
 react-native-svg@^15.3.0:
   version "15.3.0"
   resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-15.3.0.tgz"
@@ -4856,7 +4877,7 @@ react-native-yamap@^4.1.18:
   resolved "https://registry.npmjs.org/react-native-yamap/-/react-native-yamap-4.1.18.tgz"
   integrity sha512-GpodjYOU7gmnU11+jsFxLL9X9YV4pQUqWKNYRwyz6k/6ZMybDtlAFEGxna7c0lSJddP52+W4BzfNfuyPKtsMZw==
 
-react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@>=0.49.0, react-native@>=0.60.0, react-native@>=0.63.2, react-native@>=0.69.0, react-native@0.74.2:
+react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@>=0.49.0, react-native@>=0.57.0, react-native@>=0.60.0, react-native@>=0.63.2, react-native@>=0.69.0, react-native@0.74.2:
   version "0.74.2"
   dependencies:
     "@jest/create-cache-key-function" "^29.6.3"
@@ -5118,6 +5139,8 @@ semver@^6.3.0:
 
 semver@^6.3.1:
   version "6.3.1"
+  resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
+  integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
 semver@^7.3.7, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0:
   version "7.6.2"
@@ -5529,7 +5552,7 @@ typed-array-length@^1.0.6:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
 
-"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=4.2.0, typescript@5.0.4:
+"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=2.9, typescript@>=4.2.0, typescript@5.0.4:
   version "5.0.4"
 
 unbox-primitive@^1.0.2:

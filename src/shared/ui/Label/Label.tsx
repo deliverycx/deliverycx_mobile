@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 type Props = {
   text: string;

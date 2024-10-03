@@ -1,5 +1,3 @@
-export {hasCities, fetchCities} from './queries/citiesQueries';
-
-export {CitiesList} from './ui/CitiesList';
-
+export {fetchCities, hasCities} from './queries/citiesQueries';
 export type {City} from './types/citiesTypes';
+export {CitiesList} from './ui/CitiesList';

@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
-import {useCartStore} from '../stores/useCartStore';
 import {Product} from '../../../shared/types/productTypes';
+import {useCartStore} from '../stores/useCartStore';
 import {useCartAdd} from './useCartAdd';
 import {useCartRemove} from './useCartRemove';
 import {useCartUpdate} from './useCartUpdate';

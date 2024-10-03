@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {StyleProp, ViewStyle, Animated, StyleSheet} from 'react-native';
-import {Icon} from '../../../../shared/ui/Icon';
+import {Animated, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {COLORS} from '../../../../shared/styles.ts';
+import {Icon} from '../../../../shared/ui/Icon';
 
 type Props = {
   style?: StyleProp<ViewStyle>;

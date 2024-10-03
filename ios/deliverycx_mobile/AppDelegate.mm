@@ -2,6 +2,7 @@
 #import <YandexMapsMobile/YMKMapKitFactory.h>
 #import "Orientation.h"
 #import <React/RCTBundleURLProvider.h>
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 
@@ -21,7 +22,11 @@
   [YMKMapKit setApiKey:@"9319733b-bbba-48e7-af52-8410be35c07d"];
   [YMKMapKit mapKit];
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  bool didFinish=[super application:application didFinishLaunchingWithOptions:launchOptions];
+
+  [RNSplashScreen show];
+
+  return didFinish;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

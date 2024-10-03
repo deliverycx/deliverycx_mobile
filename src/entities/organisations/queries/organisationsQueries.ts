@@ -1,13 +1,17 @@
-import {QueryClient, useQuery} from '@tanstack/react-query';
+import {QueryClient, useQuery, UseQueryOptions} from '@tanstack/react-query';
 import {getOrganisationsApi} from '../api/organisationsApi';
-import {OrganisationsRequestModel} from '../types/organisationsTypes';
+import {
+  OrganisationsRequestModel,
+  OrganisationsResponseModel,
+} from '../types/organisationsTypes';
+import {filterHiddenOrganisations} from '../utils/filterHiddenOrganisations';
 
 const QUERY_KEY = 'ORGANISATIONS';
 
 const getOrganisations = async (params: OrganisationsRequestModel) => {
   const {data} = await getOrganisationsApi(params);
 
-  return data;
+  return filterHiddenOrganisations(data);
 };
 
 export const fetchOrganisations = (
@@ -20,8 +24,12 @@ export const fetchOrganisations = (
   });
 };
 
-export const useOrganisationsQuery = (params: OrganisationsRequestModel) => {
+export const useOrganisationsQuery = (
+  params: OrganisationsRequestModel,
+  config?: Partial<UseQueryOptions<OrganisationsResponseModel>>,
+) => {
   return useQuery({
+    ...config,
     queryKey: [QUERY_KEY, params.cityId],
     queryFn: () => getOrganisations(params),
   });

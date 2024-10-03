@@ -1,12 +1,20 @@
 import {useMemo} from 'react';
+import {useHiddenProductsQuery} from '../queries/hiddenProductsQueries';
 import {useProductsQuery} from '../queries/productsQueries';
 import {useStopListQuery} from '../queries/stopListQueries';
-import {useHiddenProductsQuery} from '../queries/hiddenProductsQueries';
 
 export const useProducts = (orgId: string) => {
-  const {data: products} = useProductsQuery({organization: orgId});
-  const {data: stopList} = useStopListQuery({organizationId: orgId});
-  const {data: hiddenProducts} = useHiddenProductsQuery({organization: orgId});
+  const {data: products, isFetched: isProductsFetched} = useProductsQuery({
+    organization: orgId,
+  });
+  const {data: stopList, isFetched: isStopListFetched} = useStopListQuery({
+    organizationId: orgId,
+  });
+  const {data: hiddenProducts, isFetched: isHiddenProductsFetched} =
+    useHiddenProductsQuery({organization: orgId});
+
+  const isFetched =
+    isProductsFetched && isStopListFetched && isHiddenProductsFetched;
 
   const stopListMap = useMemo(() => {
     if (!stopList) {
@@ -49,5 +57,6 @@ export const useProducts = (orgId: string) => {
   return {
     products: nextProducts,
     categories: products.categoryes,
+    isFetched,
   };
 };

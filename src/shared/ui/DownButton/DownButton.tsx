@@ -2,8 +2,8 @@ import React, {type FC} from 'react';
 import {
   StyleSheet,
   Text,
-  type TextStyle,
   TouchableOpacity,
+  type TextStyle,
   type TouchableOpacityProps,
 } from 'react-native';
 import {COLORS} from '../../styles';

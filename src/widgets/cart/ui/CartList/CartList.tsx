@@ -1,27 +1,52 @@
-import React, {FC, useMemo} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Controller} from 'react-hook-form';
 import {BlurView} from '@react-native-community/blur';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import React, {FC, useMemo} from 'react';
+import {Controller} from 'react-hook-form';
+import {
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
+import {
+  CutlerySwitcher,
+  DozenCounter,
+  useIsAddItemMutating,
+  useIsAmountItemMutating,
+  useIsRemoveItemMutating,
+} from '../../../../entities/cart';
+import {useOrderFormContext} from '../../../../entities/order';
+import {useIsOrgClosed} from '../../../../entities/organisations';
+import {COLORS, INDENTS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {CartProductPreview} from '../CartProductPreview';
-import {useTotalCartPrice} from '../../hooks/useTotalCartPrice';
-import {getCountOfProductsAndSum} from '../../utils/getCountOfProductsAndSum';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {useCartItems} from '../../hooks/useCartItems';
-import {COLORS, INDENTS} from '../../../../shared/styles';
-import {DozenCounter, CutlerySwitcher} from '../../../../entities/cart';
-import {useOrderFormContext} from '../../../../entities/order';
+import {useTotalCartPrice} from '../../hooks/useTotalCartPrice';
+import {getCountOfProductsAndSum} from '../../utils/getCountOfProductsAndSum';
+import {CartProductPreview} from '../CartProductPreview';
 
 type Props = {
   onSubmit: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
-export const CartList: FC<Props> = ({onSubmit}) => {
+export const CartList: FC<Props> = ({onSubmit, style}) => {
   const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
+
+  const isAmountItemMutating = useIsAmountItemMutating();
+  const isRemoveItemMutating = useIsRemoveItemMutating();
+  const isAddItemMutation = useIsAddItemMutating();
+
+  const isCartMutating =
+    !!isAmountItemMutating || !!isRemoveItemMutating || !!isAddItemMutation;
+
+  const isOrgClosed = useIsOrgClosed();
+
   const {formattedTotalPrice} = useTotalCartPrice();
 
   const {control} = useOrderFormContext();
@@ -58,7 +83,7 @@ export const CartList: FC<Props> = ({onSubmit}) => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, style]}>
       <ScrollView
         scrollIndicatorInsets={scrollIndicatorInsets}
         contentInset={contentInset}>
@@ -89,6 +114,8 @@ export const CartList: FC<Props> = ({onSubmit}) => {
           reducedTransparencyFallbackColor="white">
           <Container>
             <Button
+              disabled={!!isOrgClosed}
+              loading={isCartMutating}
               onPress={onSubmit}
               text={`Оформить заказ на ${formattedTotalPrice}`}
             />
@@ -127,7 +154,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingHorizontal: INDENTS.main,
     paddingBottom: 24,
-    paddingTop: 28,
+    paddingTop: 10,
   },
   wrapper: {
     flex: 1,

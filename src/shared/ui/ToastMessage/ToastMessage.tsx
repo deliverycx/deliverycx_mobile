@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Icon} from '../Icon';
 import {COLORS} from '../../styles.ts';
 import {hexToRgba} from '../../utils/hexToRgba.ts';
+import {Icon} from '../Icon';
 
 type Props = {
   text?: string;

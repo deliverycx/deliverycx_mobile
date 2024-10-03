@@ -1,34 +1,32 @@
-export {
-  useYandexDataQuery,
-  fetchYandexData,
-  useIsYandexDataFetching,
-} from './queries/yandexQueries';
-export {
-  useStreetDataQuery,
-  fetchStreetData,
-  useIsStreetFetching,
-} from './queries/streetQueries';
-export {Kind} from './types/yandexTypes';
-export type {
-  GeocoderMetaData,
-  MetaDataProperty,
-  Address,
-  GeoObjectCollection,
-  Component,
-  FeatureMember,
-  YandexResponseModel,
-  YandexRequestModel,
-} from './types/yandexTypes';
-export type {
-  StreetRequestModel,
-  StreetResponseModel,
-  Street,
-} from './types/streetTypes';
-
-export * from './queries/geoLocateAddressQueries';
 export * from './queries/addressByIdQueries';
 export * from './queries/cleanAddressQueries';
-
-export * from './types/geoLocateAddressTypes';
+export * from './queries/geoLocateAddressQueries';
+export {
+  fetchStreetData,
+  useIsStreetFetching,
+  useStreetDataQuery,
+} from './queries/streetQueries';
+export {
+  fetchYandexData,
+  useIsYandexDataFetching,
+  useYandexDataQuery,
+} from './queries/yandexQueries';
 export * from './types/addressByIdTypes';
 export * from './types/cleanAddressTypes';
+export * from './types/geoLocateAddressTypes';
+export type {
+  Street,
+  StreetRequestModel,
+  StreetResponseModel,
+} from './types/streetTypes';
+export {Kind} from './types/yandexTypes';
+export type {
+  Address,
+  Component,
+  FeatureMember,
+  GeoObjectCollection,
+  GeocoderMetaData,
+  MetaDataProperty,
+  YandexRequestModel,
+  YandexResponseModel,
+} from './types/yandexTypes';

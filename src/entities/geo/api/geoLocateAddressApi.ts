@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {
-  GeoLocateAddressResponseModel,
-  GeoLocateAddressRequestModel,
-} from '../types/geoLocateAddressTypes';
 import {DADATA_API_KEY} from '../../../shared/consts';
+import {
+  GeoLocateAddressRequestModel,
+  GeoLocateAddressResponseModel,
+} from '../types/geoLocateAddressTypes';
 
 const BASE_URL =
   'https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address';

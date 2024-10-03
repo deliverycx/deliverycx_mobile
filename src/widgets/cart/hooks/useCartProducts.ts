@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
+import {useCartStore} from '../../../entities/cart';
 import {useCurrentOrgStore} from '../../../entities/organisations';
 import {useProductsQuery} from '../../../entities/products';
-import {useCartStore} from '../../../entities/cart';
 
 export const useCartProducts = () => {
   const orgId = useCurrentOrgStore(state => state.orgId)!;

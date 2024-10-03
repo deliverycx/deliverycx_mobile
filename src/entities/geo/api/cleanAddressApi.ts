@@ -1,9 +1,9 @@
 import axios from 'axios';
+import {DADATA_API_KEY} from '../../../shared/consts';
 import {
   CleanAddressRequestModel,
   CleanAddressResponseModel,
 } from '../types/cleanAddressTypes';
-import {DADATA_API_KEY} from '../../../shared/consts';
 
 const BASE_URL = 'https://cleaner.dadata.ru/api/v1/clean/address';
 

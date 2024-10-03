@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Svg, {Path} from 'react-native-svg';
 import {FC} from 'react';
+import Svg, {Path} from 'react-native-svg';
 
 export const SadKhinkal: FC = props => {
   return (

@@ -1,27 +1,27 @@
-import React, {type FC, useRef, useState} from 'react';
-import {Priority} from 'react-native-fast-image';
+import React, {useRef, useState, type FC} from 'react';
 import {
-  type StyleProp,
+  Animated,
+  Easing,
+  Pressable,
   StyleSheet,
   Text,
   View,
-  Animated,
-  Pressable,
-  Easing,
+  type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import {COLORS} from '../../../../shared/styles';
-import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
-import {ProductImage} from '../ProductImage';
-import {ProductCard} from '../ProductCard';
-import {FullProduct} from '../../../../shared/types/productTypes';
-import {getProductWeightText} from '../../../../entities/products';
-import {Button} from '../../../../shared/ui/Button';
-import {Counter} from '../../../../shared/ui/Counter';
+import {Priority} from 'react-native-fast-image';
 import {useCartManager} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
-import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {getProductWeightText} from '../../../../entities/products';
+import {useUserStore} from '../../../../entities/user';
+import {COLORS} from '../../../../shared/styles';
+import {FullProduct} from '../../../../shared/types/productTypes';
+import {Button} from '../../../../shared/ui/Button';
+import {Counter} from '../../../../shared/ui/Counter';
+import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
+import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
+import {ProductCard} from '../ProductCard';
+import {ProductImage} from '../ProductImage';
 
 interface Props {
   data: FullProduct;
@@ -30,7 +30,7 @@ interface Props {
 }
 
 export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
-  const {name, price, image, weight, measureUnit, stopped} = data;
+  const {name, price, weight, measureUnit, stopped} = data;
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const user = useUserStore(state => state.user);

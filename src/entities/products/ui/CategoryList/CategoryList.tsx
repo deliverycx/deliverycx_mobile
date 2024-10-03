@@ -1,8 +1,7 @@
 import React, {forwardRef} from 'react';
 import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {COLORS, INDENTS} from '../../../../shared/styles';
 import {Chip} from '../../../../shared/ui/Сhip';
-import {COLORS} from '../../../../shared/styles';
-import {INDENTS} from '../../../../shared/styles';
 import {Category} from '../../types/productsTypes';
 
 interface Props {

@@ -1,9 +1,9 @@
-import React, {FC, useState, useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useOrganisationsQuery} from '../../queries/organisationsQueries';
+import {Organisation} from '../../types/organisationsTypes';
 import {OrgInfo} from '../OrgInfo';
 import {OrgMap} from '../OrgMap';
-import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
   style?: StyleProp<ViewStyle>;

@@ -1,7 +1,7 @@
 import {axiosInstance} from '../../../shared/api/axios';
 import {
-  ProductsResponseModel,
   ProductsRequestModel,
+  ProductsResponseModel,
 } from '../types/productsTypes';
 
 export const getProductsApi = (params: ProductsRequestModel) => {

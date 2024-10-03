@@ -1,9 +1,9 @@
 import axios from 'axios';
+import {DADATA_API_KEY} from '../../../shared/consts';
 import {
   AddressByIdRequestModel,
   AddressByIdResponseModel,
 } from '../types/addressByIdTypes';
-import {DADATA_API_KEY} from '../../../shared/consts';
 
 const BASE_URL =
   'https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/address';

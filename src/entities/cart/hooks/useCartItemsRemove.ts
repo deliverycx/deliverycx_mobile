@@ -1,8 +1,8 @@
-import {useCallback} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
-import {useCartStore} from '../stores/useCartStore';
-import {useDeleteAllItems} from '../queries/cartDeleteAllItemsQueries';
+import {useCallback} from 'react';
 import {getCartItems, setCartItems} from '../queries/cartAllItemsQueries';
+import {useDeleteAllItems} from '../queries/cartDeleteAllItemsQueries';
+import {useCartStore} from '../stores/useCartStore';
 import {CartAllItemsRequestModel} from '../types/cartAllItemsTypes';
 
 export const useCartItemsRemove = ({

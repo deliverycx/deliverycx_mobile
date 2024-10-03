@@ -1,7 +1,7 @@
 import {axiosInstance} from '../../../shared/api/axios';
 import {
-  OrganisationsResponseModel,
   OrganisationsRequestModel,
+  OrganisationsResponseModel,
 } from '../types/organisationsTypes';
 
 export const getOrganisationsApi = (params: OrganisationsRequestModel) => {

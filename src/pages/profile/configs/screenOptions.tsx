@@ -1,6 +1,6 @@
 import React from 'react';
-import {Icon} from '../../../shared/ui/Icon';
 import {COLORS} from '../../../shared/styles';
+import {Icon} from '../../../shared/ui/Icon';
 
 export const screenOptions = {
   tabBarIcon: ({color}: {color: string}) => (

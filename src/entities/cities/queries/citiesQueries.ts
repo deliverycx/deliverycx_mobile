@@ -1,6 +1,7 @@
 import {QueryClient, useQuery} from '@tanstack/react-query';
-import {getCitiesApi} from '../api/citiesApi';
 import {deleteFalseFromArr} from '../../../shared/utils/deleteFalseFromArr';
+import {getCitiesApi} from '../api/citiesApi';
+import {filterHiddenCities} from '../utils/deleteHiddenCities';
 
 const QUERY_KEY = 'CITIES';
 
@@ -8,7 +9,9 @@ const getCities = async () => {
   const {data} = await getCitiesApi();
 
   // This is a workaround for the API response
-  return deleteFalseFromArr(data);
+  const dataWithoutFalse = deleteFalseFromArr(data);
+
+  return filterHiddenCities(dataWithoutFalse);
 };
 
 export const fetchCities = (queryClient: QueryClient) => {

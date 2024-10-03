@@ -1,13 +1,13 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {InfoStatus} from '../../../../shared/ui/InfoStatus';
-import {Button} from '../../../../shared/ui/Button';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes, StackParamList} from '../../../../shared/routes';
+import React, {FC} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {useCartItemsRemove} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useUserStore} from '../../../../entities/user';
-import {useCartItemsRemove} from '../../../../entities/cart';
+import {Routes, StackParamList} from '../../../../shared/routes';
+import {Button} from '../../../../shared/ui/Button';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 
 const enum OSInfoVariant {
   error = 'error',

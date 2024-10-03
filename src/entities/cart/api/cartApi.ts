@@ -1,21 +1,21 @@
 import {axiosInstance} from '../../../shared/api/axios';
-import {CartAddResponseModel, CartAddRequestModel} from '../types/cartAddTypes';
+import {CartAddRequestModel, CartAddResponseModel} from '../types/cartAddTypes';
 import {
-  CartRemoveItemRequestModel,
-  CartRemoveItemResponseModel,
-} from '../types/cartRemoveItemTypes';
+  CartAllItemResponseModel,
+  CartAllItemsRequestModel,
+} from '../types/cartAllItemsTypes';
 import {
   CartAmountRequestModel,
   CartAmountResponseModel,
 } from '../types/cartAmountTypes';
 import {
-  CartAllItemsRequestModel,
-  CartAllItemResponseModel,
-} from '../types/cartAllItemsTypes';
-import {
   CartDeleteAllItemsRequestModel,
   CartDeleteAllItemsResponseModel,
 } from '../types/cartDeleteAllTypes';
+import {
+  CartRemoveItemRequestModel,
+  CartRemoveItemResponseModel,
+} from '../types/cartRemoveItemTypes';
 
 export const addApi = (data: CartAddRequestModel) => {
   return axiosInstance.post<CartAddResponseModel>('/cart/add', data);

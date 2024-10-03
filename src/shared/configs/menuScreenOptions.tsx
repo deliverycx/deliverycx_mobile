@@ -1,7 +1,7 @@
-import React from 'react';
 import {BlurView} from '@react-native-community/blur';
-import {StyleSheet} from 'react-native';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 
 export const screenOptions: BottomTabNavigationOptions = {
   tabBarStyle: {position: 'absolute'},

@@ -1,7 +1,7 @@
 import {COLORS} from '../../../shared/styles';
 
 export const screenOptions = {
-  title: 'Выберете город',
+  title: 'Выберите город',
   headerShadowVisible: false,
   headerTintColor: COLORS.main,
 };

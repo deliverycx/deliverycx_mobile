@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {Button} from '../../../../shared/ui/Button';
-import {Icon} from '../../../../shared/ui/Icon';
-import {COLORS} from '../../../../shared/styles';
 import {TELEGRAM_BOT_URL} from '../../../../shared/consts';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
+import {COLORS} from '../../../../shared/styles';
+import {Button} from '../../../../shared/ui/Button';
+import {Icon} from '../../../../shared/ui/Icon';
 
 type Props = {
   style?: StyleProp<ViewStyle>;

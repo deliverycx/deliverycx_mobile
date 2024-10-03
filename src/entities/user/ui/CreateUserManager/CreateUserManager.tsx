@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {useUserStore} from '../../stores/useUserStore';
 import {useCreateUser} from '../../queries/userQueries';
+import {useUserStore} from '../../stores/useUserStore';
 
 export const CreateUserManager = () => {
   const user = useUserStore(state => state.user);

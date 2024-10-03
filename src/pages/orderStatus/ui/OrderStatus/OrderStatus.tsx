@@ -1,11 +1,11 @@
+import type {RouteProp} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import type {RouteProp} from '@react-navigation/native';
-import {Routes, StackParamList} from '../../../../shared/routes';
 import {useGetOrderQuery} from '../../../../entities/order';
+import {Routes, StackParamList} from '../../../../shared/routes';
+import {Container} from '../../../../shared/ui/Container';
 import {OrderStatusInfo} from '../OrderStatusInfo';
 import {OrderStatusLoader} from '../OrderStatusLoader';
-import {Container} from '../../../../shared/ui/Container';
 
 type Props = {
   route: RouteProp<StackParamList, Routes.OrderStatus>;

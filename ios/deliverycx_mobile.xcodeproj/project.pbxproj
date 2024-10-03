@@ -13,7 +13,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-deliverycx_mobile-deliverycx_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-deliverycx_mobile-deliverycx_mobileTests.a */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C6252FFC2C20C49300A36938 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FE92C20C49300A36938 /* Fontisto.ttf */; };
 		C6252FFD2C20C49300A36938 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FEA2C20C49300A36938 /* Octicons.ttf */; };
 		C6252FFE2C20C49300A36938 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FEB2C20C49300A36938 /* Feather.ttf */; };
@@ -33,6 +32,7 @@
 		C625300C2C20C49300A36938 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FF92C20C49300A36938 /* SimpleLineIcons.ttf */; };
 		C625300D2C20C49300A36938 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FFA2C20C49300A36938 /* FontAwesome6_Brands.ttf */; };
 		C625300E2C20C49300A36938 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FFB2C20C49300A36938 /* MaterialIcons.ttf */; };
+		C6EA2D7B2CAD846D00A3A0FA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6EA2D7A2CAD846D00A3A0FA /* Launch Screen.storyboard */; };
 		F6B65D79C4626EA9F9746B3D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3E00E47089D3AD54C3921D8B /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +63,6 @@
 		5709B34CF0A7D63546082F79 /* Pods-deliverycx_mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deliverycx_mobile.release.xcconfig"; path = "Target Support Files/Pods-deliverycx_mobile/Pods-deliverycx_mobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-deliverycx_mobile-deliverycx_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deliverycx_mobile-deliverycx_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-deliverycx_mobile-deliverycx_mobileTests/Pods-deliverycx_mobile-deliverycx_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-deliverycx_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-deliverycx_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = deliverycx_mobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-deliverycx_mobile-deliverycx_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deliverycx_mobile-deliverycx_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-deliverycx_mobile-deliverycx_mobileTests/Pods-deliverycx_mobile-deliverycx_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		C6252FE92C20C49300A36938 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		C6252FEA2C20C49300A36938 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		C6252FF92C20C49300A36938 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		C6252FFA2C20C49300A36938 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		C6252FFB2C20C49300A36938 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		C6EA2D7A2CAD846D00A3A0FA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -131,10 +131,10 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				3E00E47089D3AD54C3921D8B /* PrivacyInfo.xcprivacy */,
+				C6EA2D7A2CAD846D00A3A0FA /* Launch Screen.storyboard */,
 			);
 			name = deliverycx_mobile;
 			sourceTree = "<group>";
@@ -315,11 +315,11 @@
 			files = (
 				C62530052C20C49300A36938 /* Ionicons.ttf in Resources */,
 				C6252FFD2C20C49300A36938 /* Octicons.ttf in Resources */,
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				C62530082C20C49300A36938 /* FontAwesome.ttf in Resources */,
 				C6252FFE2C20C49300A36938 /* Feather.ttf in Resources */,
 				C62530012C20C49300A36938 /* FontAwesome5_Brands.ttf in Resources */,
 				C625300E2C20C49300A36938 /* MaterialIcons.ttf in Resources */,
+				C6EA2D7B2CAD846D00A3A0FA /* Launch Screen.storyboard in Resources */,
 				C6252FFF2C20C49300A36938 /* FontAwesome6_Regular.ttf in Resources */,
 				C625300A2C20C49300A36938 /* EvilIcons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -562,7 +562,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 39958MKHSD;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -596,7 +596,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 39958MKHSD;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = deliverycx_mobile/Info.plist;

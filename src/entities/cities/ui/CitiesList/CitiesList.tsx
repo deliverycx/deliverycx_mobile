@@ -1,19 +1,20 @@
 import React, {FC} from 'react';
 import {
-  Text,
-  SectionList,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
   Insets,
+  SectionList,
+  StyleProp,
+  StyleSheet,
+  Text,
+  ViewStyle,
 } from 'react-native';
-import {useCityGroups} from '../../hooks/useCityGroups';
 import {COLORS, INDENTS} from '../../../../shared/styles';
-import {ListButton} from '../../../../shared/ui/ListButton';
-import {City} from '../../types/citiesTypes';
-import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 import {Container} from '../../../../shared/ui/Container';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
+import {ListButton} from '../../../../shared/ui/ListButton';
+import {useCityGroups} from '../../hooks/useCityGroups';
 import {useCitiesQuery} from '../../queries/citiesQueries';
+import {City} from '../../types/citiesTypes';
+import {CitiesSkeleton} from '../CitiesSkeleton';
 
 type Props = {
   onChange: (city: City) => void;
@@ -30,6 +31,10 @@ export const CitiesList: FC<Props> = ({
 }) => {
   const {isFetched} = useCitiesQuery();
   const cityGroups = useCityGroups({searchValue});
+
+  if (!isFetched) {
+    return <CitiesSkeleton />;
+  }
 
   if (cityGroups.length === 0 && isFetched) {
     return (

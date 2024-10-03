@@ -1,16 +1,11 @@
-import React from 'react';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {ListButton} from '../../../../shared/ui/ListButton';
-import {Tg} from '../../../../shared/ui/CustomIcons/Tg';
+import React from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   OrgDisLikeButton,
   OrgLikeButton,
   OrgVKButton,
 } from '../../../../entities/organisations';
-import {FunKhinkal} from '../../../../shared/ui/CustomIcons/FunKhinkal';
-import {AppVersion} from '../AppVersion';
-import {COLORS, INDENTS} from '../../../../shared/styles';
 import {
   CALORIES_URL,
   FRANCHISE_URL,
@@ -19,6 +14,11 @@ import {
   TELEGRAM_BOT_URL,
 } from '../../../../shared/consts';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
+import {COLORS, INDENTS} from '../../../../shared/styles';
+import {FunKhinkal} from '../../../../shared/ui/CustomIcons/FunKhinkal';
+import {Tg} from '../../../../shared/ui/CustomIcons/Tg';
+import {ListButton} from '../../../../shared/ui/ListButton';
+import {AppVersion} from '../AppVersion';
 
 export const Contacts = () => {
   const height = useBottomTabBarHeight();

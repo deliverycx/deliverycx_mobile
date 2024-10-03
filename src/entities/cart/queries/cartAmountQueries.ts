@@ -1,11 +1,13 @@
-import {QueryClient, useMutation} from '@tanstack/react-query';
+import {QueryClient, useIsMutating, useMutation} from '@tanstack/react-query';
 import {amountApi} from '../api/cartApi';
-import {CartAmountRequestModel} from '../types/cartAmountTypes';
 import {
   CartAllItemResponseModel,
   CartAllItemsRequestModel,
 } from '../types/cartAllItemsTypes';
-import {QUERY_KEY} from './cartAllItemsQueries';
+import {CartAmountRequestModel} from '../types/cartAmountTypes';
+import {QUERY_KEY as ALL_ITEMS_QUERY_KEY} from './cartAllItemsQueries';
+
+const QUERY_KEY = 'CART_UPDATE_ITEM';
 
 const amountItem = async (
   params: CartAmountRequestModel,
@@ -21,6 +23,7 @@ export const useAmountItem = (
   params: CartAllItemsRequestModel,
 ) => {
   return useMutation({
+    mutationKey: [QUERY_KEY],
     mutationFn: ({
       signal,
       ...props
@@ -29,7 +32,7 @@ export const useAmountItem = (
     },
     onSuccess: ({item, ...rest}) => {
       queryClient.setQueryData(
-        [QUERY_KEY, params.userid, params.organization],
+        [ALL_ITEMS_QUERY_KEY, params.userid, params.organization],
         (state: CartAllItemResponseModel) => {
           const nextCart = [...state.cart];
           const cartItemIndex = nextCart.findIndex(
@@ -45,5 +48,11 @@ export const useAmountItem = (
         },
       );
     },
+  });
+};
+
+export const useIsAmountItemMutating = () => {
+  return useIsMutating({
+    mutationKey: [QUERY_KEY],
   });
 };

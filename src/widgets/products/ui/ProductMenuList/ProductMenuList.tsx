@@ -1,18 +1,20 @@
 import React, {FC, useRef} from 'react';
 import {
   Insets,
-  View,
   StyleSheet,
-  ViewToken,
   Text,
+  View,
+  ViewToken,
   VirtualizedList,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {CategoryList, useProducts} from '../../../../entities/products';
-import {ProductPreviewCard} from '../ProductPreviewCard';
+import {INDENTS} from '../../../../shared/styles';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useSyncList} from '../../hooks/useSyncList';
-import {INDENTS} from '../../../../shared/styles';
+import {ProductCategorySkeleton} from '../ProductCategorySkeleton';
+import {ProductPreviewCard} from '../ProductPreviewCard';
+import {ProductsSkeleton} from '../ProductsSkeleton';
 
 type Props = {
   orgId: string;
@@ -27,7 +29,7 @@ export const ProductMenuList: FC<Props> = ({
   contentInset,
   scrollIndicatorInsets,
 }) => {
-  const {products, categories} = useProducts(orgId);
+  const {products, categories, isFetched} = useProducts(orgId);
 
   const sectionProducts = useSectionProducts(products, categories);
 
@@ -83,50 +85,60 @@ export const ProductMenuList: FC<Props> = ({
 
   return (
     <View style={styles.wrapper}>
-      <CategoryList
-        ref={categoryListRef}
-        style={styles.categoryList}
-        data={categories}
-        visibleCategoryId={visibleCategoryId}
-        onItemPress={setCategoryListCategoryId}
-      />
-      <VirtualizedList
-        getItemLayout={getItemLayout}
-        ref={menuListRef}
-        data={sectionProducts}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        contentInset={contentInset}
-        getItemCount={itemData => itemData.length}
-        getItem={(itemData, index) => itemData[index]}
-        scrollIndicatorInsets={scrollIndicatorInsets}
-        onEndReached={handleEndReached}
-        keyExtractor={(_, index) => `${index}`}
-        renderItem={({
-          item,
-          index,
-        }: {
-          item: (typeof sectionProducts)[number];
-          index: number;
-        }) => (
-          <View key={item.title} style={styles.item}>
-            <Text style={styles.title}>{item.title}</Text>
-            <View style={styles.itemsList}>
-              {item.data.map(product => (
-                <View style={styles.productPreviewCard} key={product.id}>
-                  <ProductPreviewCard
-                    data={product}
-                    imagePriority={
-                      index === 0
-                        ? FastImage.priority.high
-                        : FastImage.priority.normal
-                    }
-                  />
-                </View>
-              ))}
+      {isFetched ? (
+        <CategoryList
+          ref={categoryListRef}
+          style={styles.categoryList}
+          data={categories}
+          visibleCategoryId={visibleCategoryId}
+          onItemPress={setCategoryListCategoryId}
+        />
+      ) : (
+        <ProductCategorySkeleton />
+      )}
+      {isFetched ? (
+        <VirtualizedList
+          getItemLayout={getItemLayout}
+          ref={menuListRef}
+          data={sectionProducts}
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
+          contentInset={contentInset}
+          getItemCount={itemData => itemData.length}
+          getItem={(itemData, index) => itemData[index]}
+          scrollIndicatorInsets={scrollIndicatorInsets}
+          onEndReached={handleEndReached}
+          keyExtractor={(_, index) => `${index}`}
+          renderItem={({
+            item,
+            index,
+          }: {
+            item: (typeof sectionProducts)[number];
+            index: number;
+          }) => (
+            <View key={item.title} style={styles.item}>
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={styles.itemsList}>
+                {item.data.map(product => (
+                  <View style={styles.productPreviewCard} key={product.id}>
+                    <ProductPreviewCard
+                      data={product}
+                      imagePriority={
+                        index === 0
+                          ? FastImage.priority.high
+                          : FastImage.priority.normal
+                      }
+                    />
+                  </View>
+                ))}
+              </View>
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      ) : (
+        <ProductsSkeleton />
+      )}
     </View>
   );
 };

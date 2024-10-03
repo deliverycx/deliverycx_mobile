@@ -33,3 +33,9 @@ export interface OrganisationsRequestModel {
 }
 
 export interface OrganisationsResponseModel extends Array<Organisation> {}
+
+export interface OrganisationRequestModel {
+  organizationId: string;
+}
+
+export interface OrganisationResponseModel extends Organisation {}

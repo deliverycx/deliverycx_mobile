@@ -11,18 +11,23 @@ export const useCityGroups = (options?: Options) => {
 
   const {searchValue} = options ?? {};
 
-  const filteredData = useMemo(() => {
+  const sortedData = useMemo(() => {
     if (!data) {
       return [];
     }
+
+    return [...data].sort((a, b) => (a.name < b.name ? -1 : 1));
+  }, [data]);
+
+  const filteredData = useMemo(() => {
     if (!searchValue) {
-      return data;
+      return sortedData;
     }
 
-    return data.filter(city =>
+    return sortedData.filter(city =>
       city.name.toLowerCase().includes(searchValue.toLowerCase()),
     );
-  }, [data, searchValue]);
+  }, [sortedData, searchValue]);
 
   return useMemo(() => {
     const getMapOfGroupCities = filteredData.reduce((acc, city) => {

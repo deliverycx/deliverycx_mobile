@@ -1,8 +1,8 @@
 import React, {FC, useMemo} from 'react';
-import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
+import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 import {phoneByNumber} from '../../../../shared/utils/phoneByNumber.ts';
 
 type Props = {

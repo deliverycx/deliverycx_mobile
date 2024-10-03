@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {SvgUri} from 'react-native-svg';
-import {Filter} from '../../types/organisationsTypes';
 import {API_URL} from '../../../../shared/consts';
+import {Filter} from '../../types/organisationsTypes';
 
 type Props = {
   data: Filter[];

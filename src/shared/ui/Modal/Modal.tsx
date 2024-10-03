@@ -1,11 +1,11 @@
-import React, {forwardRef, useCallback} from 'react';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetModalProps,
 } from '@gorhom/bottom-sheet';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import React, {forwardRef, useCallback} from 'react';
 
 type Props = Omit<BottomSheetModalProps, 'backdropComponent'>;
 

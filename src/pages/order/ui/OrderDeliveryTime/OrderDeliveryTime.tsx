@@ -1,9 +1,9 @@
-import React, {FC, useRef} from 'react';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import React, {FC, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {InputButton} from '../../../../shared/ui/InputButton';
 import {Modal} from '../../../../shared/ui/Modal';
 

@@ -1,7 +1,7 @@
 import {axiosInstanceAdmin} from '../../../shared/api/axios';
 import {
-  OrgKhinkaliCounterResponseModel,
   OrgKhinkaliCounterRequestModel,
+  OrgKhinkaliCounterResponseModel,
 } from '../types/orgKhinkaliCounterTypes';
 
 export const getKhinkaliCounterApi = (

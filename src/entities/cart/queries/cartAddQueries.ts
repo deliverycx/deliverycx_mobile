@@ -1,11 +1,13 @@
-import {QueryClient, useMutation} from '@tanstack/react-query';
+import {QueryClient, useIsMutating, useMutation} from '@tanstack/react-query';
 import {addApi} from '../api/cartApi';
-import {QUERY_KEY} from './cartAllItemsQueries';
 import {CartAddRequestModel} from '../types/cartAddTypes';
 import {
   CartAllItemResponseModel,
   CartAllItemsRequestModel,
 } from '../types/cartAllItemsTypes';
+import {QUERY_KEY as ALL_ITEMS_QUERY_KEY} from './cartAllItemsQueries';
+
+const QUERY_KEY = 'CART_ADD_ITEM';
 
 const addItem = async (params: CartAddRequestModel) => {
   const {data} = await addApi(params);
@@ -19,9 +21,10 @@ export const useAddItem = (
 ) => {
   return useMutation({
     mutationFn: addItem,
+    mutationKey: [QUERY_KEY],
     onSuccess: ({item, ...rest}) => {
       queryClient.setQueryData(
-        [QUERY_KEY, params.userid, params.organization],
+        [ALL_ITEMS_QUERY_KEY, params.userid, params.organization],
         (state: CartAllItemResponseModel) => {
           const nextCart = [...state.cart];
           const cartItemIndex = nextCart.findIndex(
@@ -41,5 +44,11 @@ export const useAddItem = (
         },
       );
     },
+  });
+};
+
+export const useIsAddItemMutating = () => {
+  return useIsMutating({
+    mutationKey: [QUERY_KEY],
   });
 };

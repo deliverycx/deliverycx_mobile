@@ -1,4 +1,4 @@
-import {QueryClient, useQuery, useIsFetching} from '@tanstack/react-query';
+import {QueryClient, useIsFetching, useQuery} from '@tanstack/react-query';
 import {getYandexApi} from '../api/yandexApi';
 import {YandexRequestModel} from '../types/yandexTypes';
 

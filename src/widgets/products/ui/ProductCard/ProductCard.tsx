@@ -1,20 +1,20 @@
-import React, {type FC, useEffect, useRef, useState} from 'react';
-import FastImage from 'react-native-fast-image';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import React, {useEffect, useRef, useState, type FC} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {Container} from '../../../../shared/ui/Container';
+import FastImage from 'react-native-fast-image';
+import {useCartAdd} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {getProductWeightText} from '../../../../entities/products';
+import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {COLORS, INDENTS} from '../../../../shared/styles';
+import {Product} from '../../../../shared/types/productTypes';
 import {Button} from '../../../../shared/ui/Button';
+import {Container} from '../../../../shared/ui/Container';
 import {Counter} from '../../../../shared/ui/Counter';
 import {DownButton} from '../../../../shared/ui/DownButton';
 import {Modal} from '../../../../shared/ui/Modal';
-import {COLORS, INDENTS} from '../../../../shared/styles';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
-import {Product} from '../../../../shared/types/productTypes';
-import {getProductWeightText} from '../../../../entities/products';
-import {useCartAdd} from '../../../../entities/cart';
-import {useCurrentOrgStore} from '../../../../entities/organisations';
-import {useUserStore} from '../../../../entities/user/stores/useUserStore';
 
 interface Props {
   data: Product;
@@ -97,6 +97,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
             <View>
               <View style={styles.counter}>
                 <Counter
+                  max={100}
                   size="md"
                   value={count}
                   onChange={handleCounterChange}

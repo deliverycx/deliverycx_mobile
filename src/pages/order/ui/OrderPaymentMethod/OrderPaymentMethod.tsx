@@ -1,8 +1,8 @@
 import React, {FC, useMemo} from 'react';
 import {View} from 'react-native';
+import {PaymentMethod} from '../../../../shared/types/order';
 import {Label} from '../../../../shared/ui/Label';
 import {OrderInputButton} from '../OrderInputButton';
-import {PaymentMethod} from '../../../../shared/types/order';
 
 type Props = {
   value: PaymentMethod;

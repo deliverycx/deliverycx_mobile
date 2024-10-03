@@ -1,7 +1,7 @@
-import React, {useContext, FC} from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {TabsContext} from '../Tabs';
+import React, {FC, useContext} from 'react';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../../styles.ts';
+import {TabsContext} from '../Tabs';
 
 export type Value = string;
 

@@ -1,8 +1,8 @@
-import React from 'react';
-import {Icon} from '../../../shared/ui/Icon';
-import {COLORS} from '../../../shared/styles';
-import {useTotalCartPrice, ClearCartButton} from '../../../widgets/cart';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs/src/types';
+import React from 'react';
+import {COLORS} from '../../../shared/styles';
+import {Icon} from '../../../shared/ui/Icon';
+import {ClearCartButton, useTotalCartPrice} from '../../../widgets/cart';
 
 export const ScreenOptions = (): BottomTabNavigationOptions => {
   const {formattedTotalPrice, totalPrice} = useTotalCartPrice();

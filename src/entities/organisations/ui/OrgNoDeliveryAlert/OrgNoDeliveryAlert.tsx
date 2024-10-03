@@ -1,32 +1,35 @@
 import {FC, useEffect} from 'react';
 import {Alert} from 'react-native';
+import {useExtendedOrgStatus} from '../../hooks/useExtendedOrgStatus';
+import {OrganisationStatus} from '../../types/orgOrgStatusTypes';
 import {isCurrentTimeInRange} from '../../utils/isCurrentTimeInRange';
 import {isTimeAfterRange} from '../../utils/isTimeAfterRange';
-import {useAlertsData} from '../../hooks/useAlertsData';
-import {OrganisationStatus} from '../../types/orgOrgStatusTypes';
 
 type Props = {
-  cityId: string;
   orgId: string;
 };
 
-export const OrgNoDeliveryAlert: FC<Props> = ({cityId, orgId}) => {
-  const {organizationStatus, currentWorkTime, delivery, deliveryWorkTime} =
-    useAlertsData(cityId, orgId);
+export const OrgNoDeliveryAlert: FC<Props> = ({orgId}) => {
+  const {
+    isFetched,
+    currentWorkTime,
+    currentDeliveryWorkTime,
+    delivery,
+    organizationStatus,
+  } = useExtendedOrgStatus(orgId);
 
   const isWork = organizationStatus === OrganisationStatus.Work;
-  const hasAllData = !!(organizationStatus && currentWorkTime);
 
   let isOrgWorking: boolean | undefined;
   let isOrgClosing: boolean | undefined;
 
-  if (hasAllData) {
+  if (currentWorkTime && currentDeliveryWorkTime) {
     isOrgWorking = isCurrentTimeInRange(currentWorkTime);
-    isOrgClosing = isTimeAfterRange(deliveryWorkTime!);
+    isOrgClosing = isTimeAfterRange(currentDeliveryWorkTime!);
   }
 
   useEffect(() => {
-    if (!hasAllData || !isWork) {
+    if (!isFetched || !isWork) {
       return;
     }
 
@@ -38,11 +41,11 @@ export const OrgNoDeliveryAlert: FC<Props> = ({cityId, orgId}) => {
       );
     }
   }, [
-    hasAllData,
+    isFetched,
     isWork,
     currentWorkTime,
     delivery,
-    deliveryWorkTime,
+    currentDeliveryWorkTime,
     isOrgWorking,
     isOrgClosing,
   ]);

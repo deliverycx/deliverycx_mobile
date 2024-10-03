@@ -1,11 +1,10 @@
 import React, {
-  useCallback,
-  useRef,
-  memo,
   forwardRef,
+  memo,
+  useCallback,
   useImperativeHandle,
+  useRef,
 } from 'react';
-import {CameraPosition, YaMap} from 'react-native-yamap';
 import {
   NativeSyntheticEvent,
   StyleProp,
@@ -14,12 +13,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {Position} from '../../../../shared/types/map';
-import {AddressJumperMarker} from '../AddressJumperMarker';
-import {Icon} from '../../../../shared/ui/Icon';
+import {CameraPosition, YaMap} from 'react-native-yamap';
 import {COLORS} from '../../../../shared/styles.ts';
+import {Position} from '../../../../shared/types/map';
+import {Icon} from '../../../../shared/ui/Icon';
 import {hexToRgba} from '../../../../shared/utils/hexToRgba';
 import {getUserPosition} from '../../utils/getUserPosition';
+import {AddressJumperMarker} from '../AddressJumperMarker';
 
 type Props = {
   style?: StyleProp<ViewStyle>;

@@ -1,11 +1,11 @@
 import {axiosInstance} from '../../../shared/api/axios';
 import {
-  CheckOrderResponse,
   CheckOrderRequest,
+  CheckOrderResponse,
+  CreateOrderRequest,
+  CreateOrderResponse,
   GetOrderRequest,
   GetOrderResponse,
-  CreateOrderResponse,
-  CreateOrderRequest,
 } from '../types/orderTypes';
 
 export const checkOrderApi = (params: CheckOrderRequest) => {

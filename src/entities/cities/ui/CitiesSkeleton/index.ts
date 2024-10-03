@@ -1,0 +1,1 @@
+export {CitiesSkeleton} from './CititesSkeleton';

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {SadKhinkal} from '../CustomIcons/SadKhinkal';
+import {StyleSheet, Text, View} from 'react-native';
 import {HappyKhinkal} from '../CustomIcons/HappyKhinkal';
+import {SadKhinkal} from '../CustomIcons/SadKhinkal';
 
 const enum Variant {
   sad = 'sad',

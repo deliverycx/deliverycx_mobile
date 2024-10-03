@@ -1,7 +1,7 @@
 import React, {createContext, FC, PropsWithChildren, useCallback} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {Value} from './Tab';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {COLORS} from '../../styles.ts';
+import {Value} from './Tab';
 
 type ContextValue = {
   onChange: (value: Value) => void;

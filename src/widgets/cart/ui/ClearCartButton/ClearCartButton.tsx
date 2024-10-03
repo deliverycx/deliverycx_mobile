@@ -1,10 +1,10 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import {Icon} from '../../../../shared/ui/Icon';
-import {COLORS, INDENTS} from '../../../../shared/styles';
+import {Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import {useCartItemsRemove} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useUserStore} from '../../../../entities/user';
+import {COLORS, INDENTS} from '../../../../shared/styles';
+import {Icon} from '../../../../shared/ui/Icon';
 import {useCartItems} from '../../hooks/useCartItems';
 
 export const ClearCartButton = () => {

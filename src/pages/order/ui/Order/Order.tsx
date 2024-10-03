@@ -1,32 +1,34 @@
+import {useHeaderHeight} from '@react-navigation/elements';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import {Controller} from 'react-hook-form';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
-  View,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
+  View,
 } from 'react-native';
-import {useHeaderHeight} from '@react-navigation/elements';
-import {OrderDeliveryType} from '../OrderDeliveryType';
-import {Container} from '../../../../shared/ui/Container';
-import {Button} from '../../../../shared/ui/Button';
-import {hexToRgba} from '../../../../shared/utils/hexToRgba';
-import {COLORS} from '../../../../shared/styles';
+import {OrderForm, useOrderFormContext} from '../../../../entities/order';
+import {useIsOrgClosed} from '../../../../entities/organisations';
 import {Routes, StackParamList} from '../../../../shared/routes';
+import {COLORS} from '../../../../shared/styles';
 import {OrderType} from '../../../../shared/types/order';
-import {OrderDeliveryTime} from '../OrderDeliveryTime';
-import {OrderAddress} from '../OrderAddress/OrderAddress';
-import {useCartItems} from '../../../../widgets/cart';
-import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {OrderPaymentMethod} from '../OrderPaymentMethod';
-import {Label} from '../../../../shared/ui/Label';
+import {Button} from '../../../../shared/ui/Button';
+import {Container} from '../../../../shared/ui/Container';
 import {Input} from '../../../../shared/ui/Input';
 import {InputMask} from '../../../../shared/ui/InputMask';
-import {OrderForm, useOrderFormContext} from '../../../../entities/order';
+import {Label} from '../../../../shared/ui/Label';
+import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
+import {hexToRgba} from '../../../../shared/utils/hexToRgba';
+import {useCartItems} from '../../../../widgets/cart';
+import {OrgCloseBanner} from '../../../../widgets/organisations';
 import {useOrderSubmit} from '../../hooks/useOrderSubmit';
+import {OrderAddress} from '../OrderAddress/OrderAddress';
+import {OrderDeliveryTime} from '../OrderDeliveryTime';
+import {OrderDeliveryType} from '../OrderDeliveryType';
+import {OrderPaymentMethod} from '../OrderPaymentMethod';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Order>;
@@ -40,6 +42,8 @@ export const Order: FC<Props> = ({navigation}) => {
 
   const {onSubmit, isFetching} = useOrderSubmit();
 
+  const isOrgClosed = useIsOrgClosed();
+
   const watchField = watch('orderType');
 
   const isDelivery = watchField === OrderType.Courier;
@@ -48,6 +52,7 @@ export const Order: FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <OrgCloseBanner style={styles.closeBanner} />
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior="padding"
@@ -162,6 +167,7 @@ export const Order: FC<Props> = ({navigation}) => {
           </Text>
         </View>
         <Button
+          disabled={!!isOrgClosed}
           text="Оформить заказ"
           loading={isFetching}
           onPress={handleSubmit(onSubmit)}
@@ -172,6 +178,9 @@ export const Order: FC<Props> = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  closeBanner: {
+    marginVertical: 10,
+  },
   inputsWrapper: {
     flex: 1,
     gap: 16,

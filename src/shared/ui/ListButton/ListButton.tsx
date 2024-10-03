@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import {Icon} from '../Icon';
 import {COLORS} from '../../styles';
+import {Icon} from '../Icon';
 
 type Props = {
   text: string;

@@ -1,22 +1,12 @@
-export const enum DeliveryMethod {
-  Courier = 'COURIER',
-  PickUp = 'PICKUP',
-  OnSpot = 'ONSPOT',
-}
+import {OrderType, PaymentMethod} from '../../../shared/types/order';
 
 export const enum OrganisationStatus {
-  Work = 'WORK',
-  NoWork = 'NOWORK',
-  OnWork = 'ONWORK',
-  Open = 'OPEN',
-  NoDelivery = 'NODELIVERY',
-  SezonNotWork = 'SEZONNOTWORK',
-}
-
-export const enum PaymentMethod {
-  Cash = 'CASH',
-  ByCard = 'BYCARD',
-  Card = 'CARD',
+  Work = 'WORK', // org works
+  NoWork = 'NOWORK', // org close
+  OnWork = 'ONWORK', // org is closing
+  Open = 'OPEN', // org is starting opening
+  NoDelivery = 'NODELIVERY', // org doesn't have delivery
+  SezonNotWork = 'SEZONNOTWORK', // org temporally isn't working
 }
 
 export interface OrgStatusRequestModel {
@@ -24,7 +14,7 @@ export interface OrgStatusRequestModel {
 }
 
 export interface OrgStatusResponseModel {
-  deliveryMetod: DeliveryMethod[];
+  deliveryMetod: OrderType[];
   deliveryTime: number;
   organization: string;
   organizationStatus: OrganisationStatus;

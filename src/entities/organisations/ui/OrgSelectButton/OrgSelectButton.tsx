@@ -1,15 +1,16 @@
-import React, {FC, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
+import React, {FC, useState} from 'react';
+import {HapticFeedbackTypes} from 'react-native-haptic-feedback';
 import {Button} from '../../../../shared/ui/Button';
-import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
+import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {fetchProducts} from '../../../products';
+import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 
 type Props = {
   orgId: string;
-  cityId: string;
 };
 
-export const OrgSelectButton: FC<Props> = ({orgId, cityId}) => {
+export const OrgSelectButton: FC<Props> = ({orgId}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
@@ -18,9 +19,11 @@ export const OrgSelectButton: FC<Props> = ({orgId, cityId}) => {
   const handleOrgChange = async () => {
     setLoading(true);
 
+    hapticFeedback(HapticFeedbackTypes.impactHeavy);
+
     try {
       await fetchProducts(queryClient, {organization: orgId});
-      setOrgInfo(cityId, orgId);
+      setOrgInfo(orgId);
     } catch (err) {
     } finally {
       setLoading(false);

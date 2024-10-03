@@ -1,3 +1,3 @@
 export const deleteFalseFromArr = <T extends unknown>(arr: T[]) => {
-  return arr.filter((item) => item !== false);
+  return arr.filter(item => item !== false);
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {Vk} from '../../../../shared/ui/CustomIcons/Vk';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
+import {Vk} from '../../../../shared/ui/CustomIcons/Vk';
 import {useOrgSocialQuery} from '../../queries/orgSocialQueries';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 

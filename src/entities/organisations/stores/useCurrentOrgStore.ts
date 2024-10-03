@@ -1,30 +1,37 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
+import {createJSONStorage, persist} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
 
 type State = {
   orgId: string | null;
-  cityId: string | null;
 };
 
 type Actions = {
-  setOrgInfo: (cityId: string, orgId: string) => void;
+  setOrgInfo: (orgId: string) => void;
   deleteOrgInfo: () => void;
 };
 
 export const useCurrentOrgStore = create<State & Actions>()(
-  immer(set => ({
-    orgId: null,
-    cityId: null,
-    setOrgInfo: (cityId: string, orgId: string) => {
-      set({
-        cityId,
-        orgId,
-      });
-    },
-    deleteOrgInfo: () =>
-      set({
+  immer(
+    persist(
+      set => ({
         orgId: null,
         cityId: null,
+        setOrgInfo: (orgId: string) => {
+          set({
+            orgId,
+          });
+        },
+        deleteOrgInfo: () =>
+          set({
+            orgId: null,
+          }),
       }),
-  })),
+      {
+        name: 'current-org-store',
+        storage: createJSONStorage(() => AsyncStorage),
+      },
+    ),
+  ),
 );

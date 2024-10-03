@@ -1,5 +1,5 @@
-import {useCallback} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import {Product} from '../../../shared/types/productTypes';
 import {useAddItem} from '../queries/cartAddQueries';
 import {useCartStore} from '../stores/useCartStore';

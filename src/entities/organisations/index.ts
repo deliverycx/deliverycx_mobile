@@ -1,16 +1,21 @@
-export {OrgMapLayout} from './ui/OrgMapLayout';
-export {useOrganisationsQuery} from './queries/organisationsQueries';
-export {useOrganisationData} from './hooks/useOrganisationData';
 export {useCurrentOrg} from './hooks/useCurrentOrg';
+export {useExtendedOrgStatus} from './hooks/useExtendedOrgStatus';
+export {useIsOrgClosed} from './hooks/useIsOrgClosed';
 export {useOrgCity} from './hooks/useOrgCity';
 export {
-  OrgStatusAlertsProvider,
-  OrgStatusAlerts,
-} from './providers/OrgStatusAlertsProvider';
-export {OrgChangeButton} from './ui/OrgChangeButton';
-export {OrgCallButton} from './ui/OrgCallButton';
-export {OrgLikeButton} from './ui/OrgLikeButton';
-export {OrgDisLikeButton} from './ui/OrgDislikeButton';
-export {OrgVKButton} from './ui/OrgVKButton';
-export type {Organisation} from './types/organisationsTypes';
+  OrgAlertsProvider,
+  OrgAlertsSubscriber,
+  useOrgAlertsSubscriber,
+  useOrgStatus,
+} from './providers/OrgAlertsProvider';
+export {useOrganisationQuery} from './queries/organisationQueries';
+export {useOrganisationsQuery} from './queries/organisationsQueries';
 export {useCurrentOrgStore} from './stores/useCurrentOrgStore';
+export type {Organisation} from './types/organisationsTypes';
+export {OrgAlerts} from './ui/OrgAlerts';
+export {OrgCallButton} from './ui/OrgCallButton';
+export {OrgChangeButton} from './ui/OrgChangeButton';
+export {OrgDisLikeButton} from './ui/OrgDislikeButton';
+export {OrgLikeButton} from './ui/OrgLikeButton';
+export {OrgMapLayout} from './ui/OrgMapLayout';
+export {OrgVKButton} from './ui/OrgVKButton';

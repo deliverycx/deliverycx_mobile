@@ -1,6 +1,6 @@
 import React, {FC, PropsWithChildren} from 'react';
-import Toast, {ToastConfig} from 'react-native-toast-message';
 import {View} from 'react-native';
+import Toast, {ToastConfig} from 'react-native-toast-message';
 import {ToastMessage} from '../../ui/ToastMessage';
 
 const toastConfig: ToastConfig = {

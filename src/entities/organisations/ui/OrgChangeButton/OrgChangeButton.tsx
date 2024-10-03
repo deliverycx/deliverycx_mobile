@@ -1,31 +1,53 @@
-import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore.ts';
 import React, {FC} from 'react';
 import {
+  StyleProp,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  StyleProp,
   ViewStyle,
 } from 'react-native';
-import {Icon} from '../../../../shared/ui/Icon';
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {COLORS} from '../../../../shared/styles';
+import {Icon} from '../../../../shared/ui/Icon';
+import {useCartItemsRemove} from '../../../cart';
 import {useCurrentOrg} from '../../hooks/useCurrentOrg';
+import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
+  userId: string | undefined;
 };
 
-export const OrgChangeButton: FC<Props> = ({style}) => {
-  const organisation = useCurrentOrg();
+export const OrgChangeButton: FC<Props> = ({style, userId}) => {
+  const {data, isFetched} = useCurrentOrg();
+
   const deleteOrgInfo = useCurrentOrgStore(state => state.deleteOrgInfo);
 
+  const cartRemove = useCartItemsRemove({
+    organization: data?.guid ?? '',
+    userid: userId!,
+  });
+
+  if (!isFetched) {
+    return (
+      <ShimmerPlaceHolder
+        style={[styles.skeleton, style]}
+        LinearGradient={LinearGradient}
+      />
+    );
+  }
+
+  const handlePress = () => {
+    cartRemove();
+    deleteOrgInfo();
+  };
+
   return (
-    <TouchableOpacity
-      style={[styles.btn, style]}
-      onPress={() => deleteOrgInfo()}>
+    <TouchableOpacity style={[styles.btn, style]} onPress={handlePress}>
       <Icon style={styles.icon} name="location-on" />
       <Text style={styles.text}>
-        {organisation?.city}, {organisation?.address}
+        {data?.city}, {data?.address}
       </Text>
     </TouchableOpacity>
   );
@@ -44,5 +66,9 @@ export const styles = StyleSheet.create({
     color: COLORS.main,
     fontWeight: '500',
     fontSize: 14,
+  },
+  skeleton: {
+    height: 22,
+    borderRadius: 4,
   },
 });

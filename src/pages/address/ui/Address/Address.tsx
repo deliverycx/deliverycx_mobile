@@ -1,25 +1,25 @@
-import React, {FC, useEffect, useRef, useCallback} from 'react';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {FC, useCallback, useEffect, useRef} from 'react';
+import {SubmitHandler} from 'react-hook-form';
 import {
   KeyboardAvoidingView,
+  SafeAreaView,
   StyleSheet,
   View,
-  SafeAreaView,
 } from 'react-native';
-import {SubmitHandler} from 'react-hook-form';
 import Toast from 'react-native-toast-message';
-import {AddressMap, AddressMapRef} from '../AddressMap';
-import {AddressInputs} from '../AddressInputs';
+import {OrderForm, useOrderFormContext} from '../../../../entities/order';
+import {useOrgCity} from '../../../../entities/organisations';
+import {Routes, StackParamList} from '../../../../shared/routes';
 import {COLORS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {Container} from '../../../../shared/ui/Container';
-import {useInitialPosition} from '../../hooks/useInitialPosition';
-import {Routes, StackParamList} from '../../../../shared/routes';
+import {AddressForm, useAddressFormContext} from '../../../../widgets/address';
 import {useGeoData} from '../../hooks/useGeoData';
-import {useOrgCity} from '../../../../entities/organisations';
-import {useHeaderHeight} from '@react-navigation/elements';
-import {useAddressFormContext, AddressForm} from '../../../../widgets/address';
-import {OrderForm, useOrderFormContext} from '../../../../entities/order';
+import {useInitialPosition} from '../../hooks/useInitialPosition';
+import {AddressInputs} from '../AddressInputs';
+import {AddressMap, AddressMapRef} from '../AddressMap';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Address>;

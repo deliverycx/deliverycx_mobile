@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
+import {Linking, StyleSheet, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {WebView} from 'react-native-webview';
-import LinearGradient from 'react-native-linear-gradient';
-import {Linking, StyleSheet, View} from 'react-native';
 import {useOrgYaPlaceQuery} from '../../queries/orgYaPlaceQueries.ts';
 
 type Props = {

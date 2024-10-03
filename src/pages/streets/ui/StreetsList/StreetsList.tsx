@@ -1,17 +1,17 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC, useLayoutEffect, useMemo, useState} from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
-  TextInputFocusEventData,
   SafeAreaView,
   StyleSheet,
+  TextInputFocusEventData,
 } from 'react-native';
-import {ListButton} from '../../../../shared/ui/ListButton';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes, StackParamList} from '../../../../shared/routes';
-import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useStreetDataQuery} from '../../../../entities/geo';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {Routes, StackParamList} from '../../../../shared/routes';
 import {COLORS, INDENTS} from '../../../../shared/styles';
+import {ListButton} from '../../../../shared/ui/ListButton';
 import {AddressForm, useAddressFormContext} from '../../../../widgets/address';
 
 type Props = {

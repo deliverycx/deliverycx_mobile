@@ -1,6 +1,6 @@
-import {useCurrentOrgStore} from '../../../entities/organisations';
-import {useUserStore} from '../../../entities/user/stores/useUserStore';
 import {useCartItemsQuery} from '../../../entities/cart';
+import {useCurrentOrgStore} from '../../../entities/organisations';
+import {useUserStore} from '../../../entities/user';
 
 export const useCartItems = () => {
   const orgId = useCurrentOrgStore(state => state.orgId);

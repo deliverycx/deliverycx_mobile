@@ -1,12 +1,12 @@
+import React, {FC, memo, useMemo, useRef} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Marker, YaMap} from 'react-native-yamap';
+import {Point} from 'react-native-yamap/src/interfaces';
 import {GeoMarker} from '../../../../shared/ui/CustomIcons/GeoMarker.tsx';
-import React, {FC, useMemo, useRef, memo} from 'react';
 import {
   Organisation,
   OrganisationsResponseModel,
 } from '../../types/organisationsTypes';
-import {Point} from 'react-native-yamap/src/interfaces';
 
 type Props = {
   data: OrganisationsResponseModel;

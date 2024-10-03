@@ -1,5 +1,3 @@
-import {exp} from '@gorhom/bottom-sheet/lib/typescript/utilities/easingExp';
-
 export interface Kladr {
   id: string;
   name: string;

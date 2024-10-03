@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Text, TouchableOpacity, StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {COLORS} from '../../../../shared/styles';
 import {Icon} from '../../../../shared/ui/Icon';
 

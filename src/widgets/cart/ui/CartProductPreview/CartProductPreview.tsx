@@ -1,15 +1,18 @@
 import React, {FC} from 'react';
-import {Text, View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Counter} from '../../../../shared/ui/Counter';
-import {COLORS} from '../../../../shared/styles';
-import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {useCartUpdate, useCartRemove} from '../../../../entities/cart';
-import {useCurrentOrgStore} from '../../../../entities/organisations';
-import {useUserStore} from '../../../../entities/user/stores/useUserStore';
-import {CartItem} from '../../../../entities/cart';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {
+  CartItem,
+  useCartRemove,
+  useCartUpdate,
+} from '../../../../entities/cart';
+import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useUserStore} from '../../../../entities/user';
+import {COLORS} from '../../../../shared/styles';
+import {Counter} from '../../../../shared/ui/Counter';
+import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 
 type Props = {
   data: CartItem;

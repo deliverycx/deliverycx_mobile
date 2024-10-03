@@ -1,11 +1,13 @@
-import {QueryClient, useMutation} from '@tanstack/react-query';
+import {QueryClient, useIsMutating, useMutation} from '@tanstack/react-query';
 import {removeApi} from '../api/cartApi';
-import {CartRemoveItemRequestModel} from '../types/cartRemoveItemTypes';
 import {
   CartAllItemResponseModel,
   CartAllItemsRequestModel,
 } from '../types/cartAllItemsTypes.ts';
-import {QUERY_KEY} from './cartAllItemsQueries.ts';
+import {CartRemoveItemRequestModel} from '../types/cartRemoveItemTypes';
+import {QUERY_KEY as ALL_ITEMS_QUERY_KEY} from './cartAllItemsQueries';
+
+const QUERY_KEY = 'CART_REMOVE_ITEM';
 
 const removeItem = async (params: CartRemoveItemRequestModel) => {
   const {data} = await removeApi(params);
@@ -19,9 +21,10 @@ export const useRemoveItem = (
 ) => {
   return useMutation({
     mutationFn: removeItem,
+    mutationKey: [QUERY_KEY],
     onSuccess: ({deletedId, ...rest}) => {
       queryClient.setQueryData(
-        [QUERY_KEY, params.userid, params.organization],
+        [ALL_ITEMS_QUERY_KEY, params.userid, params.organization],
         (state: CartAllItemResponseModel) => {
           const nextCart = state.cart.filter(
             cartState => cartState.id !== deletedId,
@@ -34,5 +37,11 @@ export const useRemoveItem = (
         },
       );
     },
+  });
+};
+
+export const useIsRemoveItemMutating = () => {
+  return useIsMutating({
+    mutationKey: [QUERY_KEY],
   });
 };

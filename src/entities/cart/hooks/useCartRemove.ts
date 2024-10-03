@@ -1,8 +1,8 @@
 import {useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
 import {useRemoveItem} from '../queries/cartRemoveQueries';
-import {useCartCallbackQueue} from './useCartCallbackQueue';
 import {useCartStore} from '../stores/useCartStore';
+import {useCartCallbackQueue} from './useCartCallbackQueue';
 
 type Params = {
   orgId: string;

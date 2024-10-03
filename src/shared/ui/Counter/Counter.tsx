@@ -27,6 +27,7 @@ interface Props {
   size?: keyof typeof Size;
   style?: StyleProp<ViewStyle>;
   variant?: keyof typeof Variant;
+  max?: number;
 }
 
 export const Counter: FC<Props> = ({
@@ -35,6 +36,7 @@ export const Counter: FC<Props> = ({
   size = Size.sm,
   style,
   variant = Variant.primary,
+  max,
 }) => {
   const runLightHaptics = () => {
     hapticFeedback('impactLight');
@@ -47,7 +49,7 @@ export const Counter: FC<Props> = ({
 
   const handleInc = () => {
     runLightHaptics();
-    onChange(value + 1);
+    onChange(typeof max === 'number' ? Math.min(value + 1, max) : value + 1);
   };
 
   return (

@@ -1,8 +1,8 @@
 import {QueryClient, useMutation} from '@tanstack/react-query';
 import {deleteAllItemsApi} from '../api/cartApi';
+import {CartAllItemsRequestModel} from '../types/cartAllItemsTypes';
 import {CartDeleteAllItemsRequestModel} from '../types/cartDeleteAllTypes';
 import {fetchCartItems} from './cartAllItemsQueries';
-import {CartAllItemsRequestModel} from '../types/cartAllItemsTypes';
 
 const deleteAllItemsItem = async (params: CartDeleteAllItemsRequestModel) => {
   const {data} = await deleteAllItemsApi(params);

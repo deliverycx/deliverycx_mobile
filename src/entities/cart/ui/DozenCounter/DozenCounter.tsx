@@ -1,9 +1,9 @@
 import React, {FC, useMemo} from 'react';
-import {StyleProp, Text, View, ViewStyle, StyleSheet} from 'react-native';
-import {TwoKhinkali} from '../../../../shared/ui/CustomIcons/TwoKhinkali';
-import {CartAllItemResponseModel} from '../../types/cartAllItemsTypes';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {COLORS} from '../../../../shared/styles';
+import {TwoKhinkali} from '../../../../shared/ui/CustomIcons/TwoKhinkali';
 import {Icon} from '../../../../shared/ui/Icon';
+import {CartAllItemResponseModel} from '../../types/cartAllItemsTypes';
 
 type Props = {
   style?: StyleProp<ViewStyle>;

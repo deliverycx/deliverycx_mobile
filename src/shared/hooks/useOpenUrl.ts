@@ -1,5 +1,5 @@
-import {Alert, Linking} from 'react-native';
 import {useCallback} from 'react';
+import {Alert, Linking} from 'react-native';
 
 export const useOpenUrl = () => {
   return useCallback(async (url: string) => {

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Icon} from '../../../shared/ui/Icon';
-import {COLORS} from '../../../shared/styles';
 import {useCurrentOrg} from '../../../entities/organisations';
+import {COLORS} from '../../../shared/styles';
+import {Icon} from '../../../shared/ui/Icon';
 
 export const ScreenOptions = () => {
-  const organisation = useCurrentOrg();
+  const {data} = useCurrentOrg();
 
-  const headerTitle = organisation?.city + ', ' + organisation?.address;
+  const headerTitle = data?.city + ', ' + data?.address;
 
   return {
     tabBarIcon: ({color}: {color: string}) => (

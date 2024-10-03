@@ -1,11 +1,11 @@
-import React, {type FC, ReactElement} from 'react';
+import React, {ReactElement, type FC} from 'react';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableHighlight,
-  type TouchableHighlightProps,
-  ActivityIndicator,
   View,
+  type TouchableHighlightProps,
 } from 'react-native';
 import {COLORS} from '../../styles';
 import {hexToRgba} from '../../utils/hexToRgba';

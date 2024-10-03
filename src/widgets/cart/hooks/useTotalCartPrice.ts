@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
-import {getFormatPrice} from '../../../shared/utils/getFormatPrice';
 import {useCartItemsQuery} from '../../../entities/cart';
 import {useCurrentOrgStore} from '../../../entities/organisations';
 import {useUserStore} from '../../../entities/user/stores/useUserStore';
+import {getFormatPrice} from '../../../shared/utils/getFormatPrice';
 
 export const useTotalCartPrice = () => {
   const orgId = useCurrentOrgStore(state => state.orgId);

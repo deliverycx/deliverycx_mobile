@@ -1,23 +1,23 @@
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AxiosError} from 'axios';
 import {useState} from 'react';
+import {Alert} from 'react-native';
 import {
-  OrderForm,
   OrderCreateModel,
+  OrderForm,
   useCreateOrderQuery,
   useOrderCheckQuery,
 } from '../../../entities/order';
-import {useStreets} from '../../../widgets/order';
 import {useCurrentOrg} from '../../../entities/organisations';
 import {useUserStore} from '../../../entities/user';
-import {useCartItems} from '../../../widgets/cart';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Routes, StackParamList} from '../../../shared/routes';
+import {OrderType} from '../../../shared/types/order';
+import {useCartItems} from '../../../widgets/cart';
+import {useStreets} from '../../../widgets/order';
 import {formatDateForOrder} from '../utils/formatDateForOrder';
 import {formatTimeForOrder} from '../utils/formatTimeForOrder';
-import {OrderType} from '../../../shared/types/order';
-import {AxiosError} from 'axios';
-import {Alert} from 'react-native';
-import {showOrderAlertFail} from '../utils/showOrderAlertFail.ts';
+import {showOrderAlertFail} from '../utils/showOrderAlertFail';
 
 export const useOrderSubmit = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
@@ -25,7 +25,7 @@ export const useOrderSubmit = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const streets = useStreets();
-  const org = useCurrentOrg()!;
+  const {data} = useCurrentOrg()!;
   const {data: cartData} = useCartItems();
 
   const userId = useUserStore(state => state.user?.id);
@@ -36,6 +36,10 @@ export const useOrderSubmit = () => {
   const onSubmit = async (values: OrderForm) => {
     setIsFetching(true);
 
+    if (!data) {
+      return;
+    }
+
     const payload: OrderCreateModel = {
       comment: values.comment,
       date: formatDateForOrder(new Date()),
@@ -43,15 +47,15 @@ export const useOrderSubmit = () => {
       hash: '',
       localhost: 'https://xn--80apgfh0ct5a.xn--p1ai',
       money: 0,
-      organizationid: org.guid,
-      organization: org.guid,
+      organizationid: data.guid,
+      organization: data.guid,
       paymentMethod: values.paymentMethod,
       name: values.name,
       phone: values.phone,
       timedelivery: values.deliveryDate
         ? formatTimeForOrder(values.deliveryDate)
         : '',
-      terminal: org.terminal,
+      terminal: data.terminal,
       userid: userId!,
       orderType: values.orderType,
       orderAmount: cartData?.totalPrice!,
@@ -60,7 +64,7 @@ export const useOrderSubmit = () => {
 
     if (values.orderType === OrderType.Courier) {
       payload.address = {
-        city: org.city,
+        city: data.city,
         street: values.street,
         home: values.house,
         flat: values.flat,

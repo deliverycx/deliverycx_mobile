@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
-import {getNextTimeRange} from '../utils/getNextTimeRange';
-import {getCurrentTimeRange} from '../utils/getCurrentTimeRange';
 import {getCurrentLocalHour} from '../../../shared/utils/getCurrentLocalHour';
+import {getCurrentTimeRange} from '../utils/getCurrentTimeRange';
+import {getNextTimeRange} from '../utils/getNextTimeRange';
 
 const timeToMinutes = (time: string) => {
   let [hours, minutes] = time.split(':').map(Number);
@@ -23,7 +23,7 @@ export const useWorkTimeStatusMessage = (workTime: string[]) => {
       let [startTime, endTime] = range.split('-').map(timeToMinutes);
       let timeInMinutes = timeToMinutes(localHour + ':00');
 
-      if (timeInMinutes >= startTime && timeInMinutes <= endTime) {
+      if (timeInMinutes >= startTime && timeInMinutes < endTime) {
         return `Открыто до ${range.split('-')[1]}`;
       } else {
         const toRange = timeInMinutes >= endTime ? nextDayRange : range;

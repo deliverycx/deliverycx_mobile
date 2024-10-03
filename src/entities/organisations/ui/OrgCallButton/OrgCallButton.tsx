@@ -1,19 +1,19 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {Icon} from '../../../../shared/ui/Icon';
-import {useCurrentOrg} from '../../hooks/useCurrentOrg';
-import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
 import {COLORS} from '../../../../shared/styles';
+import {Icon} from '../../../../shared/ui/Icon';
+import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
+import {useCurrentOrg} from '../../hooks/useCurrentOrg';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
 export const OrgCallButton: FC<Props> = ({style}) => {
-  const organisation = useCurrentOrg();
+  const {data} = useCurrentOrg();
 
   const onButtonPress = () => {
-    phoneByNumber(organisation!.phone);
+    phoneByNumber(data!.phone);
   };
 
   return (

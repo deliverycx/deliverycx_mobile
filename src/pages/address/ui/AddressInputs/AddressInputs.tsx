@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
+import {StyleSheet, View} from 'react-native';
 import {Input} from '../../../../shared/ui/Input';
 import {InputButton} from '../../../../shared/ui/InputButton';
 import {AddressForm} from '../../../../widgets/address';

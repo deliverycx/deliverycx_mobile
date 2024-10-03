@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
-import {FullProduct} from '../../../shared/types/productTypes';
 import {Category} from '../../../entities/products';
+import {FullProduct} from '../../../shared/types/productTypes';
 
 export const useSectionProducts = (
   products: FullProduct[] | null,

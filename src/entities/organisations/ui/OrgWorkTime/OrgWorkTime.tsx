@@ -1,6 +1,6 @@
-import {Button} from '../../../../shared/ui/Button';
 import React, {FC} from 'react';
 import {Alert, StyleProp, ViewStyle} from 'react-native';
+import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
 import {useWeekWorkTimeTemplate} from '../../hooks/useWeekWorkTimeTemplate';
 import {useWorkTimeStatusMessage} from '../../hooks/useWorkTimeStatusMessage.ts';

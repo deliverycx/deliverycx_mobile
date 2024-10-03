@@ -1,14 +1,14 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC, useLayoutEffect, useState} from 'react';
 import {
   NativeSyntheticEvent,
   SafeAreaView,
-  TextInputFocusEventData,
   StyleSheet,
+  TextInputFocusEventData,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes, StackParamList} from '../../../../shared/routes';
 import {CitiesList, City} from '../../../../entities/cities';
+import {Routes, StackParamList} from '../../../../shared/routes';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Cities>;

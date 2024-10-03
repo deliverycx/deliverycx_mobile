@@ -1,55 +1,45 @@
 import {FC, useEffect} from 'react';
 import {Alert} from 'react-native';
-import {OrganisationStatus} from '../../types/orgOrgStatusTypes';
-import {isTimeAfterRange} from '../../utils/isTimeAfterRange';
-import {isCurrentTimeInRange} from '../../utils/isCurrentTimeInRange';
-import {getToTime} from '../../utils/getToTime';
 import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
-import {useAlertsData} from '../../hooks/useAlertsData';
+import {useOrganisationQuery} from '../../queries/organisationQueries';
+import {OrganisationStatus} from '../../types/orgOrgStatusTypes';
+import {getToTime} from '../../utils/getToTime';
+import {isCurrentTimeInRange} from '../../utils/isCurrentTimeInRange';
+import {isTimeAfterRange} from '../../utils/isTimeAfterRange';
 
 type Props = {
+  currentWorkTime: string;
+  deliveryWorkTime: string;
+  delivery: boolean;
   orgId: string;
-  cityId: string;
+  organizationStatus: OrganisationStatus;
 };
 
-export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
-  const {
-    organizationStatus,
-    currentWorkTime,
-    nextWorkTime,
-    delivery,
-    deliveryWorkTime,
-    nextDeliveryWorkTime,
-    phone,
-  } = useAlertsData(cityId, orgId);
+export const OrgAlerts: FC<Props> = ({
+  delivery,
+  deliveryWorkTime,
+  currentWorkTime,
+  orgId,
+  organizationStatus,
+}) => {
+  const {data} = useOrganisationQuery({organizationId: orgId});
 
   const isWork = organizationStatus === OrganisationStatus.Work;
-  const hasAllData = !!(organizationStatus && currentWorkTime);
+  const phone = data?.phone ?? '';
 
-  let isOrgWorking: boolean | undefined;
-  let isOrgClosing: boolean | undefined;
-
-  if (hasAllData) {
-    isOrgWorking = isCurrentTimeInRange(currentWorkTime);
-    isOrgClosing = isTimeAfterRange(deliveryWorkTime!);
-  }
+  const isOrgWorking = isCurrentTimeInRange(currentWorkTime);
+  const isOrgClosing = isTimeAfterRange(deliveryWorkTime);
 
   useEffect(() => {
-    if (!hasAllData || !isWork) {
+    if (!isWork) {
       return;
     }
 
     if (!isOrgWorking) {
       const getAlertMessage = () => {
-        const timeAfterRange = isOrgClosing;
-
-        const takeAwayTimeMessage = `Самовывоз доступен ${
-          timeAfterRange ? nextWorkTime : currentWorkTime
-        }`;
+        const takeAwayTimeMessage = `Самовывоз доступен ${currentWorkTime}`;
         const deliveryTimeMessage = delivery
-          ? `\nДоставка доступна ${
-              timeAfterRange ? nextDeliveryWorkTime : deliveryWorkTime
-            }`
+          ? `\nДоставка доступна ${deliveryWorkTime}`
           : '';
 
         return takeAwayTimeMessage + deliveryTimeMessage;
@@ -60,19 +50,16 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
       ]);
     }
   }, [
-    nextDeliveryWorkTime,
-    hasAllData,
     currentWorkTime,
     delivery,
     deliveryWorkTime,
     isWork,
-    nextWorkTime,
     isOrgClosing,
     isOrgWorking,
   ]);
 
   useEffect(() => {
-    if (!hasAllData || !isWork) {
+    if (!isWork) {
       return;
     }
 
@@ -95,7 +82,6 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
   }, [
     currentWorkTime,
     isWork,
-    hasAllData,
     delivery,
     deliveryWorkTime,
     isOrgWorking,
@@ -103,63 +89,47 @@ export const OrgAlerts: FC<Props> = ({orgId, cityId}) => {
   ]);
 
   useEffect(() => {
-    if (
-      !isWork &&
-      hasAllData &&
-      organizationStatus === OrganisationStatus.Open
-    ) {
+    if (!isWork && organizationStatus === OrganisationStatus.Open) {
       Alert.alert(
         'Готовимся к открытию',
         'Это заведение только готовится к открытию. Попробуйте выбрать другое ближайшее заведение',
         [{text: 'Хорошо'}],
       );
     }
-  }, [organizationStatus, isWork, hasAllData]);
+  }, [organizationStatus, isWork]);
 
   useEffect(() => {
-    if (
-      !isWork &&
-      hasAllData &&
-      organizationStatus === OrganisationStatus.NoWork
-    ) {
+    if (!isWork && organizationStatus === OrganisationStatus.NoWork) {
       Alert.alert(
         'В этом заведении нет онлайн заказа',
         'С удовольствием примем его немного позднее, а пока можете ознкомиться с нашим меню',
         [{text: 'Хорошо'}],
       );
     }
-  }, [organizationStatus, isWork, hasAllData]);
+  }, [organizationStatus, isWork]);
 
   useEffect(() => {
-    if (
-      !isWork &&
-      hasAllData &&
-      organizationStatus === OrganisationStatus.NoDelivery
-    ) {
+    if (!isWork && organizationStatus === OrganisationStatus.NoDelivery) {
       Alert.alert(
         'В этом заведении онлайн заказ временно не доступен',
         'Но вы можете позвонить нам, и мы с удовольствием примем ваш заказ по телефону',
         [
           {text: 'Хорошо'},
-          {text: 'Позвонить', onPress: () => phoneByNumber(phone!)},
+          {text: 'Позвонить', onPress: () => phoneByNumber(phone)},
         ],
       );
     }
-  }, [organizationStatus, isWork, hasAllData, phone]);
+  }, [organizationStatus, isWork, phone]);
 
   useEffect(() => {
-    if (
-      !isWork &&
-      hasAllData &&
-      organizationStatus === OrganisationStatus.SezonNotWork
-    ) {
+    if (!isWork && organizationStatus === OrganisationStatus.SezonNotWork) {
       Alert.alert(
         'Заведение временно не работает',
         'Временное закрытие заведения в связи с текущим несезонным временем года.',
         [{text: 'Хорошо'}],
       );
     }
-  }, [organizationStatus, isWork, hasAllData]);
+  }, [organizationStatus, isWork]);
 
   return null;
 };

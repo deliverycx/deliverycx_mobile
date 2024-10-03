@@ -1,9 +1,9 @@
+import type {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes, StackParamList} from '../../../../shared/routes';
-import type {RouteProp} from '@react-navigation/native';
 import {OrgMapLayout} from '../../../../entities/organisations';
+import {Routes, StackParamList} from '../../../../shared/routes';
 
 type Props = {
   route: RouteProp<StackParamList, Routes.Organisations>;

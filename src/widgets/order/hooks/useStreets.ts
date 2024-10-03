@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
-import {useCurrentOrgStore} from '../../../entities/organisations';
 import {useStreetDataQuery} from '../../../entities/geo';
+import {useCurrentOrgStore} from '../../../entities/organisations';
 
 export const useStreets = () => {
   const orgId = useCurrentOrgStore(state => state.orgId);

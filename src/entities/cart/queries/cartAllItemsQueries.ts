@@ -27,6 +27,7 @@ export const useCartItemsQuery = (params: CartAllItemsRequestModel) => {
   return useQuery({
     queryKey: [QUERY_KEY, params.userid, params.organization],
     queryFn: () => getAllItems(params),
+    notifyOnChangeProps: 'all',
   });
 };
 

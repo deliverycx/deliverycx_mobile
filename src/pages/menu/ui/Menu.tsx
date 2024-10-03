@@ -1,7 +1,7 @@
 import React from 'react';
-import {ProductMenuList} from '../../../widgets/products';
 import {useCurrentOrgStore} from '../../../entities/organisations';
-import {useListInsets} from '../../../shared/hooks/useListInsets.ts';
+import {useListInsets} from '../../../shared/hooks/useListInsets';
+import {ProductMenuList} from '../../../widgets/products';
 
 export const Menu = () => {
   const {scrollIndicatorInsets, contentInset} = useListInsets();

@@ -1,5 +1,5 @@
 import React, {type FC, type PropsWithChildren} from 'react';
-import {View, StyleSheet, type ViewStyle, type StyleProp} from 'react-native';
+import {StyleSheet, View, type StyleProp, type ViewStyle} from 'react-native';
 import {INDENTS} from '../../styles';
 
 type Props = {

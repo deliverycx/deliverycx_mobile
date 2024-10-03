@@ -1,15 +1,15 @@
+import {useQueryClient} from '@tanstack/react-query';
 import {useCallback, useMemo, useState} from 'react';
-import {useCurrentOrgStore} from '../../../entities/organisations';
 import {
   GeoLocateAddressRequestModel,
-  fetchGeoLocateAddressData,
   fetchAddressById,
   fetchCleanAddress,
+  fetchGeoLocateAddressData,
   useStreetDataQuery,
 } from '../../../entities/geo';
-import {useQueryClient} from '@tanstack/react-query';
-import {debouncePromise} from '../../../shared/utils/debouncePromise';
+import {useCurrentOrgStore} from '../../../entities/organisations';
 import {Position} from '../../../shared/types/map';
+import {debouncePromise} from '../../../shared/utils/debouncePromise';
 
 const REQUEST_DELAY_MS = 600;
 

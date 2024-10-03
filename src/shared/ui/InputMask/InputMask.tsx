@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
 import React, {FC} from 'react';
+import {StyleSheet} from 'react-native';
 import TextInputMask, {TextInputMaskProps} from 'react-native-text-input-mask';
 import {COLORS} from '../../styles';
 

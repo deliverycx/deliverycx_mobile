@@ -1,9 +1,9 @@
 import React, {FC, useMemo} from 'react';
-import {Text, StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
-import {useKhinkaliCounterQuery} from '../../queries/orgKhinkaliCounterQueries';
-import {COLORS} from '../../../../shared/styles';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {COLORS} from '../../../../shared/styles';
+import {useKhinkaliCounterQuery} from '../../queries/orgKhinkaliCounterQueries';
 
 type Props = {
   orgId: string;

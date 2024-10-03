@@ -1,6 +1,5 @@
-import React, {FC, useEffect, useRef, useMemo} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {OrgGallery} from '../OrgGallery';
+import React, {FC, useEffect, useMemo, useRef} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -10,19 +9,20 @@ import {
 } from 'react-native';
 import 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {COLORS} from '../../../../shared/styles';
 import {Container} from '../../../../shared/ui/Container';
 import {Icon} from '../../../../shared/ui/Icon';
 import {Modal} from '../../../../shared/ui/Modal';
-import {COLORS} from '../../../../shared/styles';
+import {useOrgAlertsSubscriber} from '../../providers/OrgAlertsProvider';
 import {Organisation} from '../../types/organisationsTypes';
-import {OrgRating} from '../OrgRating';
-import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
-import {OrgWorkTime} from '../OrgWorkTime';
-import {OrgPhone} from '../OrgPhone';
 import {OrgFilters} from '../OrgFilters';
-import {useOrgStatusAlerts} from '../../providers/OrgStatusAlertsProvider';
+import {OrgGallery} from '../OrgGallery';
+import {OrgKhinkaliCounter} from '../OrgKhinkaliCounter';
 import {OrgNoDeliveryAlert} from '../OrgNoDeliveryAlert';
+import {OrgPhone} from '../OrgPhone';
+import {OrgRating} from '../OrgRating';
 import {OrgSelectButton} from '../OrgSelectButton';
+import {OrgWorkTime} from '../OrgWorkTime';
 
 type Props = {
   onCloseRequest: () => void;
@@ -35,7 +35,8 @@ const FILTER_ITEM = 16;
 const FILTER_ITEM_ROW_GAP = 10;
 
 export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
-  useOrgStatusAlerts(data.cityid._id, data.guid);
+  useOrgAlertsSubscriber(data.guid);
+
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -60,7 +61,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
         onDismiss={onCloseRequest}
         footerComponent={() => (
           <Container style={{marginBottom: insets.bottom}}>
-            <OrgSelectButton orgId={data.guid} cityId={data.cityid._id} />
+            <OrgSelectButton orgId={data.guid} />
           </Container>
         )}
         ref={modalRef}
@@ -99,7 +100,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
           </Container>
         </ScrollView>
       </Modal>
-      <OrgNoDeliveryAlert cityId={data.cityid._id} orgId={data.guid} />
+      <OrgNoDeliveryAlert orgId={data.guid} />
     </>
   );
 };

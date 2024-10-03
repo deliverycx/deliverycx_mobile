@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import {Input, Props as InputProps} from '../Input';
 import {COLORS} from '../../styles';
+import {Input, Props as InputProps} from '../Input';
 
 type Props = {
   label: string;

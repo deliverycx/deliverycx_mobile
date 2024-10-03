@@ -3,6 +3,7 @@ export interface City {
   id: string;
   isHidden: boolean;
   name: string;
+  isHiddenOnMobile: boolean;
 }
 
 export interface CityRequestModel {}

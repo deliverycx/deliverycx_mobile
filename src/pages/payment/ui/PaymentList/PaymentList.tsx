@@ -1,11 +1,11 @@
-import React, {FC, useMemo} from 'react';
-import {FlatList, StyleSheet, SafeAreaView} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {FC, useMemo} from 'react';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {useOrderFormContext} from '../../../../entities/order';
 import {Routes, StackParamList} from '../../../../shared/routes';
-import {ListButton} from '../../../../shared/ui/ListButton';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {PaymentMethod} from '../../../../shared/types/order';
-import {useOrderFormContext} from '../../../../entities/order';
+import {ListButton} from '../../../../shared/ui/ListButton';
 
 type Props = {
   navigation: NativeStackNavigationProp<StackParamList, Routes.Payment>;
