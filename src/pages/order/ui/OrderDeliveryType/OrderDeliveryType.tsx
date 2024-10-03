@@ -23,10 +23,11 @@ export const OrderDeliveryType: FC<Props> = ({style, onChange, value}) => {
   const handleChange = (nextValue: string) => {
     if (delivery || nextValue === OrderType.Pickup) {
       onChange(nextValue);
+      return;
     }
 
     Alert.alert(
-      'В этом завдении доступен только самовывоз',
+      'В этом заведении доступен только самовывоз',
       'Если вы хотите оформить доставку курьером - попробуйте выбрать другое ближайшее заведение',
       [{text: 'Хорошо'}],
     );
