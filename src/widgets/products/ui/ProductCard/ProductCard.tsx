@@ -100,7 +100,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
             <View>
               <View style={styles.counter}>
                 <Counter
-                  max={100}
+                  max={99}
                   size="md"
                   value={count}
                   onChange={handleCounterChange}

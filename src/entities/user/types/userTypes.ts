@@ -6,3 +6,7 @@ export interface User {
 export interface UserRequestModel {}
 
 export interface UserResponseModel extends User {}
+
+export interface CheckGuestRequestModel extends User {}
+
+export interface CheckGuestResponseModel extends User {}

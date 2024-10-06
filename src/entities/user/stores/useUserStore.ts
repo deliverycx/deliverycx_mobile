@@ -9,7 +9,7 @@ type State = {
 };
 
 type Actions = {
-  setUser: (user: User) => void;
+  setUser: (user: User | null) => void;
 };
 
 export const useUserStore = create<State & Actions>()(
@@ -17,7 +17,7 @@ export const useUserStore = create<State & Actions>()(
     persist(
       set => ({
         user: null,
-        setUser: (user: User) => {
+        setUser: (user: User | null) => {
           set({
             user,
           });

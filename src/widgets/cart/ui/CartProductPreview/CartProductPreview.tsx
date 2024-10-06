@@ -77,7 +77,7 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
               LinearGradient={LinearGradient}
             />
           ) : (
-            <Counter max={100} value={count} onChange={handleCounterChange} />
+            <Counter max={99} value={count} onChange={handleCounterChange} />
           )}
         </View>
       </View>

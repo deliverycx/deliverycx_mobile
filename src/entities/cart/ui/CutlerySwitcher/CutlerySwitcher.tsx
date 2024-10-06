@@ -19,7 +19,7 @@ export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
       <View style={styles.right}>
         {count > 0 && (
           <Counter
-            max={100}
+            max={99}
             variant="secondary"
             value={count}
             onChange={onCountChange}

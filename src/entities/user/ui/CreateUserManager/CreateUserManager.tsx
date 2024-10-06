@@ -1,12 +1,15 @@
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
+import {useCheckGuest} from '../../queries/checkGuestQueries';
 import {useCreateUser} from '../../queries/userQueries';
 import {useUserStore} from '../../stores/useUserStore';
 
 export const CreateUserManager = () => {
   const user = useUserStore(state => state.user);
   const setUser = useUserStore(state => state.setUser);
-  const {mutateAsync} = useCreateUser();
+
+  const {mutateAsync: createUser} = useCreateUser();
+  const {mutateAsync: checkGuest} = useCheckGuest();
 
   const [hydrated, setHydrated] = useState(false);
 
@@ -27,7 +30,7 @@ export const CreateUserManager = () => {
 
     (async function () {
       try {
-        const userResponse = await mutateAsync();
+        const userResponse = await createUser();
         setUser(userResponse);
       } catch (err) {
         Alert.alert(
@@ -37,7 +40,21 @@ export const CreateUserManager = () => {
         );
       }
     })();
-  }, [user, setUser, mutateAsync, hydrated]);
+  }, [user, setUser, createUser, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated || !user) {
+      return;
+    }
+
+    (async function () {
+      try {
+        await checkGuest(user);
+      } catch (err) {
+        setUser(null);
+      }
+    })();
+  }, [hydrated, user, setUser, checkGuest]);
 
   return null;
 };
