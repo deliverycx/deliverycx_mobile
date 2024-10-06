@@ -5,17 +5,30 @@ import {
   useQuery,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import {checkOrderApi, createOrderApi, getOrderApi} from '../api/orderApi';
+import {
+  checkCartApi,
+  checkOrderApi,
+  createOrderApi,
+  getOrderApi,
+} from '../api/orderApi';
 import {GetOrderRequest, GetOrderResponse} from '../types/orderTypes';
 
 const ORDER_CHECK_KEY = 'ORDER_CHECK_KEY';
 const ORDER_GET_KEY = 'ORDER_GET_KEY';
 const ORDER_CREATE_KEY = 'ORDER_CREATE_KEY';
+const ORDER_CHECK_CART_KEY = 'ORDER_CHECK_CART_KEY';
 
 export const useOrderCheckQuery = () => {
   return useMutation({
     mutationKey: [ORDER_CHECK_KEY],
     mutationFn: checkOrderApi,
+  });
+};
+
+export const useOrderCheckCartQuery = () => {
+  return useMutation({
+    mutationKey: [ORDER_CHECK_CART_KEY],
+    mutationFn: checkCartApi,
   });
 };
 

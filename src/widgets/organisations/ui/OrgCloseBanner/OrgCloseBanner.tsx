@@ -27,6 +27,7 @@ export const OrgCloseBanner: FC<Props> = ({style}) => {
     organizationStatus,
   } = useExtendedOrgStatus(currentOrgId!, {
     enabled: !!currentOrgId,
+    notifyOnChangeProps: 'all',
   });
 
   const isWork = organizationStatus === OrganisationStatus.Work;
@@ -51,7 +52,7 @@ export const OrgCloseBanner: FC<Props> = ({style}) => {
     return (
       <Container>
         <View style={[styles.wrapper, style]}>
-          <Text style={styles.title}>Заведение уже закрыто</Text>
+          <Text style={styles.title}>Заведение закрыто</Text>
           <Text style={styles.accent}>{getAlertMessage()}</Text>
         </View>
       </Container>

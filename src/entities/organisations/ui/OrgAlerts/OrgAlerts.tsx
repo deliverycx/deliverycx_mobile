@@ -45,9 +45,7 @@ export const OrgAlerts: FC<Props> = ({
         return takeAwayTimeMessage + deliveryTimeMessage;
       };
 
-      Alert.alert('Заведение уже закрыто', getAlertMessage(), [
-        {text: 'Хорошо'},
-      ]);
+      Alert.alert('Заведение закрыто', getAlertMessage(), [{text: 'Хорошо'}]);
     }
   }, [
     currentWorkTime,

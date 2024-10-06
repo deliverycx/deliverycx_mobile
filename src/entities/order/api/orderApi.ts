@@ -1,5 +1,7 @@
 import {axiosInstance} from '../../../shared/api/axios';
 import {
+  CheckCartRequest,
+  CheckCartResponse,
   CheckOrderRequest,
   CheckOrderResponse,
   CreateOrderRequest,
@@ -21,4 +23,8 @@ export const createOrderApi = (params: CreateOrderRequest) => {
     '/order/createOrderMicro',
     params,
   );
+};
+
+export const checkCartApi = (params: CheckCartRequest) => {
+  return axiosInstance.post<CheckCartResponse>('/order/checkcart', params);
 };

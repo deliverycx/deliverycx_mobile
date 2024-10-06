@@ -59,3 +59,9 @@ export interface GetOrderResponse extends OrderModel {}
 export interface CreateOrderRequest extends OrderCreateModel {}
 
 export type CreateOrderResponse = boolean;
+
+export interface CheckCartRequest {
+  userid: string;
+}
+
+export type CheckCartResponse = string;

@@ -6,6 +6,7 @@ import {Alert} from 'react-native';
 import {
   OrderCreateModel,
   OrderForm,
+  showOrderAlertFail,
   useCreateOrderQuery,
   useOrderCheckQuery,
 } from '../../../entities/order';
@@ -17,7 +18,6 @@ import {useCartItems} from '../../../widgets/cart';
 import {useStreets} from '../../../widgets/order';
 import {formatDateForOrder} from '../utils/formatDateForOrder';
 import {formatTimeForOrder} from '../utils/formatTimeForOrder';
-import {showOrderAlertFail} from '../utils/showOrderAlertFail';
 
 export const useOrderSubmit = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();

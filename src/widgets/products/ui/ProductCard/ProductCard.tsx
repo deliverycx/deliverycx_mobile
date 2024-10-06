@@ -2,10 +2,11 @@ import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types
 import React, {useEffect, useRef, useState, type FC} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {createImageProgress} from 'react-native-image-progress';
 import {useCartAdd} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {getProductWeightText} from '../../../../entities/products';
-import {useUserStore} from '../../../../entities/user/stores/useUserStore';
+import {useUserStore} from '../../../../entities/user';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {Product} from '../../../../shared/types/productTypes';
 import {Button} from '../../../../shared/ui/Button';
@@ -23,6 +24,8 @@ interface Props {
 
 const INITIAL_COUNT = 1;
 const SNAP_POINTS = ['100%'];
+
+const Image = createImageProgress(FastImage);
 
 export const ProductCard: FC<Props> = ({onClosed, data}) => {
   const {name, description, price, weight, image, measureUnit} = data;
@@ -83,7 +86,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
       <SafeAreaView style={styles.safeAreaView}>
         <Container style={styles.wrapper}>
           <DownButton onPress={onClosed} style={styles.downButton} />
-          <FastImage
+          <Image
             resizeMode="contain"
             style={styles.img}
             source={{uri: image}}

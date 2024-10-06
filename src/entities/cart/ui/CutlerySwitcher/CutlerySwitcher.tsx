@@ -18,7 +18,12 @@ export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
       </View>
       <View style={styles.right}>
         {count > 0 && (
-          <Counter variant="secondary" value={count} onChange={onCountChange} />
+          <Counter
+            max={100}
+            variant="secondary"
+            value={count}
+            onChange={onCountChange}
+          />
         )}
         <Switch
           trackColor={{true: COLORS.success}}

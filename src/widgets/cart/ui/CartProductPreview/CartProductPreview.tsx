@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {createImageProgress} from 'react-native-image-progress';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {
@@ -18,6 +19,8 @@ type Props = {
   data: CartItem;
   style?: StyleProp<ViewStyle>;
 };
+
+const Image = createImageProgress(FastImage);
 
 export const CartProductPreview: FC<Props> = ({data, style}) => {
   const {productImage, price, productName, productId, oneprice} = data;
@@ -54,7 +57,7 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
 
   return (
     <View style={[styles.wrapper, style]}>
-      <FastImage
+      <Image
         style={styles.img}
         resizeMode="contain"
         source={{uri: productImage}}
@@ -74,7 +77,7 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
               LinearGradient={LinearGradient}
             />
           ) : (
-            <Counter value={count} onChange={handleCounterChange} />
+            <Counter max={100} value={count} onChange={handleCounterChange} />
           )}
         </View>
       </View>

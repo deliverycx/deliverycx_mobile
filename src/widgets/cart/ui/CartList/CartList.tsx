@@ -32,9 +32,10 @@ import {CartProductPreview} from '../CartProductPreview';
 type Props = {
   onSubmit: () => void;
   style?: StyleProp<ViewStyle>;
+  isLoading: boolean;
 };
 
-export const CartList: FC<Props> = ({onSubmit, style}) => {
+export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
   const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
 
@@ -115,7 +116,7 @@ export const CartList: FC<Props> = ({onSubmit, style}) => {
           <Container>
             <Button
               disabled={!!isOrgClosed}
-              loading={isCartMutating}
+              loading={isCartMutating || isLoading}
               onPress={onSubmit}
               text={`Оформить заказ на ${formattedTotalPrice}`}
             />
