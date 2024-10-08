@@ -106,31 +106,39 @@ export const Order: FC<Props> = ({navigation}) => {
                 <Controller
                   name="name"
                   control={control}
-                  render={({field: {value, onChange}}) => {
+                  rules={{
+                    required: true,
+                  }}
+                  render={({field: {value, onChange}, formState}) => {
                     return (
                       <Input
                         autoCapitalize="sentences"
                         value={value}
                         onChangeText={onChange}
-                        placeholder="Ваше имя"
+                        placeholder="Ваше имя *"
+                        color={formState.errors.name ? 'danger' : undefined}
                       />
                     );
                   }}
                 />
               </View>
               <Controller
+                rules={{
+                  required: true,
+                }}
                 name="phone"
                 control={control}
-                render={({field: {value, onChange}}) => {
+                render={({field: {value, onChange}, formState}) => {
                   return (
                     <InputMask
-                      placeholder="Номер телефона"
+                      placeholder="Номер телефона *"
                       value={value}
                       onChangeText={(_, extracted) => {
                         onChange(`+7${extracted}`);
                       }}
                       keyboardType="phone-pad"
                       mask={'+7 ([000]) [000] [00] [00]'}
+                      color={formState.errors.phone ? 'danger' : undefined}
                     />
                   );
                 }}

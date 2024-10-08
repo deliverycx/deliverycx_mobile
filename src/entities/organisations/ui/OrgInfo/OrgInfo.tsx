@@ -13,7 +13,9 @@ import {COLORS} from '../../../../shared/styles';
 import {Container} from '../../../../shared/ui/Container';
 import {Icon} from '../../../../shared/ui/Icon';
 import {Modal} from '../../../../shared/ui/Modal';
+import {useExtendedOrgStatus} from '../../hooks/useExtendedOrgStatus.ts';
 import {useOrgAlertsSubscriber} from '../../providers/OrgAlertsProvider';
+import {OrganisationStatus} from '../../types/orgOrgStatusTypes.ts';
 import {Organisation} from '../../types/organisationsTypes';
 import {OrgFilters} from '../OrgFilters';
 import {OrgGallery} from '../OrgGallery';
@@ -37,6 +39,8 @@ const FILTER_ITEM_ROW_GAP = 10;
 export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
   useOrgAlertsSubscriber(data.guid);
 
+  const {organizationStatus} = useExtendedOrgStatus(data.guid);
+
   const modalRef = useRef<BottomSheetModalMethods | null>(null);
 
   const insets = useSafeAreaInsets();
@@ -53,6 +57,18 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
     return CONTENT_WITHOUT_FILTERS_HEIGHT + filtersHeight;
   }, [data]);
 
+  const isDisabled = () => {
+    switch (organizationStatus) {
+      case OrganisationStatus.SezonNotWork:
+      case OrganisationStatus.NoWork:
+        return true;
+
+      default: {
+        return false;
+      }
+    }
+  };
+
   return (
     <>
       <Modal
@@ -61,7 +77,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
         onDismiss={onCloseRequest}
         footerComponent={() => (
           <Container style={{marginBottom: insets.bottom}}>
-            <OrgSelectButton orgId={data.guid} />
+            <OrgSelectButton disabled={isDisabled()} orgId={data.guid} />
           </Container>
         )}
         ref={modalRef}

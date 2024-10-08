@@ -100,11 +100,14 @@ export const OrgAlerts: FC<Props> = ({
     if (!isWork && organizationStatus === OrganisationStatus.NoWork) {
       Alert.alert(
         'В этом заведении нет онлайн заказа',
-        'С удовольствием примем его немного позднее, а пока можете ознкомиться с нашим меню',
-        [{text: 'Хорошо'}],
+        'Но вы можете позвонить нам, и мы с удовольствием примем ваш заказ по телефону',
+        [
+          {text: 'Хорошо'},
+          {text: 'Позвонить', onPress: () => phoneByNumber(phone)},
+        ],
       );
     }
-  }, [organizationStatus, isWork]);
+  }, [organizationStatus, isWork, phone]);
 
   useEffect(() => {
     if (!isWork && organizationStatus === OrganisationStatus.NoDelivery) {

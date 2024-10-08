@@ -11,6 +11,7 @@ import {
   FRANCHISE_URL,
   JOBS_URL,
   RIGHTS_URL,
+  SECRET_GUEST_URL,
   TELEGRAM_BOT_URL,
 } from '../../../../shared/consts';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
@@ -65,6 +66,11 @@ export const Contacts = () => {
             style={styles.item}
             onPress={() => openUrl(CALORIES_URL)}
             text="Калорийность и состав"
+          />
+          <ListButton
+            style={styles.item}
+            onPress={() => openUrl(SECRET_GUEST_URL)}
+            text="Стать тайным гостем"
           />
         </ScrollView>
         <View style={styles.versionWrapper}>

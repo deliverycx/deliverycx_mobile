@@ -8,9 +8,10 @@ import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 
 type Props = {
   orgId: string;
+  disabled?: boolean;
 };
 
-export const OrgSelectButton: FC<Props> = ({orgId}) => {
+export const OrgSelectButton: FC<Props> = ({orgId, disabled = false}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +32,11 @@ export const OrgSelectButton: FC<Props> = ({orgId}) => {
   };
 
   return (
-    <Button loading={loading} onPress={handleOrgChange} text="Перейти в меню" />
+    <Button
+      loading={loading}
+      disabled={disabled}
+      onPress={handleOrgChange}
+      text="Перейти в меню"
+    />
   );
 };
