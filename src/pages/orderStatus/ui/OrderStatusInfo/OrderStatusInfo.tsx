@@ -42,7 +42,12 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
 
   useEffect(() => {
     removeHashData();
-  }, [cartRemove, reset]);
+
+    if (variant === OSInfoVariant.success) {
+      cartRemove();
+      reset();
+    }
+  }, [cartRemove, variant, reset]);
 
   const isSuccess = variant === OSInfoVariant.success;
 
@@ -61,9 +66,6 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
   };
 
   const handleMenuGoPress = async () => {
-    cartRemove();
-    reset();
-
     navigation.replace(Routes.TabScreens);
   };
 

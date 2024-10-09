@@ -40,6 +40,7 @@ export const OrderFormProvider: FC<Props> = ({children}) => {
       orderType: OrderType.Pickup,
       paymentMethod: PaymentMethod.Cash,
       devices: 1,
+      comment: '',
     },
   });
 
