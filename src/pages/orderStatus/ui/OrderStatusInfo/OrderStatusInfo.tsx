@@ -1,13 +1,18 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useCartItemsRemove} from '../../../../entities/cart';
+import {useOrderFormContext} from '../../../../entities/order';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
+import {useOrgYaPlaceQuery} from '../../../../entities/organisations/queries/orgYaPlaceQueries';
 import {useUserStore} from '../../../../entities/user';
+import {TELEGRAM_BOT_URL} from '../../../../shared/consts';
+import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {Button} from '../../../../shared/ui/Button';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
+import {removeHashData} from '../../../../widgets/orderStatus';
 
 const enum OSInfoVariant {
   error = 'error',
@@ -25,10 +30,19 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
   const orgId = useCurrentOrgStore(state => state.orgId);
   const userId = useUserStore(state => state.user?.id);
 
+  const {data} = useOrgYaPlaceQuery({organization: orgId!});
+  const openUrl = useOpenUrl();
+
+  const {reset} = useOrderFormContext();
+
   const cartRemove = useCartItemsRemove({
     organization: orgId!,
     userid: userId!,
   });
+
+  useEffect(() => {
+    removeHashData();
+  }, [cartRemove, reset]);
 
   const isSuccess = variant === OSInfoVariant.success;
 
@@ -48,6 +62,8 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
 
   const handleMenuGoPress = async () => {
     cartRemove();
+    reset();
+
     navigation.replace(Routes.TabScreens);
   };
 
@@ -68,12 +84,24 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
         {isSuccess ? (
           <>
             <Button onPress={handleMenuGoPress} text="Перейти в меню" />
-            <Button variant="secondary" text="Оставить отзыв" />
+            <Button
+              onPress={() =>
+                openUrl(
+                  `https://yandex.ru/sprav/widget/rating-badge/${data?.goodplaceid}?type=award`,
+                )
+              }
+              variant="secondary"
+              text="Оставить отзыв"
+            />
           </>
         ) : (
           <>
             <Button onPress={handleBackPress} text="Вернуться назад" />
-            <Button variant="secondary" text="Сообщить об ошибке" />
+            <Button
+              onPress={() => openUrl(TELEGRAM_BOT_URL)}
+              variant="secondary"
+              text="Сообщить об ошибке"
+            />
           </>
         )}
       </View>

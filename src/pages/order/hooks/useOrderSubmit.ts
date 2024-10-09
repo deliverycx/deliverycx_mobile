@@ -16,6 +16,7 @@ import {Routes, StackParamList} from '../../../shared/routes';
 import {OrderType} from '../../../shared/types/order';
 import {useCartItems} from '../../../widgets/cart';
 import {useStreets} from '../../../widgets/order';
+import {saveHashData} from '../../../widgets/orderStatus';
 import {formatDateForOrder} from '../utils/formatDateForOrder';
 import {formatTimeForOrder} from '../utils/formatTimeForOrder';
 
@@ -78,15 +79,17 @@ export const useOrderSubmit = () => {
     try {
       const {data: hash} = await checkOrder(payload);
 
-      const {data} = await createOrder({
+      const {data: orderData} = await createOrder({
         ...payload,
         hash,
       });
 
-      if (!data) {
+      if (!orderData) {
         showOrderAlertFail();
         return;
       }
+
+      saveHashData(hash);
 
       navigation.replace(Routes.OrderStatus, {
         hash,

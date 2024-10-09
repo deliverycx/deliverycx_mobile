@@ -14,6 +14,7 @@ import {
 import {CreateUserManager, useUserStore} from './src/entities/user';
 import {ToastProvider} from './src/shared/providers/ToastProvider';
 import {AddressFormProvider} from './src/widgets/address';
+import {OrderStatusManager} from './src/widgets/orderStatus';
 
 type Props = {
   organisationsSlot: ReactNode;
@@ -37,13 +38,16 @@ export const Providers: FC<Props> = ({organisationsSlot, homeSlot}) => {
           <OrgAlertsProvider>
             <NavigationContainer>
               {isHomeSlotShown ? (
-                <OrgAlertsSubscriber orgId={currentOrgId}>
-                  <CartStateManager orgId={currentOrgId} userId={userId}>
-                    <OrderFormProvider>
-                      <AddressFormProvider>{homeSlot}</AddressFormProvider>
-                    </OrderFormProvider>
-                  </CartStateManager>
-                </OrgAlertsSubscriber>
+                <>
+                  <OrderStatusManager />
+                  <OrgAlertsSubscriber orgId={currentOrgId}>
+                    <CartStateManager orgId={currentOrgId} userId={userId}>
+                      <OrderFormProvider>
+                        <AddressFormProvider>{homeSlot}</AddressFormProvider>
+                      </OrderFormProvider>
+                    </CartStateManager>
+                  </OrgAlertsSubscriber>
+                </>
               ) : (
                 organisationsSlot
               )}
