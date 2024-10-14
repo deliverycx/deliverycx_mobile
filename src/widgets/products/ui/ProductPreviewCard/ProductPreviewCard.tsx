@@ -121,10 +121,10 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
             </View>
           </View>
         </Pressable>
-        {isProductModalShown && (
-          <ProductCard data={data} onClosed={handleProductCardClosed} />
-        )}
       </Animated.View>
+      {isProductModalShown && (
+        <ProductCard data={data} onClosed={handleProductCardClosed} />
+      )}
     </>
   );
 };

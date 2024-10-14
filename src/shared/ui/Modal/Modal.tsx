@@ -12,13 +12,15 @@ type Props = Omit<BottomSheetModalProps, 'backdropComponent'>;
 export const Modal = forwardRef<BottomSheetModalMethods, Props>(
   ({children, ...props}, ref) => {
     const renderBackdrop = useCallback(
-      (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop
-          {...backdropProps}
-          appearsOnIndex={0}
-          disappearsOnIndex={-1}
-        />
-      ),
+      (backdropProps: BottomSheetBackdropProps) => {
+        return (
+          <BottomSheetBackdrop
+            {...backdropProps}
+            appearsOnIndex={0}
+            disappearsOnIndex={-1}
+          />
+        );
+      },
       [],
     );
 

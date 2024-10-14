@@ -52,7 +52,7 @@ export const Cart: FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.wrapper}>
-      {!!data?.cart?.length && <OrgCloseBanner />}
+      {!!data?.cart?.length && <OrgCloseBanner style={styles.orgCloseBanner} />}
       <CartList onSubmit={handleSubmit} isLoading={isPending} />
     </View>
   );
@@ -61,10 +61,8 @@ export const Cart: FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    gap: 20,
-    paddingTop: 18,
   },
   orgCloseBanner: {
-    paddingVertical: 16,
+    marginTop: 16,
   },
 });

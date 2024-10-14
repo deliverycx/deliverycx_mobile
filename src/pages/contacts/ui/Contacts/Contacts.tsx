@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     alignItems: 'center',
-    paddingTop: 40,
+    paddingTop: 20,
     paddingBottom: 50,
   },
   address: {

@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingHorizontal: INDENTS.main,
     paddingBottom: 24,
-    paddingTop: 10,
+    paddingTop: 30,
   },
   wrapper: {
     flex: 1,

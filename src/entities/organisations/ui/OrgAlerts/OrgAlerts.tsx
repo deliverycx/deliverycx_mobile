@@ -103,7 +103,10 @@ export const OrgAlerts: FC<Props> = ({
         'Но вы можете позвонить нам, и мы с удовольствием примем ваш заказ по телефону',
         [
           {text: 'Хорошо'},
-          {text: 'Позвонить', onPress: () => phoneByNumber(phone)},
+          {
+            text: 'Позвонить',
+            onPress: () => phoneByNumber(phone),
+          },
         ],
       );
     }
@@ -116,7 +119,10 @@ export const OrgAlerts: FC<Props> = ({
         'Но вы можете позвонить нам, и мы с удовольствием примем ваш заказ по телефону',
         [
           {text: 'Хорошо'},
-          {text: 'Позвонить', onPress: () => phoneByNumber(phone)},
+          {
+            text: 'Позвонить',
+            onPress: () => phoneByNumber(phone),
+          },
         ],
       );
     }

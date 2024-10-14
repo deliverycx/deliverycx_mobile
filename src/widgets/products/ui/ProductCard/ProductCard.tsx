@@ -71,6 +71,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
 
   return (
     <Modal
+      backgroundStyle={styles.modalBackground}
       handleIndicatorStyle={styles.indicatorStyles}
       footerComponent={() => (
         <Container style={styles.footerContainer}>
@@ -82,6 +83,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
       )}
       ref={modalRef}
       snapPoints={SNAP_POINTS}
+      onDismiss={onClosed}
       onChange={handleBottomSheetModalChange}>
       <SafeAreaView style={styles.safeAreaView}>
         <Container style={styles.wrapper}>
@@ -115,6 +117,9 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
 };
 
 const styles = StyleSheet.create({
+  modalBackground: {
+    borderRadius: 0,
+  },
   counter: {
     flexDirection: 'row',
   },
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
     minHeight: '100%',
   },
   img: {
-    height: 400,
+    height: '60%',
     width: null,
   },
   name: {
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   footerContainer: {
-    paddingBottom: 46,
+    paddingBottom: '8%',
     paddingTop: 16,
   },
   weight: {
