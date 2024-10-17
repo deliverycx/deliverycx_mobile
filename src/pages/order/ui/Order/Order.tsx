@@ -151,6 +151,7 @@ export const Order: FC<Props> = ({navigation}) => {
                   render={({field: {value, onChange}}) => {
                     return (
                       <Input
+                        textAlignVertical="top"
                         autoCapitalize="sentences"
                         style={styles.textarea}
                         multiline={true}

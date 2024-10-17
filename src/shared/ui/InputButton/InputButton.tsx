@@ -43,5 +43,6 @@ export const styles = StyleSheet.create({
   input: {
     paddingTop: 26,
     position: 'relative',
+    color: COLORS.textPrimary,
   },
 });

@@ -14,8 +14,6 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-YaMap.init('9319733b-bbba-48e7-af52-8410be35c07d');
-
 export const OrgMap: FC<Props> = memo(({data, style, onOrgPress}) => {
   const mapRef = useRef<YaMap>(null);
 

@@ -1,8 +1,8 @@
 import {BlurView} from '@react-native-community/blur';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React, {FC, useMemo, useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {
+  Platform,
   ScrollView,
   StyleProp,
   StyleSheet,
@@ -36,7 +36,6 @@ type Props = {
 };
 
 export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
-  const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
 
   const [buttonHeight, setButtonHeight] = useState<number>(0);
@@ -74,10 +73,24 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
     );
   }
 
+  const button = (
+    <Container style={styles.buttonWrapper}>
+      <Button
+        disabled={!!isOrgClosed}
+        loading={isCartMutating || isLoading}
+        onPress={onSubmit}
+        text={`Оформить заказ на ${formattedTotalPrice}`}
+      />
+    </Container>
+  );
+
   return (
     <View style={[styles.wrapper, style]}>
       <ScrollView
         scrollIndicatorInsets={{
+          bottom: buttonHeight,
+        }}
+        contentInset={{
           bottom: buttonHeight,
         }}>
         <Text style={styles.totalHeader}>{totalHeader}</Text>
@@ -95,13 +108,7 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
             )}
           />
         </View>
-        <View
-          style={[
-            styles.dozenCounter,
-            {
-              paddingBottom: buttonHeight + 16,
-            },
-          ]}>
+        <View style={styles.dozenCounter}>
           <DozenCounter data={data} />
         </View>
       </ScrollView>
@@ -110,20 +117,18 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
           setButtonHeight(event.nativeEvent.layout.height);
         }}
         style={styles.buttonContainer}>
-        <BlurView
-          blurType="light"
-          blurAmount={10}
-          style={styles.blurView}
-          reducedTransparencyFallbackColor="white">
-          <Container style={styles.blurInner}>
-            <Button
-              disabled={!!isOrgClosed}
-              loading={isCartMutating || isLoading}
-              onPress={onSubmit}
-              text={`Оформить заказ на ${formattedTotalPrice}`}
-            />
-          </Container>
-        </BlurView>
+        {Platform.select({
+          ios: (
+            <BlurView
+              blurType="light"
+              blurAmount={10}
+              style={styles.blurView}
+              reducedTransparencyFallbackColor="white">
+              {button}
+            </BlurView>
+          ),
+          android: button,
+        })}
       </View>
     </View>
   );
@@ -137,22 +142,30 @@ const styles = StyleSheet.create({
   },
   dozenCounter: {
     marginTop: 4,
+    marginBottom: 16,
     paddingHorizontal: INDENTS.main,
   },
   blurView: {
     backgroundColor: hexToRgba(COLORS.backgroundSecondary, 0.6),
   },
-  blurInner: {
+  buttonWrapper: {
     paddingVertical: 16,
   },
   buttonContainer: {
     bottom: 0,
     left: 0,
     width: '100%',
-    position: 'absolute',
+    position: Platform.select({
+      ios: 'absolute',
+      android: undefined,
+    }),
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
     overflow: 'hidden',
+    backgroundColor: Platform.select({
+      ios: undefined,
+      android: COLORS.backgroundPrimary,
+    }),
   },
   totalHeader: {
     fontSize: 24,

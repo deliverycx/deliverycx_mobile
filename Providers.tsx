@@ -4,6 +4,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React, {FC, ReactNode} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {YaMap} from 'react-native-yamap';
 import {CartStateManager} from './src/entities/cart';
 import {OrderFormProvider} from './src/entities/order';
 import {
@@ -22,6 +23,8 @@ type Props = {
 };
 
 const queryClient = new QueryClient();
+
+YaMap.init('9319733b-bbba-48e7-af52-8410be35c07d');
 
 export const Providers: FC<Props> = ({organisationsSlot, homeSlot}) => {
   const currentOrgId = useCurrentOrgStore(state => state.orgId);

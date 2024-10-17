@@ -1,11 +1,9 @@
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import React, {FC, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
+import React, {FC, useState} from 'react';
+import {Platform} from 'react-native';
+import {DateTimePickerAndroid} from '../../../../shared/ui/DateTimePickerAndroid';
+import {DateTimePickerIOS} from '../../../../shared/ui/DateTimePickerIOS';
 import {InputButton} from '../../../../shared/ui/InputButton';
-import {Modal} from '../../../../shared/ui/Modal';
 
 type Props = {
   value: Date | undefined;
@@ -16,15 +14,19 @@ const ONE_HOUR_MS = 60 * 60 * 1000;
 const TEN_MINUTES_MS = 1000 * 60 * 10;
 
 export const OrderDeliveryTime: FC<Props> = ({onChange, value}) => {
-  const modalRef = useRef<BottomSheetModalMethods | null>(null);
+  const [open, setOpen] = useState(false);
 
   const handlePress = () => {
-    modalRef.current?.present();
+    setOpen(true);
   };
 
   const handleChange = (_: DateTimePickerEvent, date?: Date) => {
     if (!date) {
       return;
+    }
+
+    if (Platform.OS === 'android') {
+      setOpen(false);
     }
 
     onChange(date);
@@ -53,9 +55,9 @@ export const OrderDeliveryTime: FC<Props> = ({onChange, value}) => {
         label="Время доставки"
         onPress={handlePress}
       />
-      <Modal style={styles.modal} snapPoints={['30%']} ref={modalRef}>
-        <View style={styles.wrapper}>
-          <DateTimePicker
+      {Platform.select({
+        android: open && (
+          <DateTimePickerAndroid
             display="spinner"
             mode="time"
             is24Hour={true}
@@ -64,19 +66,19 @@ export const OrderDeliveryTime: FC<Props> = ({onChange, value}) => {
             value={value ?? minDate}
             minuteInterval={10}
           />
-        </View>
-      </Modal>
+        ),
+        ios: open && (
+          <DateTimePickerIOS
+            display="spinner"
+            mode="time"
+            minimumDate={minDate}
+            onChange={handleChange}
+            value={value ?? minDate}
+            minuteInterval={10}
+            onDismiss={() => setOpen(false)}
+          />
+        ),
+      })}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  modal: {
-    flex: 1,
-  },
-});
