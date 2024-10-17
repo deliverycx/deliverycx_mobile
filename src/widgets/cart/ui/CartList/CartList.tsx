@@ -115,7 +115,7 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
           blurAmount={10}
           style={styles.blurView}
           reducedTransparencyFallbackColor="white">
-          <Container style={styles.buttonWrapper}>
+          <Container style={styles.blurInner}>
             <Button
               disabled={!!isOrgClosed}
               loading={isCartMutating || isLoading}
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
   blurView: {
     backgroundColor: hexToRgba(COLORS.backgroundSecondary, 0.6),
   },
-  buttonWrapper: {
-    marginVertical: 16,
+  blurInner: {
+    paddingVertical: 16,
   },
   buttonContainer: {
     bottom: 0,

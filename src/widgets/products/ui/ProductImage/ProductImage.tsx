@@ -25,6 +25,7 @@ export const ProductImage: FC<Props> = ({data, imagePriority}) => {
         </View>
       )}
       <Image
+        resizeMode="contain"
         style={[styles.img, stopped && styles.stopped]}
         source={{
           uri: image,
