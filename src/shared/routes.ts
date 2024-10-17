@@ -36,6 +36,7 @@ export const STACK_NAVIGATOR_OPTIONS = {
   headerTitleStyle: {
     color: COLORS.textPrimary,
   },
+  navigationBarColor: 'white',
   headerTintColor: COLORS.main,
   headerShadowVisible: false,
   headerBackTitle: '',

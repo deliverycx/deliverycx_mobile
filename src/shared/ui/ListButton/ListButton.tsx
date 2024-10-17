@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
+    color: COLORS.textPrimary,
   },
   icon: {
     color: COLORS.iconPrimary,

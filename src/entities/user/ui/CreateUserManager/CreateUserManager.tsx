@@ -33,6 +33,7 @@ export const CreateUserManager = () => {
         const userResponse = await createUser();
         setUser(userResponse);
       } catch (err) {
+        console.log(err);
         Alert.alert(
           'Не удалось создать пользователя',
           'Приложение продолжает работать, но могут возникнуть ошибки при оформлении заказа',

@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {COLORS} from '../../styles.ts';
 import {HappyKhinkal} from '../CustomIcons/HappyKhinkal';
 import {SadKhinkal} from '../CustomIcons/SadKhinkal';
 
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+    color: COLORS.textPrimary,
   },
   desc: {
     fontSize: 12,
@@ -53,5 +55,6 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     maxWidth: 350,
     paddingTop: 10,
+    color: COLORS.textPrimary,
   },
 });

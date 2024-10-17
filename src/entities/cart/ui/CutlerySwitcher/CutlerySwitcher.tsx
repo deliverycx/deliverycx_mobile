@@ -13,7 +13,7 @@ export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.left}>
-        <Icon name="local-dining" />
+        <Icon style={styles.iconTitle} name="local-dining" />
         <Text style={styles.title}>Приборы</Text>
       </View>
       <View style={styles.right}>
@@ -26,7 +26,9 @@ export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
           />
         )}
         <Switch
+          style={styles.switch}
           trackColor={{true: COLORS.success}}
+          thumbColor={COLORS.backgroundPrimary}
           onValueChange={checked => onCountChange(checked ? 1 : 0)}
           value={count > 0}
         />
@@ -56,6 +58,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
+    color: COLORS.textPrimary,
     fontWeight: '500',
+  },
+  iconTitle: {
+    color: COLORS.textPrimary,
+  },
+  switch: {
+    height: 30,
   },
 });

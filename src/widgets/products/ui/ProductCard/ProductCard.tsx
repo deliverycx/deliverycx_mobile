@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: COLORS.textPrimary,
   },
   description: {
     fontSize: 14,

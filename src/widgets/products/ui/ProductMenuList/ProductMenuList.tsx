@@ -1,6 +1,7 @@
 import React, {FC, useRef} from 'react';
 import {
   Insets,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -9,7 +10,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {CategoryList, useProducts} from '../../../../entities/products';
-import {INDENTS} from '../../../../shared/styles';
+import {COLORS, INDENTS} from '../../../../shared/styles';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useSyncList} from '../../hooks/useSyncList';
 import {ProductCategorySkeleton} from '../ProductCategorySkeleton';
@@ -62,7 +63,7 @@ export const ProductMenuList: FC<Props> = ({
 
   const getItemLayout = (item: typeof sectionProducts, index: number) => {
     const getItemHeight = (d: (typeof sectionProducts)[number]) => {
-      const headerHeight = 52;
+      const headerHeight = 54;
       const elemHeight = 290;
 
       return Math.ceil(d.data.length / 2) * elemHeight + headerHeight;
@@ -84,7 +85,16 @@ export const ProductMenuList: FC<Props> = ({
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View
+      style={[
+        styles.wrapper,
+        {
+          paddingBottom: Platform.select({
+            android: contentInset?.bottom,
+            ios: 0,
+          }),
+        },
+      ]}>
       {isFetched ? (
         <CategoryList
           ref={categoryListRef}
@@ -166,5 +176,7 @@ const styles = StyleSheet.create({
     paddingTop: INDENTS.main,
     fontSize: 18,
     fontWeight: '500',
+    minHeight: 54,
+    color: COLORS.textPrimary,
   },
 });

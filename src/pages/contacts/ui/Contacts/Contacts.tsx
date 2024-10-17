@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   item: {
     marginLeft: INDENTS.main,
     paddingRight: INDENTS.main,
+    color: COLORS.textPrimary,
   },
   social: {
     borderTopWidth: 1,

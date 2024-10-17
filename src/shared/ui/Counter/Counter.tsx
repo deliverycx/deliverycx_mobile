@@ -61,11 +61,11 @@ export const Counter: FC<Props> = ({
         style,
       ]}>
       <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleDec}>
-        <Icon name="remove" size={size} />
+        <Icon style={styles.icon} name="remove" size={size} />
       </TouchableOpacity>
       <Text style={styles.text}>{value}</Text>
       <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleInc}>
-        <Icon name="add" size={size} />
+        <Icon style={styles.icon} name="add" size={size} />
       </TouchableOpacity>
     </View>
   );
@@ -86,6 +86,7 @@ const sizeWrapperStyles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: 10,
     minWidth: 100,
+    maxHeight: 30,
   },
 
   md: {
@@ -121,5 +122,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     flex: 1,
+  },
+  icon: {
+    color: COLORS.textPrimary,
   },
 });

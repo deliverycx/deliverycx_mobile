@@ -2,7 +2,9 @@ import {BlurView} from '@react-native-community/blur';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {
+  Platform,
   StyleSheet,
+  View,
   type Animated,
   type StyleProp,
   type ViewStyle,
@@ -26,18 +28,28 @@ export const screenOptions: BottomTabNavigationOptions = {
     elevation: 0,
     borderTopWidth: 0,
   },
-  tabBarBackground: () => (
-    <BlurView
-      blurType="xlight"
-      style={styles.blurView}
-      blurAmount={10}
-      reducedTransparencyFallbackColor="white"
-    />
-  ),
+  tabBarBackground: () =>
+    Platform.select({
+      ios: (
+        <View style={styles.blurViewWrapper}>
+          <BlurView
+            blurType="xlight"
+            style={styles.blurView}
+            blurAmount={10}
+            reducedTransparencyFallbackColor="white"
+          />
+        </View>
+      ),
+      android: undefined,
+    }),
 };
 
 const styles = StyleSheet.create({
+  blurViewWrapper: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+  },
   blurView: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
 });

@@ -1,6 +1,6 @@
 import {BlurView} from '@react-native-community/blur';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import React, {FC, useMemo} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {
   ScrollView,
@@ -39,6 +39,8 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
   const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
 
+  const [buttonHeight, setButtonHeight] = useState<number>(0);
+
   const isAmountItemMutating = useIsAmountItemMutating();
   const isRemoveItemMutating = useIsRemoveItemMutating();
   const isAddItemMutation = useIsAddItemMutating();
@@ -60,20 +62,9 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
     return getCountOfProductsAndSum(data.cart.length, formattedTotalPrice);
   }, [data, formattedTotalPrice]);
 
-  const {scrollIndicatorInsets, contentInset} = useMemo(() => {
-    return {
-      scrollIndicatorInsets: {
-        bottom: tabBarHeight,
-      },
-      contentInset: {
-        bottom: tabBarHeight,
-      },
-    };
-  }, [tabBarHeight]);
-
   if (!data?.cart.length) {
     return (
-      <Container style={[styles.noProducts, {paddingBottom: tabBarHeight}]}>
+      <Container style={styles.noProducts}>
         <InfoStatus
           variant="sad"
           text="Ваша корзина пуста"
@@ -86,8 +77,9 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
   return (
     <View style={[styles.wrapper, style]}>
       <ScrollView
-        scrollIndicatorInsets={scrollIndicatorInsets}
-        contentInset={contentInset}>
+        scrollIndicatorInsets={{
+          bottom: buttonHeight,
+        }}>
         <Text style={styles.totalHeader}>{totalHeader}</Text>
         {data.cart.map(product => (
           <View key={product.productId} style={styles.cartProductPreview}>
@@ -103,17 +95,27 @@ export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
             )}
           />
         </View>
-        <View style={styles.dozenCounter}>
+        <View
+          style={[
+            styles.dozenCounter,
+            {
+              paddingBottom: buttonHeight + 16,
+            },
+          ]}>
           <DozenCounter data={data} />
         </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
+      <View
+        onLayout={event => {
+          setButtonHeight(event.nativeEvent.layout.height);
+        }}
+        style={styles.buttonContainer}>
         <BlurView
           blurType="light"
           blurAmount={10}
           style={styles.blurView}
           reducedTransparencyFallbackColor="white">
-          <Container>
+          <Container style={styles.buttonWrapper}>
             <Button
               disabled={!!isOrgClosed}
               loading={isCartMutating || isLoading}
@@ -135,12 +137,13 @@ const styles = StyleSheet.create({
   },
   dozenCounter: {
     marginTop: 4,
-    marginBottom: 10,
     paddingHorizontal: INDENTS.main,
   },
   blurView: {
-    paddingVertical: 16,
     backgroundColor: hexToRgba(COLORS.backgroundSecondary, 0.6),
+  },
+  buttonWrapper: {
+    marginVertical: 16,
   },
   buttonContainer: {
     bottom: 0,
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
+    overflow: 'hidden',
   },
   totalHeader: {
     fontSize: 24,
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: INDENTS.main,
     paddingBottom: 24,
     paddingTop: 30,
+    color: COLORS.textPrimary,
   },
   wrapper: {
     flex: 1,

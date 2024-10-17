@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: '500',
     fontSize: 14,
+    color: COLORS.textPrimary,
   },
   buttonWrapper: {
     padding: 10,

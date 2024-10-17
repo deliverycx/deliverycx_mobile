@@ -31,7 +31,7 @@ export const Providers: FC<Props> = ({organisationsSlot, homeSlot}) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <CreateUserManager />
       <GestureHandlerRootView style={styles.gestureHandlerRootView}>
         <BottomSheetModalProvider>
