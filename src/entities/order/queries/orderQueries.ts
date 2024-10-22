@@ -9,6 +9,7 @@ import {
   checkCartApi,
   checkOrderApi,
   createOrderApi,
+  createPaymentLinkApi,
   getOrderApi,
 } from '../api/orderApi';
 import {GetOrderRequest, GetOrderResponse} from '../types/orderTypes';
@@ -17,6 +18,7 @@ const ORDER_CHECK_KEY = 'ORDER_CHECK_KEY';
 const ORDER_GET_KEY = 'ORDER_GET_KEY';
 const ORDER_CREATE_KEY = 'ORDER_CREATE_KEY';
 const ORDER_CHECK_CART_KEY = 'ORDER_CHECK_CART_KEY';
+const ORDER_CREATE_PAYMENT_LINK_KEY = 'ORDER_CREATE_PAYMENT_LINK_KEY';
 
 export const useOrderCheckQuery = () => {
   return useMutation({
@@ -63,5 +65,12 @@ export const fetchGetOrder = (
   return queryClient.fetchQuery({
     queryKey: [ORDER_GET_KEY, payload.hash],
     queryFn: () => getOrderApi(payload),
+  });
+};
+
+export const useCreatePaymentLinkQuery = () => {
+  return useMutation({
+    mutationKey: [ORDER_CREATE_PAYMENT_LINK_KEY],
+    mutationFn: createPaymentLinkApi,
   });
 };

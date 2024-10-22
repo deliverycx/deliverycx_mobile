@@ -77,27 +77,27 @@ export const Order: FC<Props> = ({navigation}) => {
                 <>
                   <OrderAddress />
                   <Controller
-                    name="deliveryDate"
+                    name="paymentMethod"
                     control={control}
-                    render={({field: {value, onChange}}) => {
+                    render={({field: {value}}) => {
                       return (
-                        <OrderDeliveryTime value={value} onChange={onChange} />
+                        <OrderPaymentMethod
+                          value={value}
+                          onPress={() => {
+                            navigation.push(Routes.Payment);
+                          }}
+                        />
                       );
                     }}
                   />
                 </>
               )}
               <Controller
-                name="paymentMethod"
+                name="deliveryDate"
                 control={control}
-                render={({field: {value}}) => {
+                render={({field: {value, onChange}}) => {
                   return (
-                    <OrderPaymentMethod
-                      value={value}
-                      onPress={() => {
-                        navigation.push(Routes.Payment);
-                      }}
-                    />
+                    <OrderDeliveryTime value={value} onChange={onChange} />
                   );
                 }}
               />

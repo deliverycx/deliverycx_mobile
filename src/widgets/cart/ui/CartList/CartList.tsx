@@ -1,5 +1,4 @@
 import {BlurView} from '@react-native-community/blur';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React, {FC, useMemo, useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {
@@ -36,7 +35,6 @@ type Props = {
 };
 
 export const CartList: FC<Props> = ({onSubmit, style, isLoading}) => {
-  const tabBarHeight = useBottomTabBarHeight();
   const {data} = useCartItems();
 
   const [buttonHeight, setButtonHeight] = useState<number>(0);

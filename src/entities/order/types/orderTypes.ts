@@ -1,3 +1,5 @@
+import {OrderType, PaymentMethod} from '../../../shared/types/order';
+
 export interface Kladr {
   id: string;
   name: string;
@@ -38,12 +40,25 @@ export interface OrderCreateModel {
   address?: AddressModel;
 }
 
+export enum OrderStatus {
+  Success = 'Success',
+  Error = 'Error',
+}
+
+export interface OrderParams {
+  paymentMethod: PaymentMethod;
+  orderType: OrderType;
+}
+
 export interface OrderModel {
   user: string;
   organization: string;
   orderNumber: number;
   orderHash: string;
   orderError: string;
+  orderStatus: OrderStatus;
+  orderParams: OrderParams;
+  payment: unknown;
 }
 
 export interface CheckOrderRequest extends OrderCreateModel {}
@@ -65,3 +80,9 @@ export interface CheckCartRequest {
 }
 
 export type CheckCartResponse = string;
+
+export interface PaymentLinkRequest extends OrderModel {}
+
+export interface PaymentLinkResponse {
+  redirectUrl: string;
+}
