@@ -12,6 +12,7 @@ import {
   useCurrentOrgStore,
 } from './src/entities/organisations';
 import {CreateUserManager, useUserStore} from './src/entities/user';
+import {linking} from './src/shared/configs/linking';
 import {ToastProvider} from './src/shared/providers/ToastProvider';
 import {AddressFormProvider} from './src/widgets/address';
 import {OrderPaymentMethodValidator} from './src/widgets/order';
@@ -36,7 +37,7 @@ export const Providers: FC<Props> = ({organisationsSlot, homeSlot}) => {
       <GestureHandlerRootView style={styles.gestureHandlerRootView}>
         <BottomSheetModalProvider>
           <OrgAlertsProvider>
-            <NavigationContainer>
+            <NavigationContainer linking={linking}>
               {isHomeSlotShown ? (
                 <>
                   <OrgAlertsSubscriber orgId={currentOrgId}>

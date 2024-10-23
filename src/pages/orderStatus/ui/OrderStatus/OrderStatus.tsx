@@ -2,10 +2,8 @@ import type {RouteProp} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useGetOrderQuery} from '../../../../entities/order';
-import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl.ts';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {Container} from '../../../../shared/ui/Container';
-import {usePaymentLink} from '../../hooks/usePaymentLink.ts';
 import {OrderStatusInfo} from '../OrderStatusInfo';
 import {OrderStatusLoader} from '../OrderStatusLoader';
 
@@ -30,19 +28,8 @@ export const OrderStatus = ({route}: Props) => {
     },
   );
 
-  const openUrl = useOpenUrl();
-  const paymentLink = usePaymentLink(data);
-
   const orderNumber = data?.orderNumber ?? null;
   const hasError = error || data?.orderError || timeoutError;
-
-  useEffect(() => {
-    if (!paymentLink) {
-      return;
-    }
-
-    openUrl(paymentLink);
-  }, [paymentLink, openUrl]);
 
   useEffect(() => {
     let timerId: NodeJS.Timer;
@@ -64,12 +51,11 @@ export const OrderStatus = ({route}: Props) => {
   return (
     <SafeAreaView style={styles.wrapper}>
       <Container style={styles.container}>
-        {!enabledGetOrder ? (
+        {enabledGetOrder ? (
           <OrderStatusLoader />
         ) : (
           <OrderStatusInfo
-            paymentLink={paymentLink}
-            orderNumber={orderNumber}
+            orderData={data}
             variant={hasError ? 'error' : 'success'}
           />
         )}

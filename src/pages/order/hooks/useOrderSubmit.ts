@@ -12,6 +12,7 @@ import {
 } from '../../../entities/order';
 import {useCurrentOrg} from '../../../entities/organisations';
 import {useUserStore} from '../../../entities/user';
+import {URL_ID} from '../../../shared/consts';
 import {Routes, StackParamList} from '../../../shared/routes';
 import {OrderType} from '../../../shared/types/order';
 import {useCartItems} from '../../../widgets/cart';
@@ -45,7 +46,7 @@ export const useOrderSubmit = () => {
       date: formatDateForOrder(new Date()),
       devises: values.devices + '',
       hash: '',
-      localhost: 'https://xn--80apgfh0ct5a.xn--p1ai',
+      localhost: `${URL_ID}://`,
       money: 0,
       organizationid: data.guid,
       organization: data.guid,
