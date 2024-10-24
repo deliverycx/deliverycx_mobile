@@ -17,6 +17,7 @@ export const OrderAddress: FC = () => {
 
   const street = watch('street');
   const house = watch('house');
+  const flat = watch('flat');
 
   useEffect(() => {
     register('classifierId', {
@@ -33,7 +34,7 @@ export const OrderAddress: FC = () => {
       return 'Выберите адрес';
     }
 
-    return `${orgCity}, ${street}, ${house}`;
+    return `${orgCity},\n${street}, ${house}` + `${flat ? `, кв.${flat}` : ''}`;
   };
 
   return (

@@ -62,6 +62,7 @@ export const Address: FC<Props> = ({navigation}) => {
       });
     }
 
+    setValue('classifierId', geoData.classifierId);
     setValue('street', geoData.name ?? '');
     setValue('house', geoData.house ?? '');
   }, [reset, geoData, setValue]);
