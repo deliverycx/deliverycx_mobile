@@ -106,7 +106,12 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
                 <Text style={styles.price}>{getFormatPrice(price)}</Text>
               </View>
               {count > 0 ? (
-                <Counter size="sm" value={count} onChange={handleCountChange} />
+                <Counter
+                  style={{width: '100%'}}
+                  size="sm"
+                  value={count}
+                  onChange={handleCountChange}
+                />
               ) : (
                 <Button
                   disabled={stopped}
