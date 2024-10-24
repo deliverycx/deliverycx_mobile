@@ -50,7 +50,7 @@ export const Order: FC<Props> = ({navigation}) => {
   const isDelivery = watchField === OrderType.Courier;
 
   const handleError = (errors: FieldErrors<OrderForm>) => {
-    let description = 'Ошибка оформления заказа';
+    let description = '';
 
     if (errors.classifierId?.message) {
       description = errors.classifierId.message;

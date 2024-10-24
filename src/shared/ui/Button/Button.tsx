@@ -1,6 +1,7 @@
 import React, {ReactElement, type FC} from 'react';
 import {
   ActivityIndicator,
+  GestureResponderEvent,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -8,6 +9,7 @@ import {
   type TouchableHighlightProps,
 } from 'react-native';
 import {COLORS} from '../../styles';
+import {hapticFeedback} from '../../utils/hapticFeedback.ts';
 import {hexToRgba} from '../../utils/hexToRgba';
 
 const enum Variant {
@@ -43,11 +45,19 @@ export const Button: FC<Props> = ({
   leftAddons,
   rightAddons,
   disabled,
+  onPress,
   ...props
 }) => {
+  const handlePress = (event: GestureResponderEvent) => {
+    hapticFeedback('impactMedium');
+
+    onPress?.(event);
+  };
+
   return (
     <TouchableHighlight
       {...props}
+      onPress={handlePress}
       disabled={disabled || loading}
       underlayColor={
         variant === Variant.primary

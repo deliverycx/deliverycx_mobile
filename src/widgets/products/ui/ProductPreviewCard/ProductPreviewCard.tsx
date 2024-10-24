@@ -19,7 +19,6 @@ import {FullProduct} from '../../../../shared/types/productTypes';
 import {Button} from '../../../../shared/ui/Button';
 import {Counter} from '../../../../shared/ui/Counter';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {ProductCard} from '../ProductCard';
 import {ProductImage} from '../ProductImage';
 
@@ -64,7 +63,6 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
   };
 
   const handleFastBuyPress = async () => {
-    hapticFeedback('impactHeavy');
     await manage(1);
   };
 

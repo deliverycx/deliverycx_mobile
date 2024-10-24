@@ -1,10 +1,17 @@
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   OrgDisLikeButton,
   OrgLikeButton,
   OrgVKButton,
+  useCurrentOrg,
 } from '../../../../entities/organisations';
 import {
   CALORIES_URL,
@@ -19,15 +26,33 @@ import {COLORS, INDENTS} from '../../../../shared/styles';
 import {FunKhinkal} from '../../../../shared/ui/CustomIcons/FunKhinkal';
 import {Tg} from '../../../../shared/ui/CustomIcons/Tg';
 import {ListButton} from '../../../../shared/ui/ListButton';
+import {formatPhoneNumber} from '../../../../shared/utils/formatPhoneNumber.ts';
+import {phoneByNumber} from '../../../../shared/utils/phoneByNumber.ts';
 import {AppVersion} from '../AppVersion';
 
 export const Contacts = () => {
   const height = useBottomTabBarHeight();
+  const {data} = useCurrentOrg();
+
+  const handlePhonePress = () => {
+    if (!data) {
+      return;
+    }
+
+    phoneByNumber(data.phone);
+  };
 
   const openUrl = useOpenUrl();
 
   return (
     <View style={[styles.wrapper, {paddingBottom: height}]}>
+      {data && (
+        <TouchableOpacity onPress={handlePhonePress}>
+          <Text style={styles.phone}>
+            {data && formatPhoneNumber(data.phone)}
+          </Text>
+        </TouchableOpacity>
+      )}
       <View style={styles.imageWrapper}>
         <FunKhinkal />
       </View>
@@ -105,7 +130,7 @@ const styles = StyleSheet.create({
   imageWrapper: {
     alignItems: 'center',
     paddingTop: 20,
-    paddingBottom: 50,
+    paddingBottom: 40,
   },
   address: {
     textAlign: 'center',
@@ -141,5 +166,11 @@ const styles = StyleSheet.create({
   },
   headerActionsButton: {
     width: '100%',
+  },
+  phone: {
+    fontSize: 16,
+    color: COLORS.main,
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });

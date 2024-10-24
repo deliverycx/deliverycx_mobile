@@ -1,8 +1,6 @@
 import {useQueryClient} from '@tanstack/react-query';
 import React, {FC, useState} from 'react';
-import {HapticFeedbackTypes} from 'react-native-haptic-feedback';
 import {Button} from '../../../../shared/ui/Button';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 import {fetchProducts} from '../../../products';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 
@@ -19,8 +17,6 @@ export const OrgSelectButton: FC<Props> = ({orgId, disabled = false}) => {
 
   const handleOrgChange = async () => {
     setLoading(true);
-
-    hapticFeedback(HapticFeedbackTypes.impactHeavy);
 
     try {
       await fetchProducts(queryClient, {organization: orgId});

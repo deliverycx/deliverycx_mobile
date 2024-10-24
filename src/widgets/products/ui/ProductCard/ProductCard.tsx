@@ -15,7 +15,6 @@ import {Counter} from '../../../../shared/ui/Counter';
 import {DownButton} from '../../../../shared/ui/DownButton';
 import {Modal} from '../../../../shared/ui/Modal';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 
 interface Props {
   data: Product;
@@ -52,8 +51,6 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
   };
 
   const handleBuyPress = async () => {
-    hapticFeedback('impactHeavy');
-
     onClosed();
 
     await add(count);

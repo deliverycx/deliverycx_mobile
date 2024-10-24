@@ -8,7 +8,6 @@ import {
 } from '../../../../entities/order';
 import {useUserStore} from '../../../../entities/user';
 import {Routes, StackParamList} from '../../../../shared/routes';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback.ts';
 import {CartList, useCartItems} from '../../../../widgets/cart';
 import {OrgCloseBanner} from '../../../../widgets/organisations';
 
@@ -26,8 +25,6 @@ export const Cart: FC<Props> = ({navigation}) => {
     if (!userId) {
       return;
     }
-
-    hapticFeedback('impactMedium');
 
     try {
       await checkCart({userid: userId});

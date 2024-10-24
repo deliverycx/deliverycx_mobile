@@ -36,7 +36,7 @@ export const PaymentList: FC<Props> = ({navigation}) => {
     if (paymentMetod?.includes(PaymentMethod.ByCard)) {
       options.push({
         id: PaymentMethod.ByCard,
-        name: 'Банковской картой',
+        name: 'Картой при получении',
       });
     }
 

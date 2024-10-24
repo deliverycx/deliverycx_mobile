@@ -41,6 +41,7 @@ export const OrderAddress: FC = () => {
       disabled={!streets.length}
       onPress={() => navigation.push(Routes.Address)}
       text={getAddressInfo()}
+      iconName="home"
     />
   );
 };
