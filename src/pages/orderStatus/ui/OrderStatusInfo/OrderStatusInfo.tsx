@@ -3,7 +3,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useCartItemsRemove} from '../../../../entities/cart';
-import {useOrderFormContext} from '../../../../entities/order';
+import {
+  GetOrderResponse,
+  useOrderFormContext,
+} from '../../../../entities/order';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useOrgYaPlaceQuery} from '../../../../entities/organisations/queries/orgYaPlaceQueries';
 import {useUserStore} from '../../../../entities/user';
@@ -12,7 +15,7 @@ import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {Button} from '../../../../shared/ui/Button';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
-import {removeHashData} from '../../../../widgets/orderStatus';
+import {OrderStatusOnlinePayment} from '../OrderStatusOnlinePayment';
 
 const enum OSInfoVariant {
   error = 'error',
@@ -21,16 +24,17 @@ const enum OSInfoVariant {
 
 type Props = {
   variant: keyof typeof OSInfoVariant;
-  orderNumber: number | null;
+  orderData: GetOrderResponse | undefined;
 };
 
-export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
+export const OrderStatusInfo: FC<Props> = ({variant, orderData}) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const userId = useUserStore(state => state.user?.id);
 
   const {data} = useOrgYaPlaceQuery({organization: orgId!});
+
   const openUrl = useOpenUrl();
 
   const {reset} = useOrderFormContext();
@@ -41,8 +45,6 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
   });
 
   useEffect(() => {
-    removeHashData();
-
     if (variant === OSInfoVariant.success) {
       cartRemove();
       reset();
@@ -77,10 +79,13 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderNumber}) => {
         variant={isSuccess ? 'happy' : 'sad'}
       />
       {isSuccess && (
-        <Text style={styles.orderNumberWrapper}>
-          Номер вашего заказа: №{' '}
-          <Text style={styles.orderNumber}>{orderNumber}</Text>
-        </Text>
+        <View>
+          <Text style={styles.orderNumberWrapper}>
+            Номер вашего заказа: №{' '}
+            <Text style={styles.orderNumber}>{orderData?.orderNumber}</Text>
+          </Text>
+          {orderData && <OrderStatusOnlinePayment hash={orderData.orderHash} />}
+        </View>
       )}
       <View style={styles.actions}>
         {isSuccess ? (
@@ -123,5 +128,6 @@ const styles = StyleSheet.create({
   },
   orderNumberWrapper: {
     textAlign: 'center',
+    marginBottom: 10,
   },
 });

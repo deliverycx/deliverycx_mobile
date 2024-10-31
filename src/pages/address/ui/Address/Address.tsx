@@ -107,7 +107,11 @@ export const Address: FC<Props> = ({navigation}) => {
   const onSubmit: SubmitHandler<AddressForm> = values => {
     navigation.goBack();
 
-    setOrderValues('classifierId', values.classifierId);
+    if (!geoData) {
+      return;
+    }
+
+    setOrderValues('classifierId', geoData.classifierId);
     setOrderValues('flat', values.flat);
     setOrderValues('house', values.house);
     setOrderValues('floor', values.floor);

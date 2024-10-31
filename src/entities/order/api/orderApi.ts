@@ -8,6 +8,8 @@ import {
   CreateOrderResponse,
   GetOrderRequest,
   GetOrderResponse,
+  PaymentLinkRequest,
+  PaymentLinkResponse,
 } from '../types/orderTypes';
 
 export const checkOrderApi = (params: CheckOrderRequest) => {
@@ -27,4 +29,11 @@ export const createOrderApi = (params: CreateOrderRequest) => {
 
 export const checkCartApi = (params: CheckCartRequest) => {
   return axiosInstance.post<CheckCartResponse>('/order/checkcart', params);
+};
+
+export const createPaymentLinkApi = (params: PaymentLinkRequest) => {
+  return axiosInstance.post<PaymentLinkResponse>(
+    '/webhook/paymentCreate',
+    params,
+  );
 };

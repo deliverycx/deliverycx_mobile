@@ -1,16 +1,14 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import FastImage, {Priority} from 'react-native-fast-image';
-import {createImageProgress} from 'react-native-image-progress';
+import {Priority} from 'react-native-fast-image';
 import {COLORS} from '../../../../shared/styles.ts';
 import {FullProduct} from '../../../../shared/types/productTypes';
+import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
 
 type Props = {
   data: FullProduct;
   imagePriority?: Priority;
 };
-
-const Image = createImageProgress(FastImage);
 
 export const ProductImage: FC<Props> = ({data, imagePriority}) => {
   const {stopped, image} = data;
@@ -24,7 +22,7 @@ export const ProductImage: FC<Props> = ({data, imagePriority}) => {
           </View>
         </View>
       )}
-      <Image
+      <ProductImageSizer
         resizeMode="contain"
         style={[styles.img, stopped && styles.stopped]}
         source={{

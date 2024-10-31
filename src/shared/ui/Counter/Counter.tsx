@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import {COLORS} from '../../styles';
@@ -53,21 +52,27 @@ export const Counter: FC<Props> = ({
   };
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={event => event.stopPropagation()}
+      activeOpacity={1}
       style={[
         styles.wrapper,
         sizeWrapperStyles[size],
         variantWrapperStyles[variant],
         style,
       ]}>
-      <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleDec}>
+      <TouchableOpacity
+        style={[sizeButtonStyles[size], styles.button]}
+        onPress={handleDec}>
         <Icon style={styles.icon} name="remove" size={size} />
       </TouchableOpacity>
       <Text style={styles.text}>{value}</Text>
-      <TouchableOpacity style={sizeButtonStyles[size]} onPress={handleInc}>
+      <TouchableOpacity
+        style={[sizeButtonStyles[size], styles.button]}
+        onPress={handleInc}>
         <Icon style={styles.icon} name="add" size={size} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -126,4 +131,5 @@ const styles = StyleSheet.create({
   icon: {
     color: COLORS.textPrimary,
   },
+  button: {},
 });

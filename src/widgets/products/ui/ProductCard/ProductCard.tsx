@@ -14,8 +14,8 @@ import {Container} from '../../../../shared/ui/Container';
 import {Counter} from '../../../../shared/ui/Counter';
 import {DownButton} from '../../../../shared/ui/DownButton';
 import {Modal} from '../../../../shared/ui/Modal';
+import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
-import {hapticFeedback} from '../../../../shared/utils/hapticFeedback';
 
 interface Props {
   data: Product;
@@ -52,8 +52,6 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
   };
 
   const handleBuyPress = async () => {
-    hapticFeedback('impactHeavy');
-
     onClosed();
 
     await add(count);
@@ -88,7 +86,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
       <SafeAreaView style={styles.safeAreaView}>
         <Container style={styles.wrapper}>
           <DownButton onPress={onClosed} style={styles.downButton} />
-          <Image
+          <ProductImageSizer
             resizeMode="contain"
             style={styles.img}
             source={{uri: image}}

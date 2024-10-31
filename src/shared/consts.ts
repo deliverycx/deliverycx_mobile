@@ -12,3 +12,5 @@ export const SECRET_GUEST_URL = 'https://starikkhinkalich.ru/control';
 
 export const YANDEX_API_KEY = '473431c9-b8f6-45d6-a166-243a0152c68b';
 export const DADATA_API_KEY = 'dfc3cbda46da20fe4ece6883f3413b03f8a1a88f';
+
+export const URL_ID = 'khinkalich';

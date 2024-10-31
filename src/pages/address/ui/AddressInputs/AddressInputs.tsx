@@ -93,7 +93,7 @@ export const AddressInputs: FC<Props> = ({
               style={styles.mediumInput}
               value={value}
               placeholder="Этаж"
-              onPress={onChange}
+              onChangeText={onChange}
             />
           )}
         />

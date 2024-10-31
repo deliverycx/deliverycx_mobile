@@ -55,7 +55,7 @@ export const OrderStatus = ({route}: Props) => {
           <OrderStatusLoader />
         ) : (
           <OrderStatusInfo
-            orderNumber={orderNumber}
+            orderData={data}
             variant={hasError ? 'error' : 'success'}
           />
         )}

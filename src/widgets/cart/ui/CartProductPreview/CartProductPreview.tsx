@@ -1,7 +1,5 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {createImageProgress} from 'react-native-image-progress';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {
@@ -13,14 +11,13 @@ import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useUserStore} from '../../../../entities/user';
 import {COLORS} from '../../../../shared/styles';
 import {Counter} from '../../../../shared/ui/Counter';
+import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 
 type Props = {
   data: CartItem;
   style?: StyleProp<ViewStyle>;
 };
-
-const Image = createImageProgress(FastImage);
 
 export const CartProductPreview: FC<Props> = ({data, style}) => {
   const {productImage, price, productName, productId, oneprice} = data;
@@ -57,7 +54,7 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
 
   return (
     <View style={[styles.wrapper, style]}>
-      <Image
+      <ProductImageSizer
         style={styles.img}
         resizeMode="contain"
         source={{uri: productImage}}

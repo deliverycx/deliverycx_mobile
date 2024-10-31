@@ -1,8 +1,9 @@
 import {useHeaderHeight} from '@react-navigation/elements';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
-import {Controller} from 'react-hook-form';
+import {Controller, FieldErrors} from 'react-hook-form';
 import {
+  Alert,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
@@ -48,7 +49,22 @@ export const Order: FC<Props> = ({navigation}) => {
 
   const isDelivery = watchField === OrderType.Courier;
 
+  const handleError = (errors: FieldErrors<OrderForm>) => {
+    let description = '';
+
+    if (errors.classifierId?.message) {
+      description = errors.classifierId.message;
+    } else if (errors.name?.message) {
+      description = errors.name.message;
+    } else if (errors.phone?.message) {
+      description = errors.phone.message;
+    }
+
+    Alert.alert('Ошибка оформления заказа', description);
+  };
+
   const displayedPrice = (isDelivery ? data?.totalPrice : data?.fullPrice) ?? 0;
+  const deliveryPrice = data?.deliveryPrice ?? 0;
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -77,27 +93,27 @@ export const Order: FC<Props> = ({navigation}) => {
                 <>
                   <OrderAddress />
                   <Controller
-                    name="deliveryDate"
+                    name="paymentMethod"
                     control={control}
-                    render={({field: {value, onChange}}) => {
+                    render={({field: {value}}) => {
                       return (
-                        <OrderDeliveryTime value={value} onChange={onChange} />
+                        <OrderPaymentMethod
+                          value={value}
+                          onPress={() => {
+                            navigation.push(Routes.Payment);
+                          }}
+                        />
                       );
                     }}
                   />
                 </>
               )}
               <Controller
-                name="paymentMethod"
+                name="deliveryDate"
                 control={control}
-                render={({field: {value}}) => {
+                render={({field: {value, onChange}}) => {
                   return (
-                    <OrderPaymentMethod
-                      value={value}
-                      onPress={() => {
-                        navigation.push(Routes.Payment);
-                      }}
-                    />
+                    <OrderDeliveryTime value={value} onChange={onChange} />
                   );
                 }}
               />
@@ -107,7 +123,7 @@ export const Order: FC<Props> = ({navigation}) => {
                   name="name"
                   control={control}
                   rules={{
-                    required: true,
+                    required: 'Укажите ваше имя',
                   }}
                   render={({field: {value, onChange}, formState}) => {
                     return (
@@ -124,7 +140,7 @@ export const Order: FC<Props> = ({navigation}) => {
               </View>
               <Controller
                 rules={{
-                  required: true,
+                  required: 'Укажите ваш номер телефона',
                 }}
                 name="phone"
                 control={control}
@@ -169,17 +185,19 @@ export const Order: FC<Props> = ({navigation}) => {
         </ScrollView>
       </KeyboardAvoidingView>
       <Container>
-        <View style={styles.footerInfo}>
-          <Text style={styles.footerText}>Стоимость заказа</Text>
-          <Text style={styles.footerText}>
-            {getFormatPrice(displayedPrice)}
-          </Text>
-        </View>
+        {isDelivery && (
+          <View style={styles.footerInfo}>
+            <Text style={styles.footerText}>Стоимость доставки</Text>
+            <Text style={styles.footerText}>
+              {getFormatPrice(deliveryPrice)}
+            </Text>
+          </View>
+        )}
         <Button
           disabled={!!isOrgClosed}
-          text="Оформить заказ"
+          text={`Оформить заказ на ${getFormatPrice(displayedPrice)}`}
           loading={isFetching}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onSubmit, handleError)}
         />
       </Container>
     </SafeAreaView>

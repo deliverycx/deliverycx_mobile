@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {View} from 'react-native';
 import {PaymentMethod} from '../../../../shared/types/order';
 import {Label} from '../../../../shared/ui/Label';
@@ -10,14 +10,30 @@ type Props = {
 };
 
 export const OrderPaymentMethod: FC<Props> = ({onPress, value}) => {
-  const text = useMemo(() => {
-    return value === PaymentMethod.Cash ? 'Наличными' : 'Банковской картой';
-  }, [value]);
+  const getPaymentText = () => {
+    if (value === PaymentMethod.Cash) {
+      return 'Наличными';
+    }
+
+    if (value === PaymentMethod.Card) {
+      return 'Картой в приложении';
+    }
+
+    if (value === PaymentMethod.ByCard) {
+      return 'Картой при получении';
+    }
+
+    return 'Выберите способ оплаты';
+  };
 
   return (
     <View>
       <Label text="Оплата" />
-      <OrderInputButton onPress={onPress} iconName="payments" text={text} />
+      <OrderInputButton
+        onPress={onPress}
+        iconName="payments"
+        text={getPaymentText()}
+      />
     </View>
   );
 };

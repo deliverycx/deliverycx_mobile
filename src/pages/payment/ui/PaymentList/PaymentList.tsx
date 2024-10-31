@@ -24,12 +24,26 @@ export const PaymentList: FC<Props> = ({navigation}) => {
   });
 
   const getOptions = () => {
-    const options = [{id: PaymentMethod.Cash, name: 'Наличными'}];
+    const options = [];
+
+    if (paymentMetod?.includes(PaymentMethod.Cash)) {
+      options.push({
+        id: PaymentMethod.Cash,
+        name: 'Наличными',
+      });
+    }
 
     if (paymentMetod?.includes(PaymentMethod.ByCard)) {
       options.push({
         id: PaymentMethod.ByCard,
-        name: 'Банковской картой',
+        name: 'Картой при получении',
+      });
+    }
+
+    if (paymentMetod?.includes(PaymentMethod.Card)) {
+      options.push({
+        id: PaymentMethod.Card,
+        name: 'Картой в приложении',
       });
     }
 

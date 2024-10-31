@@ -84,6 +84,7 @@ const OrganisationsScreens = () => {
 const App = (): React.JSX.Element => {
   useEffect(() => {
     SplashScreen.hide();
+
     Orientation.lockToPortrait();
     Appearance.setColorScheme('light');
   }, []);
