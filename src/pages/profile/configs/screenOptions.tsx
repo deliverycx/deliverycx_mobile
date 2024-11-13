@@ -7,6 +7,6 @@ export const screenOptions = {
     <Icon color={color} size="lg" name="face" />
   ),
   tabBarActiveTintColor: COLORS.main,
-  title: '',
+  title: 'Профиль',
   tabBarLabel: 'Профиль',
 };

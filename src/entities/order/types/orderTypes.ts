@@ -86,3 +86,9 @@ export interface PaymentLinkRequest extends OrderModel {}
 export interface PaymentLinkResponse {
   redirectUrl: string;
 }
+
+export type GetOrdersRequest = {
+  userId: string;
+};
+
+export type GetOrdersResponse = {};

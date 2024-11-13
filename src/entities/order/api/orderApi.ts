@@ -8,6 +8,8 @@ import {
   CreateOrderResponse,
   GetOrderRequest,
   GetOrderResponse,
+  GetOrdersRequest,
+  GetOrdersResponse,
   PaymentLinkRequest,
   PaymentLinkResponse,
 } from '../types/orderTypes';
@@ -29,6 +31,10 @@ export const createOrderApi = (params: CreateOrderRequest) => {
 
 export const checkCartApi = (params: CheckCartRequest) => {
   return axiosInstance.post<CheckCartResponse>('/order/checkcart', params);
+};
+
+export const getOrdersApi = ({userId}: GetOrdersRequest) => {
+  return axiosInstance.get<GetOrdersResponse>(`/order/orderuser/${userId}`);
 };
 
 export const createPaymentLinkApi = (params: PaymentLinkRequest) => {
