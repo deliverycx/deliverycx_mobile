@@ -27,12 +27,20 @@ export const IconButton: FC<Props> = ({
     return;
   };
 
+  const getSize = () => {
+    if (size === ButtonSize.md) {
+      return 'md';
+    }
+
+    return 'sm';
+  };
+
   return (
     <Button
       style={styles.button}
       size={size}
       variant={variant}
-      leftAddons={<Icon name={iconName} size={size} color={getColor()} />}
+      leftAddons={<Icon name={iconName} size={getSize()} color={getColor()} />}
     />
   );
 };
