@@ -11,14 +11,21 @@ import {
   createOrderApi,
   createPaymentLinkApi,
   getOrderApi,
+  getOrdersApi,
 } from '../api/orderApi';
-import {GetOrderRequest, GetOrderResponse} from '../types/orderTypes';
+import {
+  GetOrderRequest,
+  GetOrderResponse,
+  GetOrdersRequest,
+  GetOrdersResponse,
+} from '../types/orderTypes';
 
 const ORDER_CHECK_KEY = 'ORDER_CHECK_KEY';
 const ORDER_GET_KEY = 'ORDER_GET_KEY';
 const ORDER_CREATE_KEY = 'ORDER_CREATE_KEY';
 const ORDER_CHECK_CART_KEY = 'ORDER_CHECK_CART_KEY';
 const ORDER_CREATE_PAYMENT_LINK_KEY = 'ORDER_CREATE_PAYMENT_LINK_KEY';
+const ORDERS_GEY_KEY = 'ORDERS_GET_KEY';
 
 export const useOrderCheckQuery = () => {
   return useMutation({
@@ -31,6 +38,23 @@ export const useOrderCheckCartQuery = () => {
   return useMutation({
     mutationKey: [ORDER_CHECK_CART_KEY],
     mutationFn: checkCartApi,
+  });
+};
+
+export const useGetOrdersQuery = (
+  payload: GetOrdersRequest,
+  options?: Omit<
+    UseQueryOptions<unknown, DefaultError, GetOrdersResponse>,
+    'queryKey' | 'queryFn'
+  >,
+) => {
+  return useQuery({
+    ...options,
+    queryKey: [ORDERS_GEY_KEY, payload.userId],
+    queryFn: async () => {
+      const {data} = await getOrdersApi(payload);
+      return data;
+    },
   });
 };
 

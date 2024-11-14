@@ -173,7 +173,7 @@ export const Order: FC<Props> = ({navigation}) => {
                         numberOfLines={4}
                         value={value}
                         onChangeText={onChange}
-                        placeholder="Вы можеет добавить примечание к заказу"
+                        placeholder="Вы можете добавить примечание к заказу"
                       />
                     );
                   }}

@@ -12,6 +12,7 @@ import {useUserStore} from '../../../../entities/user';
 import {COLORS} from '../../../../shared/styles';
 import {Counter} from '../../../../shared/ui/Counter';
 import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
+import {IconButton} from "../../../../shared/ui/IconButton";
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 
 type Props = {
@@ -74,7 +75,14 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
               LinearGradient={LinearGradient}
             />
           ) : (
-            <Counter max={99} value={count} onChange={handleCounterChange} />
+              <View style={styles.bottomButtons}>
+                <IconButton
+                    onPress={() => remove()}
+                    iconName="close"
+                    variant="tertiary"
+                />
+                <Counter max={99} value={count} onChange={handleCounterChange}/>
+              </View>
           )}
         </View>
       </View>
@@ -136,5 +144,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.textPrimary,
     marginTop: 5,
+  },
+  bottomButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 8,
   },
 });
