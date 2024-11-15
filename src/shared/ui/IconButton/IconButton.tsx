@@ -12,14 +12,14 @@ type Props = {
   iconName: string;
   size?: ButtonProps['size'];
   variant?: ButtonProps['variant'];
-  onPress?: ((event: GestureResponderEvent) => void) | undefined
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
 };
 
 export const IconButton: FC<Props> = ({
   size = ButtonSize.sm,
   iconName,
   variant = ButtonVariant.primary,
-  onPress
+  onPress,
 }) => {
   const getColor = () => {
     if (variant === ButtonVariant.primary) {
