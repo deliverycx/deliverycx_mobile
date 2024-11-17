@@ -50,14 +50,28 @@ export interface OrderParams {
   orderType: OrderType;
 }
 
+export interface OrderItem {
+  amount: number;
+  id: string;
+  oneprice: number;
+  price: number;
+  productId: string;
+  productImage: string;
+  productName: string;
+  productTags: string[];
+}
+
 export interface OrderModel {
   user: string;
   organization: string;
   orderNumber: number;
   orderHash: string;
   orderError: string;
+  createdAt: string;
+  orderTotalAmount: number;
   orderStatus: OrderStatus;
   orderParams: OrderParams;
+  orderItems: OrderItem[];
   payment: unknown;
 }
 
@@ -91,4 +105,4 @@ export type GetOrdersRequest = {
   userId: string;
 };
 
-export type GetOrdersResponse = {};
+export type GetOrdersResponse = OrderModel[];

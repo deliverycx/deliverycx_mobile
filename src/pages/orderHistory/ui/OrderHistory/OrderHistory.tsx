@@ -6,9 +6,13 @@ import {useUserStore} from '../../../../entities/user';
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
 
-  const history = useGetOrdersQuery({userId: userId!}, {enabled: !!userId});
+  // You can use userId (673a1710de172d6708837e0e) to get real orders
+  const {data, isFetching} = useGetOrdersQuery(
+    {userId: userId!},
+    {enabled: !!userId},
+  );
 
-  console.log(5555, history);
+  console.log('use this data to render order history: ', data);
 
   return <Text>order history will be here</Text>;
 };

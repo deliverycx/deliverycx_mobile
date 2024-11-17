@@ -4,9 +4,9 @@ import {Icon} from '../../../shared/ui/Icon';
 
 export const screenOptions = {
   tabBarIcon: ({color}: {color: string}) => (
-    <Icon color={color} size="lg" name="format-list-bulleted" />
+    <Icon color={color} size="lg" name="watch-later" />
   ),
   tabBarActiveTintColor: COLORS.main,
-  title: 'История заказов',
+  title: 'Мои заказы',
   tabBarLabel: 'Заказы',
 };
