@@ -96,7 +96,6 @@ export const OrderHistory = () => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    paddingBottom: 0,
   },
   ordersList: {
     marginVertical: 10,
