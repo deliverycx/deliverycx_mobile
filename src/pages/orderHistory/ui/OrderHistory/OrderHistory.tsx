@@ -8,18 +8,16 @@ import {ProductImageSizer} from "../../../../shared/ui/ProductImageSizer";
 import {Container} from "../../../../shared/ui/Container";
 import {InfoStatus} from "../../../../shared/ui/InfoStatus";
 
-type order = {
-  orderId: string,
-  date: string,
-  status: string,
-  totalPrice: string,
-  products: string[]
-}
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
 
-  const history = useGetOrdersQuery({userId: userId!}, {enabled: !!userId});
+  // You can use userId (673a1710de172d6708837e0e) to get real orders
+  const {data, isFetching} = useGetOrdersQuery(
+    {userId: userId!},
+    {enabled: !!userId},
+  );
 
+  console.log('use this data to render order history: ', data);
   const products = [
     'https://16a9564f-f8ec-42ba-a998-3027aa809e50.selstorage.ru/starikhinkalich-co/26130/images/items/94988bb56c15d25a7c178ef94c17192c.PNG',
     'https://16a9564f-f8ec-42ba-a998-3027aa809e50.selstorage.ru/starikhinkalich-co/26130/images/items/610fa5d13c55cbde664c369fc2cb35ee.PNG',
@@ -53,115 +51,5 @@ export const OrderHistory = () => {
     )
   }
 
-  return (
-    <ScrollView style={[styles.wrapper, {marginBottom: navbarHeight()}]}>
-      <View style={styles.ordersList}>
-        {orders.map((item) =>
-          <Container key={item.orderId} style={styles.orderCart}>
-            <View style={styles.orderTitle}>
-              <Text style={styles.orderNumber}>Заказ №{item.orderId}</Text>
-              <Text style={styles.orderDate}>{item.date}</Text>
-            </View>
-            <View style={styles.orderStatus}>
-              <Text style={styles.statusLabel}>Статус</Text>
-              <Text style={styles.statusValue}>{item.status}</Text>
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.products}>
-              {item.products.map((productImg: string) =>
-                <ProductImageSizer
-                  key={productImg}
-                  style={styles.img}
-                  resizeMode="contain"
-                  source={{
-                    uri: productImg,
-                  }}
-                />
-              )}
-            </ScrollView>
-            <View style={styles.divider} />
-            <View style={styles.orderPrice}>
-              <Text style={styles.priceLabel}>Итого</Text>
-              <Text style={styles.priceValue}>{item.totalPrice}</Text>
-            </View>
-          </Container>
-        )}
-      </View>
-    </ScrollView>
-  );
+  return <Text>order history will be here</Text>;
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-  ordersList: {
-    marginVertical: 10,
-    gap: 10,
-  },
-  noProducts: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  orderCart: {
-    padding: 20,
-    borderRadius: 18,
-    backgroundColor: COLORS.backgroundPrimary,
-    marginHorizontal: 10,
-    gap: 10,
-  },
-  orderTitle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  orderNumber: {
-    fontWeight: '500',
-    color: COLORS.textPrimary,
-  },
-  orderDate: {
-    fontWeight: '500',
-    color: COLORS.textTertiary,
-  },
-  orderStatus:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statusLabel: {
-    fontWeight: '500',
-    color: COLORS.textPrimary,
-  },
-  statusValue:{
-    fontWeight: '500',
-    color: COLORS.success,
-  },
-  img: {
-    width: 60,
-    height: 60,
-    marginHorizontal: 4,
-  },
-  products: {
-    marginHorizontal: -20,
-    flexDirection: 'row',
-    gap: 7,
-  },
-  divider: {
-    height: 1,
-    width: '100%',
-    backgroundColor: COLORS.border,
-    marginVertical: 5,
-  },
-  orderPrice: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  priceLabel: {
-    fontWeight: '500',
-    color: COLORS.textPrimary,
-  },
-  priceValue: {
-    fontWeight: '500',
-    color: COLORS.main,
-  }
-})

@@ -157,6 +157,8 @@ const wrapperStyles = {
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: COLORS.main,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     fontSize: 16,
