@@ -9,10 +9,8 @@ import {OrderHistoryItem} from "../OrderHistoryItem";
 
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
+  const bottomTabBarHeight = useBottomTabBarHeight();
 
-  const testUserId = '673a1710de172d6708837e0e'
-
-  // You can use userId (673a1710de172d6708837e0e) to get real orders
   const {data, isFetching} = useGetOrdersQuery(
     {userId: userId!},
     {enabled: !!userId},
@@ -20,10 +18,10 @@ export const OrderHistory = () => {
 
   if (!data?.length && !isFetching) {
     return (
-      <Container style={[styles.noProducts, {marginBottom: useBottomTabBarHeight()}]}>
+      <Container style={[styles.noProducts, {marginBottom: bottomTabBarHeight}]}>
         <InfoStatus
             variant="sad"
-            text="Вы ещё у нас не заказывали"
+            text="Вы ещё ничего не заказывали."
             desc="Чтобы совершить заказ, выберете себе что‑нибудь вкусное на главной странице"
         />
       </Container>
@@ -31,9 +29,9 @@ export const OrderHistory = () => {
   }
 
   return (
-    <ScrollView style={[styles.wrapper, {marginBottom: useBottomTabBarHeight()}]}>
+    <ScrollView style={[styles.wrapper, {marginBottom: bottomTabBarHeight}]}>
       <View style={styles.ordersList}>
-        {data && data.map((item) => (
+        {data?.map((item) => (
             <OrderHistoryItem key={item.orderNumber} order={item}/>
           )
         )}

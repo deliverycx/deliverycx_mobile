@@ -1,1 +1,1 @@
-export {OrderHistoryItem} from './orderHistoryItem.tsx'
+export {OrderHistoryItem} from './OrderHistoryItem.tsx'

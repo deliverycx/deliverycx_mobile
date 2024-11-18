@@ -2,9 +2,9 @@ import React, {FC} from "react";
 import {ScrollView, StyleSheet, Text, View} from "react-native";
 import {Container} from "../../../../shared/ui/Container";
 import {ProductImageSizer} from "../../../../shared/ui/ProductImageSizer";
-import {getFormatPrice} from "../../../../shared/utils/getFormatPrice.ts";
+import {getFormatPrice} from "../../../../shared/utils/getFormatPrice";
 import {OrderModel, OrderStatus} from "../../../../entities/order";
-import {COLORS} from "../../../../shared/styles.ts";
+import {COLORS} from "../../../../shared/styles";
 
 type Props = {
   order: OrderModel
