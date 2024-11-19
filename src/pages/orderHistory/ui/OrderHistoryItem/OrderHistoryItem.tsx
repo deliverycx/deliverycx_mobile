@@ -1,24 +1,32 @@
-import React, {FC} from "react";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
-import {Container} from "../../../../shared/ui/Container";
-import {ProductImageSizer} from "../../../../shared/ui/ProductImageSizer";
-import {getFormatPrice} from "../../../../shared/utils/getFormatPrice";
-import {OrderModel, OrderStatus} from "../../../../entities/order";
-import {COLORS} from "../../../../shared/styles";
+import React, {FC} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {OrderModel, OrderStatus} from '../../../../entities/order';
+import {COLORS} from '../../../../shared/styles';
+import {Container} from '../../../../shared/ui/Container';
+import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
+import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 
 type Props = {
-  order: OrderModel
-}
+  order: OrderModel;
+};
 
 export const OrderHistoryItem: FC<Props> = ({order}) => {
   const getFormatOrderStatus = (status: OrderStatus) => {
-    switch (status){
+    switch (status) {
       case OrderStatus.Success:
-        return <Text style={[styles.statusValue, {color: COLORS.success}]}>Завершён</Text>;
+        return (
+          <Text style={[styles.statusValue, {color: COLORS.success}]}>
+            Завершён
+          </Text>
+        );
       case OrderStatus.Error:
-        return <Text style={[styles.statusValue, {color: COLORS.main}]}>Не выполнен</Text>;
+        return (
+          <Text style={[styles.statusValue, {color: COLORS.main}]}>
+            Не выполнен
+          </Text>
+        );
     }
-  }
+  };
 
   return (
     <Container key={order.orderNumber} style={styles.orderCart}>
@@ -31,24 +39,26 @@ export const OrderHistoryItem: FC<Props> = ({order}) => {
         {getFormatOrderStatus(order.orderStatus)}
       </View>
       <ScrollView
-        horizontal
+        horizontal={true}
+        contentContainerStyle={styles.scrollView}
         showsHorizontalScrollIndicator={false}
         style={styles.products}>
-        {order.orderItems.map((product) =>
+        {order.orderItems.map(product => (
           <ProductImageSizer
             key={product.id}
             style={styles.img}
-            resizeMode="contain"
             source={{
               uri: product.productImage,
             }}
           />
-        )}
+        ))}
       </ScrollView>
       <View style={styles.divider} />
       <View style={styles.orderPrice}>
         <Text style={styles.priceLabel}>Итого</Text>
-        <Text style={styles.priceValue}>{getFormatPrice(order.orderParams.orderTotalAmount)}</Text>
+        <Text style={styles.priceValue}>
+          {getFormatPrice(order.orderParams.orderTotalAmount)}
+        </Text>
       </View>
     </Container>
   );
@@ -74,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: COLORS.textTertiary,
   },
-  orderStatus:{
+  orderStatus: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -82,12 +92,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: COLORS.textPrimary,
   },
-  statusValue:{
+  statusValue: {
     fontWeight: '500',
   },
   img: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginHorizontal: 4,
   },
   products: {
@@ -112,5 +122,8 @@ const styles = StyleSheet.create({
   priceValue: {
     fontWeight: '500',
     color: COLORS.main,
-  }
-})
+  },
+  scrollView: {
+    paddingHorizontal: 10,
+  },
+});

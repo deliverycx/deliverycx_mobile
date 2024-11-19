@@ -1,11 +1,11 @@
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useGetOrdersQuery} from '../../../../entities/order';
 import {useUserStore} from '../../../../entities/user';
-import {Container} from "../../../../shared/ui/Container";
-import {InfoStatus} from "../../../../shared/ui/InfoStatus";
-import {OrderHistoryItem} from "../OrderHistoryItem";
+import {Container} from '../../../../shared/ui/Container';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
+import {OrderHistoryItem} from '../OrderHistoryItem';
 
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
@@ -18,23 +18,23 @@ export const OrderHistory = () => {
 
   if (!data?.length && !isFetching) {
     return (
-      <Container style={[styles.noProducts, {marginBottom: bottomTabBarHeight}]}>
+      <Container
+        style={[styles.noProducts, {marginBottom: bottomTabBarHeight}]}>
         <InfoStatus
-            variant="sad"
-            text="Вы ещё ничего не заказывали."
-            desc="Чтобы совершить заказ, выберете себе что‑нибудь вкусное на главной странице"
+          variant="sad"
+          text="Вы ещё ничего не заказывали."
+          desc="Чтобы совершить заказ, выберете себе что‑нибудь вкусное на главной странице"
         />
       </Container>
-    )
+    );
   }
 
   return (
     <ScrollView style={[styles.wrapper, {marginBottom: bottomTabBarHeight}]}>
       <View style={styles.ordersList}>
-        {data?.map((item) => (
-            <OrderHistoryItem key={item.orderNumber} order={item}/>
-          )
-        )}
+        {data?.map(item => (
+          <OrderHistoryItem key={item.orderNumber} order={item} />
+        ))}
       </View>
     </ScrollView>
   );
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     gap: 10,
   },
-})
+});
