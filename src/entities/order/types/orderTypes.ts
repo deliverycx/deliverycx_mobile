@@ -48,6 +48,8 @@ export enum OrderStatus {
 export interface OrderParams {
   paymentMethod: PaymentMethod;
   orderType: OrderType;
+  orderTotalAmount: number;
+  date: string,
 }
 
 export interface OrderItem {
@@ -68,7 +70,6 @@ export interface OrderModel {
   orderHash: string;
   orderError: string;
   createdAt: string;
-  orderTotalAmount: number;
   orderStatus: OrderStatus;
   orderParams: OrderParams;
   orderItems: OrderItem[];

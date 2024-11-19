@@ -1,18 +1,56 @@
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Text} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useGetOrdersQuery} from '../../../../entities/order';
 import {useUserStore} from '../../../../entities/user';
+import {Container} from '../../../../shared/ui/Container';
+import {InfoStatus} from '../../../../shared/ui/InfoStatus';
+import {OrderHistoryItem} from '../OrderHistoryItem';
 
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
+  const bottomTabBarHeight = useBottomTabBarHeight();
 
-  // You can use userId (673a1710de172d6708837e0e) to get real orders
   const {data, isFetching} = useGetOrdersQuery(
     {userId: userId!},
     {enabled: !!userId},
   );
 
-  console.log('use this data to render order history: ', data);
+  if (!data?.length && !isFetching) {
+    return (
+      <Container
+        style={[styles.noProducts, {marginBottom: bottomTabBarHeight}]}>
+        <InfoStatus
+          variant="sad"
+          text="Вы ещё ничего не заказывали."
+          desc="Чтобы совершить заказ, выберете себе что‑нибудь вкусное на главной странице"
+        />
+      </Container>
+    );
+  }
 
-  return <Text>order history will be here</Text>;
+  return (
+    <ScrollView style={[styles.wrapper, {marginBottom: bottomTabBarHeight}]}>
+      <View style={styles.ordersList}>
+        {data?.map(item => (
+          <OrderHistoryItem key={item.orderNumber} order={item} />
+        ))}
+      </View>
+    </ScrollView>
+  );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    paddingBottom: 0,
+  },
+  noProducts: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  ordersList: {
+    marginVertical: 10,
+    gap: 10,
+  },
+});
