@@ -24,6 +24,10 @@ import {
 import {Menu, ScreenOptions as MenuScreenOptions} from './src/pages/menu';
 import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
 import {
+  OrderHistory,
+  screenOptions as orderHistoryScreenOptions,
+} from './src/pages/orderHistory';
+import {
   OrderStatus,
   screenOptions as orderStatusScreenOptions,
 } from './src/pages/orderStatus';
@@ -52,6 +56,11 @@ const TabScreens = () => {
         options={ContactsScreenOptions}
         name={Routes.Contacts}
         component={Contacts}
+      />
+      <Tab.Screen
+        options={orderHistoryScreenOptions}
+        name={Routes.OrderHistory}
+        component={OrderHistory}
       />
       <Tab.Screen
         options={CartScreenOptions}

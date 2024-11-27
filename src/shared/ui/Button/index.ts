@@ -1,1 +1,2 @@
-export {Button} from './Button.tsx';
+export {Button, Size, Variant} from './Button';
+export type {Props} from './Button';

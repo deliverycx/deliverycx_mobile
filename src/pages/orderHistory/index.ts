@@ -1,2 +1,2 @@
 export {screenOptions} from './configs/screenOptions';
-export {Profile} from './ui/Profile';
+export {OrderHistory} from './ui/OrderHistory';

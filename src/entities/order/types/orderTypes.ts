@@ -48,6 +48,19 @@ export enum OrderStatus {
 export interface OrderParams {
   paymentMethod: PaymentMethod;
   orderType: OrderType;
+  orderTotalAmount: number;
+  date: string,
+}
+
+export interface OrderItem {
+  amount: number;
+  id: string;
+  oneprice: number;
+  price: number;
+  productId: string;
+  productImage: string;
+  productName: string;
+  productTags: string[];
 }
 
 export interface OrderModel {
@@ -56,8 +69,10 @@ export interface OrderModel {
   orderNumber: number;
   orderHash: string;
   orderError: string;
+  createdAt: string;
   orderStatus: OrderStatus;
   orderParams: OrderParams;
+  orderItems: OrderItem[];
   payment: unknown;
 }
 
@@ -86,3 +101,9 @@ export interface PaymentLinkRequest extends OrderModel {}
 export interface PaymentLinkResponse {
   redirectUrl: string;
 }
+
+export type GetOrdersRequest = {
+  userId: string;
+};
+
+export type GetOrdersResponse = OrderModel[];

@@ -9,23 +9,24 @@ import {
   type TouchableHighlightProps,
 } from 'react-native';
 import {COLORS} from '../../styles';
-import {hapticFeedback} from '../../utils/hapticFeedback.ts';
+import {hapticFeedback} from '../../utils/hapticFeedback';
 import {hexToRgba} from '../../utils/hexToRgba';
 
-const enum Variant {
+export const enum Variant {
   primary = 'primary',
   secondary = 'secondary',
   tertiary = 'tertiary',
   quaternary = 'quaternary',
 }
 
-const enum Size {
+export const enum Size {
+  xs = 'xs',
   sm = 'sm',
   md = 'md',
 }
 
-interface Props extends TouchableHighlightProps {
-  text: string;
+export interface Props extends TouchableHighlightProps {
+  text?: string;
   variant?: keyof typeof Variant;
   size?: keyof typeof Size;
   loading?: boolean;
@@ -77,10 +78,12 @@ export const Button: FC<Props> = ({
       ) : (
         <View style={styles.textWrapper}>
           {leftAddons}
-          <Text
-            style={[styles.text, textStyles[variant], textSizeStyles[size]]}>
-            {text}
-          </Text>
+          {text && (
+            <Text
+              style={[styles.text, textStyles[variant], textSizeStyles[size]]}>
+              {text}
+            </Text>
+          )}
           {rightAddons}
         </View>
       )}
@@ -104,19 +107,27 @@ const textStyles = StyleSheet.create({
 });
 
 const sizeStyles = StyleSheet.create({
+  xs: {
+    paddingHorizontal: 6,
+    borderRadius: 30,
+    height: 20,
+  },
   sm: {
     paddingHorizontal: 10,
-    paddingVertical: 6,
     borderRadius: 30,
+    height: 30,
   },
   md: {
     paddingHorizontal: 20,
-    paddingVertical: 13,
     borderRadius: 40,
+    height: 44,
   },
 });
 
 const textSizeStyles = StyleSheet.create({
+  xs: {
+    fontSize: 12,
+  },
   sm: {
     fontSize: 13,
   },
@@ -146,6 +157,8 @@ const wrapperStyles = {
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: COLORS.main,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     fontSize: 16,
@@ -157,6 +170,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   textWrapper: {
+    flex: 1,
     gap: 6,
     flexDirection: 'row',
     alignItems: 'center',
