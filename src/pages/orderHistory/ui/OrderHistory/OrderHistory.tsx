@@ -6,11 +6,11 @@ import {useUserStore} from '../../../../entities/user';
 import {Container} from '../../../../shared/ui/Container';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 import {OrderHistoryItem} from '../OrderHistoryItem';
+import {OrderHistoryListSkeleton} from '../OrdersListSkeleton';
 
 export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
   const bottomTabBarHeight = useBottomTabBarHeight();
-
   const {data, isFetching} = useGetOrdersQuery(
     {userId: userId!},
     {enabled: !!userId},
@@ -31,11 +31,15 @@ export const OrderHistory = () => {
 
   return (
     <ScrollView style={[styles.wrapper, {marginBottom: bottomTabBarHeight}]}>
-      <View style={styles.ordersList}>
-        {data?.map(item => (
-          <OrderHistoryItem key={item.orderNumber} order={item} />
-        ))}
-      </View>
+      {isFetching ? (
+        <OrderHistoryListSkeleton />
+      ) : (
+        <View style={styles.ordersList}>
+          {data?.map(item => (
+            <OrderHistoryItem key={item.orderNumber} order={item} />
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };
