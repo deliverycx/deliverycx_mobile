@@ -15,11 +15,13 @@ const Image = createImageProgress(FastImage);
 export const OrgGallery: FC<Props> = ({data, style}) => {
   return (
     <Carousel
+      autoplayInterval={5000}
       showsControls={false}
       style={[styles.wrapper, style]}
       autoplay={true}>
       {data.map((item, index) => (
         <Image
+          resizeMode={FastImage.resizeMode.cover}
           key={item}
           style={styles.img}
           source={{

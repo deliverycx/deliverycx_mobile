@@ -7,6 +7,9 @@ export const screenOptions = {
     <Icon color={color} size="lg" name="watch-later" />
   ),
   tabBarActiveTintColor: COLORS.main,
+  headerTitleStyle: {
+    fontSize: 16,
+  },
   title: 'Мои заказы',
   tabBarLabel: 'Заказы',
 };

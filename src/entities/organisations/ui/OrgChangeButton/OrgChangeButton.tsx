@@ -46,7 +46,7 @@ export const OrgChangeButton: FC<Props> = ({style, userId}) => {
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={handlePress}>
       <Icon style={styles.icon} name="location-on" />
-      <Text style={styles.text}>
+      <Text numberOfLines={2} style={styles.text}>
         {data?.city}, {data?.address}
       </Text>
     </TouchableOpacity>

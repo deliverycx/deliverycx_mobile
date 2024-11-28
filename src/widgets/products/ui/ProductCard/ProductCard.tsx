@@ -1,8 +1,6 @@
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {useEffect, useRef, useState, type FC} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {createImageProgress} from 'react-native-image-progress';
 import {useCartAdd} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {getProductWeightText} from '../../../../entities/products';
@@ -24,8 +22,6 @@ interface Props {
 
 const INITIAL_COUNT = 1;
 const SNAP_POINTS = ['100%'];
-
-const Image = createImageProgress(FastImage);
 
 export const ProductCard: FC<Props> = ({onClosed, data}) => {
   const {name, description, price, weight, image, measureUnit} = data;
@@ -85,7 +81,6 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
       onChange={handleBottomSheetModalChange}>
       <SafeAreaView style={styles.safeAreaView}>
         <Container style={styles.wrapper}>
-          <DownButton onPress={onClosed} style={styles.downButton} />
           <ProductImageSizer
             resizeMode="contain"
             style={styles.img}
@@ -108,6 +103,7 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
               </View>
             </View>
           </View>
+          <DownButton onPress={onClosed} style={styles.downButton} />
         </Container>
       </SafeAreaView>
     </Modal>
@@ -135,6 +131,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 9,
     left: INDENTS.main,
+    top: 10,
   },
   modalStyle: {
     minHeight: '100%',

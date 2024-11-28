@@ -26,6 +26,9 @@ export const ScreenOptions = (): BottomTabNavigationOptions => {
     title: '',
     tabBarLabel: 'Корзина',
     headerTitle: 'Корзина',
+    headerTitleStyle: {
+      fontSize: 16,
+    },
     tabBarBadge: totalPrice > 0 ? formattedTotalPrice : undefined,
     headerBackgroundContainerStyle: {
       shadowOffset: {width: -1, height: 1},

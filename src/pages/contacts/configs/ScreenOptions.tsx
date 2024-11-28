@@ -14,6 +14,9 @@ export const ScreenOptions = () => {
     ),
     tabBarActiveTintColor: COLORS.main,
     headerTitle: headerTitle,
+    headerTitleStyle: {
+      fontSize: 16,
+    },
     tabBarLabel: 'Контакты',
   };
 };

@@ -18,7 +18,7 @@ export const ProductImage: FC<Props> = ({data, imagePriority}) => {
       {stopped && (
         <View style={styles.stoppedWrapper}>
           <View style={styles.stoppedTextWrapper}>
-            <Text style={styles.stoppedText}>Упс... Закончилось</Text>
+            <Text style={styles.stoppedText}>Упс...{'\n'} Закончилось</Text>
           </View>
         </View>
       )}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     transform: [{rotateZ: '-8deg'}],
   },
   stoppedText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     height: 150,
   },
   stopped: {
-    opacity: 0.8,
+    opacity: 0.5,
   },
 });

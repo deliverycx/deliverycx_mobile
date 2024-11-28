@@ -23,6 +23,7 @@ export const ScreenOptions = () => {
 export const styles = StyleSheet.create({
   leftIndent: {
     marginLeft: INDENTS.main,
+    maxWidth: 250,
   },
   rightIndent: {
     marginRight: INDENTS.main,

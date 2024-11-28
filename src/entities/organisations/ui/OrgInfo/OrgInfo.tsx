@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+    maxWidth: '90%',
   },
   gallery: {
     height: 250,
