@@ -30,7 +30,7 @@ export const OrgLikeButton: FC<Props> = ({style}) => {
       onPress={handlePress}
       style={style}
       variant="quaternary"
-      leftAddons={<Icon style={styles.icon} name="thumb-up" />}
+      leftAddons={<Icon size="sm" style={styles.icon} name="thumb-up" />}
       text="Похвалить"
     />
   );

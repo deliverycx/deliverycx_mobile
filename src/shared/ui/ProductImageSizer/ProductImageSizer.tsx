@@ -1,6 +1,7 @@
 import React, {FC, useMemo} from 'react';
 import FastImage, {FastImageProps, Source} from 'react-native-fast-image';
 import {createImageProgress} from 'react-native-image-progress';
+import {COLORS} from '../../styles.ts';
 
 type Props = Omit<FastImageProps, 'source'> & {
   source?: Source;
@@ -29,5 +30,13 @@ export const ProductImageSizer: FC<Props> = ({source, ...props}) => {
     };
   }, [source]);
 
-  return <Image {...props} source={_source} />;
+  return (
+    <Image
+      {...props}
+      source={_source}
+      indicatorProps={{
+        color: COLORS.main,
+      }}
+    />
+  );
 };

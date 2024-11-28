@@ -176,7 +176,7 @@ export const Address: FC<Props> = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingVertical: 14,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     backgroundColor: COLORS.backgroundPrimary,

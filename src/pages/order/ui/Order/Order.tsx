@@ -184,7 +184,7 @@ export const Order: FC<Props> = ({navigation}) => {
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
-      <Container>
+      <Container style={styles.containerBottom}>
         {isDelivery && (
           <View style={styles.footerInfo}>
             <Text style={styles.footerText}>Стоимость доставки</Text>
@@ -213,6 +213,9 @@ const styles = StyleSheet.create({
     gap: 16,
     marginVertical: 16,
   },
+  containerBottom: {
+    paddingVertical: 14,
+  },
   wrapper: {
     flex: 1,
     backgroundColor: COLORS.backgroundPrimary,
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
   footerInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 16,
+    paddingBottom: 16,
   },
   footerText: {
     fontSize: 16,

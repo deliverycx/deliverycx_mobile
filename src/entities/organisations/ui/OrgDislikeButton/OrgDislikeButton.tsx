@@ -18,7 +18,7 @@ export const OrgDisLikeButton: FC<Props> = ({style}) => {
       onPress={() => openUrl(TELEGRAM_BOT_URL)}
       style={style}
       variant="secondary"
-      leftAddons={<Icon style={styles.icon} name="thumb-down" />}
+      leftAddons={<Icon size="sm" style={styles.icon} name="thumb-down" />}
       text="Пожаловаться"
     />
   );

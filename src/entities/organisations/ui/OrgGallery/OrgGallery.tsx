@@ -17,6 +17,7 @@ export const OrgGallery: FC<Props> = ({data, style}) => {
     <Carousel
       autoplayInterval={5000}
       showsControls={false}
+      loop={true}
       style={[styles.wrapper, style]}
       autoplay={true}>
       {data.map((item, index) => (
@@ -40,6 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   img: {
-    flex: 1,
+    height: 250,
   },
 });

@@ -118,7 +118,7 @@ const sizeStyles = StyleSheet.create({
     height: 30,
   },
   md: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 18,
     borderRadius: 40,
     height: 44,
   },
@@ -132,7 +132,7 @@ const textSizeStyles = StyleSheet.create({
     fontSize: 13,
   },
   md: {
-    fontSize: 16,
+    fontSize: 15,
   },
 });
 
