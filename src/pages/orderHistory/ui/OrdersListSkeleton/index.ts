@@ -1,1 +1,1 @@
-export {OrderHistoryListSkeleton} from './OrderHistoryListSkeleton.tsx';
+export {OrderHistoryListSkeleton} from './OrderHistoryListSkeleton';
