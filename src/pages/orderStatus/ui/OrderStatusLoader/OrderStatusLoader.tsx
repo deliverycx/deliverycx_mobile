@@ -1,10 +1,11 @@
 import React from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {COLORS} from '../../../../shared/styles.ts';
 
 export const OrderStatusLoader = () => {
   return (
     <View style={styles.wrapper}>
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="large" color={COLORS.main} />
       <View style={styles.texts}>
         <Text style={styles.title}>Пожалуйста подождите...</Text>
         <Text style={styles.desc}>

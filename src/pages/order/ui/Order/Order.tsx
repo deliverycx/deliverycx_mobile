@@ -5,6 +5,7 @@ import {Controller, FieldErrors} from 'react-hook-form';
 import {
   Alert,
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -214,7 +215,8 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   containerBottom: {
-    paddingVertical: 14,
+    paddingTop: 14,
+    paddingBottom: Platform.select({ios: 0, android: 14}),
   },
   wrapper: {
     flex: 1,
