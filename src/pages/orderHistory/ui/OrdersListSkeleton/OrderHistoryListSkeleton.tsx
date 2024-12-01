@@ -1,16 +1,39 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {INDENTS} from '../../../../shared/styles';
+
+const width = Dimensions.get('window').width - INDENTS.main;
 
 export const OrderHistoryListSkeleton = () => {
   return (
     <View style={styles.skeletonWrapper}>
-      <ShimmerPlaceHolder style={styles.item} LinearGradient={LinearGradient} />
-      <ShimmerPlaceHolder style={styles.item} LinearGradient={LinearGradient} />
-      <ShimmerPlaceHolder style={styles.item} LinearGradient={LinearGradient} />
-      <ShimmerPlaceHolder style={styles.item} LinearGradient={LinearGradient} />
-      <ShimmerPlaceHolder style={styles.item} LinearGradient={LinearGradient} />
+      <ShimmerPlaceHolder
+        width={width}
+        style={styles.item}
+        LinearGradient={LinearGradient}
+      />
+      <ShimmerPlaceHolder
+        width={width}
+        style={styles.item}
+        LinearGradient={LinearGradient}
+      />
+      <ShimmerPlaceHolder
+        width={width}
+        style={styles.item}
+        LinearGradient={LinearGradient}
+      />
+      <ShimmerPlaceHolder
+        width={width}
+        style={styles.item}
+        LinearGradient={LinearGradient}
+      />
+      <ShimmerPlaceHolder
+        width={width}
+        style={styles.item}
+        LinearGradient={LinearGradient}
+      />
     </View>
   );
 };
@@ -23,8 +46,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   item: {
-    width: '100%',
     height: 180,
     borderRadius: 16,
+    flex: 1,
   },
 });

@@ -55,7 +55,7 @@ export const Address: FC<Props> = ({navigation}) => {
 
     if (!geoData.classifierId) {
       Toast.show({
-        topOffset: 100,
+        topOffset: 80,
         visibilityTime: 5000,
         type: 'custom',
         text1: 'Доставка по указанному адресу невозможна',

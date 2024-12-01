@@ -128,9 +128,8 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   downButton: {
-    position: 'absolute',
-    zIndex: 9,
     left: INDENTS.main,
+    position: 'absolute',
     top: 10,
   },
   modalStyle: {

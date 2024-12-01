@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    width: '95%',
+    width: '70%',
   },
   icon: {
     color: COLORS.textInvert,
