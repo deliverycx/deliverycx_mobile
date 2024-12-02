@@ -12,7 +12,7 @@ export const OrderHistory = () => {
   const userId = useUserStore(state => state.user?.id);
   const bottomTabBarHeight = useBottomTabBarHeight();
   const {data, isFetching} = useGetOrdersQuery(
-    {userId: '673a1710de172d6708837e0e'!},
+    {userId: userId!},
     {enabled: !!userId},
   );
 
