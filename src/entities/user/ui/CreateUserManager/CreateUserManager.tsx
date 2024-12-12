@@ -1,3 +1,4 @@
+import axios, {AxiosError, HttpStatusCode} from 'axios';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {useCheckGuest} from '../../queries/checkGuestQueries';
@@ -52,7 +53,13 @@ export const CreateUserManager = () => {
       try {
         await checkGuest(user);
       } catch (err) {
-        setUser(null);
+        const errors = err as Error | AxiosError;
+
+        if (axios.isAxiosError(errors)) {
+          if (errors.response?.status === HttpStatusCode.Unauthorized) {
+            setUser(null);
+          }
+        }
       }
     })();
   }, [hydrated, user, setUser, checkGuest]);

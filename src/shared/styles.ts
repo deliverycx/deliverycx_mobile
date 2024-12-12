@@ -17,7 +17,7 @@ export const COLORS = {
 };
 
 export const INDENTS = {
-  main: 20,
+  main: 16,
 };
 
 export const ICON_SIZES = {
