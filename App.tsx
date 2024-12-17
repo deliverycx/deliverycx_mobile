@@ -12,6 +12,7 @@ import {
 import {Routes, STACK_NAVIGATOR_OPTIONS} from './src/shared/routes';
 
 import {Appearance} from 'react-native';
+import {YaMap} from 'react-native-yamap';
 import {
   Address,
   screenOptions as addressScreenOptions,
@@ -22,7 +23,6 @@ import {
   ScreenOptions as ContactsScreenOptions,
 } from './src/pages/contacts';
 import {Menu, ScreenOptions as MenuScreenOptions} from './src/pages/menu';
-import {NetworkError} from './src/pages/network';
 import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
 import {
   OrderHistory,
@@ -41,10 +41,11 @@ import {
   screenOptions as streetsScreenOptions,
 } from './src/pages/streets';
 import {screenOptions as tabNavigatorOptions} from './src/shared/configs/menuScreenOptions';
-import {useIsConnected} from './src/shared/hooks/useIsConnected.ts';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+YaMap.init('9319733b-bbba-48e7-af52-8410be35c07d');
 
 const TabScreens = () => {
   return (
@@ -93,8 +94,6 @@ const OrganisationsScreens = () => {
 };
 
 const App = (): React.JSX.Element => {
-  const {isConnected, fetchNetInfo} = useIsConnected();
-
   useEffect(() => {
     SplashScreen.hide();
 
@@ -102,54 +101,46 @@ const App = (): React.JSX.Element => {
     Appearance.setColorScheme('light');
   }, []);
 
-  const isNetworkErrorShown = isConnected === false;
-
   return (
-    <>
-      {isNetworkErrorShown ? (
-        <NetworkError onRefetch={fetchNetInfo} />
-      ) : (
-        <Providers
-          organisationsSlot={<OrganisationsScreens />}
-          homeSlot={
-            <Stack.Navigator
-              screenOptions={STACK_NAVIGATOR_OPTIONS}
-              initialRouteName={Routes.TabScreens}>
-              <Stack.Screen
-                options={{headerShown: false}}
-                name={Routes.TabScreens}
-                component={TabScreens}
-              />
-              <Stack.Screen
-                name={Routes.Order}
-                options={orderScreenOptions}
-                component={Order}
-              />
-              <Stack.Screen
-                options={addressScreenOptions}
-                name={Routes.Address}
-                component={Address}
-              />
-              <Stack.Screen
-                options={paymentScreenOptions}
-                name={Routes.Payment}
-                component={PaymentList}
-              />
-              <Stack.Screen
-                options={streetsScreenOptions}
-                name={Routes.Streets}
-                component={StreetsList}
-              />
-              <Stack.Screen
-                options={orderStatusScreenOptions}
-                name={Routes.OrderStatus}
-                component={OrderStatus}
-              />
-            </Stack.Navigator>
-          }
-        />
-      )}
-    </>
+    <Providers
+      organisationsSlot={<OrganisationsScreens />}
+      homeSlot={
+        <Stack.Navigator
+          screenOptions={STACK_NAVIGATOR_OPTIONS}
+          initialRouteName={Routes.TabScreens}>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name={Routes.TabScreens}
+            component={TabScreens}
+          />
+          <Stack.Screen
+            name={Routes.Order}
+            options={orderScreenOptions}
+            component={Order}
+          />
+          <Stack.Screen
+            options={addressScreenOptions}
+            name={Routes.Address}
+            component={Address}
+          />
+          <Stack.Screen
+            options={paymentScreenOptions}
+            name={Routes.Payment}
+            component={PaymentList}
+          />
+          <Stack.Screen
+            options={streetsScreenOptions}
+            name={Routes.Streets}
+            component={StreetsList}
+          />
+          <Stack.Screen
+            options={orderStatusScreenOptions}
+            name={Routes.OrderStatus}
+            component={OrderStatus}
+          />
+        </Stack.Navigator>
+      }
+    />
   );
 };
 

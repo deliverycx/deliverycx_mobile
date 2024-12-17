@@ -32,7 +32,10 @@ export const CreateUserManager = () => {
     (async function () {
       try {
         const userResponse = await createUser();
-        setUser(userResponse);
+
+        if (userResponse) {
+          setUser(userResponse);
+        }
       } catch (err) {
         console.log(err);
         Alert.alert(

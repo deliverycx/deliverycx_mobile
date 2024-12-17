@@ -4,7 +4,6 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React, {FC, ReactNode} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {YaMap} from 'react-native-yamap';
 import {CartStateManager} from './src/entities/cart';
 import {OrderFormProvider} from './src/entities/order';
 import {
@@ -13,7 +12,9 @@ import {
   useCurrentOrgStore,
 } from './src/entities/organisations';
 import {CreateUserManager, useUserStore} from './src/entities/user';
+import {NetworkError} from './src/pages/network';
 import {linking} from './src/shared/configs/linking';
+import {useIsConnected} from './src/shared/hooks/useIsConnected.ts';
 import {ToastProvider} from './src/shared/providers/ToastProvider';
 import {AddressFormProvider} from './src/widgets/address';
 import {OrderPaymentMethodValidator} from './src/widgets/order';
@@ -25,41 +26,51 @@ type Props = {
 
 const queryClient = new QueryClient();
 
-YaMap.init('9319733b-bbba-48e7-af52-8410be35c07d');
-
 export const Providers: FC<Props> = ({organisationsSlot, homeSlot}) => {
+  const {isConnected, fetchNetInfo} = useIsConnected();
+
   const currentOrgId = useCurrentOrgStore(state => state.orgId);
   const userId = useUserStore(state => state.user?.id);
 
   const isHomeSlotShown = !!(currentOrgId && userId);
 
+  const isNetworkErrorShown = isConnected === false;
+
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
-      <CreateUserManager />
-      <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-        <BottomSheetModalProvider>
-          <OrgAlertsProvider>
-            <NavigationContainer linking={linking}>
-              {isHomeSlotShown ? (
-                <>
-                  <OrgAlertsSubscriber orgId={currentOrgId}>
-                    <CartStateManager orgId={currentOrgId} userId={userId}>
-                      <OrderFormProvider>
-                        <OrderPaymentMethodValidator />
-                        <AddressFormProvider>{homeSlot}</AddressFormProvider>
-                      </OrderFormProvider>
-                    </CartStateManager>
-                  </OrgAlertsSubscriber>
-                </>
-              ) : (
-                organisationsSlot
-              )}
-            </NavigationContainer>
-          </OrgAlertsProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-      <ToastProvider />
+      {isNetworkErrorShown ? (
+        <NetworkError queryClient={queryClient} onRefetch={fetchNetInfo} />
+      ) : (
+        <>
+          <CreateUserManager />
+          <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+            <BottomSheetModalProvider>
+              <OrgAlertsProvider>
+                <NavigationContainer linking={linking}>
+                  {isHomeSlotShown ? (
+                    <>
+                      <OrgAlertsSubscriber orgId={currentOrgId}>
+                        <CartStateManager orgId={currentOrgId} userId={userId}>
+                          <OrderFormProvider>
+                            <OrderPaymentMethodValidator />
+                            <AddressFormProvider>
+                              {homeSlot}
+                            </AddressFormProvider>
+                          </OrderFormProvider>
+                        </CartStateManager>
+                      </OrgAlertsSubscriber>
+                    </>
+                  ) : (
+                    organisationsSlot
+                  )}
+                </NavigationContainer>
+              </OrgAlertsProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+          <ToastProvider />
+        </>
+      )}
     </QueryClientProvider>
   );
 };
