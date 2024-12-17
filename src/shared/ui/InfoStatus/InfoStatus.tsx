@@ -1,12 +1,14 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {COLORS} from '../../styles.ts';
+import {AsleepKhinkal} from '../CustomIcons/AsleepKhinkal';
 import {HappyKhinkal} from '../CustomIcons/HappyKhinkal';
 import {SadKhinkal} from '../CustomIcons/SadKhinkal';
 
 const enum Variant {
   sad = 'sad',
   happy = 'happy',
+  asleep = 'asleep',
 }
 
 type Props = {
@@ -23,6 +25,9 @@ export const InfoStatus: FC<Props> = ({text, desc, variant}) => {
 
       case Variant.happy:
         return <HappyKhinkal />;
+
+      case Variant.asleep:
+        return <AsleepKhinkal />;
     }
   };
 

@@ -22,6 +22,7 @@ import {
   ScreenOptions as ContactsScreenOptions,
 } from './src/pages/contacts';
 import {Menu, ScreenOptions as MenuScreenOptions} from './src/pages/menu';
+import {NetworkError} from './src/pages/network';
 import {Order, screenOptions as orderScreenOptions} from './src/pages/order';
 import {
   OrderHistory,
@@ -99,45 +100,48 @@ const App = (): React.JSX.Element => {
   }, []);
 
   return (
-    <Providers
-      organisationsSlot={<OrganisationsScreens />}
-      homeSlot={
-        <Stack.Navigator
-          screenOptions={STACK_NAVIGATOR_OPTIONS}
-          initialRouteName={Routes.TabScreens}>
-          <Stack.Screen
-            options={{headerShown: false}}
-            name={Routes.TabScreens}
-            component={TabScreens}
-          />
-          <Stack.Screen
-            name={Routes.Order}
-            options={orderScreenOptions}
-            component={Order}
-          />
-          <Stack.Screen
-            options={addressScreenOptions}
-            name={Routes.Address}
-            component={Address}
-          />
-          <Stack.Screen
-            options={paymentScreenOptions}
-            name={Routes.Payment}
-            component={PaymentList}
-          />
-          <Stack.Screen
-            options={streetsScreenOptions}
-            name={Routes.Streets}
-            component={StreetsList}
-          />
-          <Stack.Screen
-            options={orderStatusScreenOptions}
-            name={Routes.OrderStatus}
-            component={OrderStatus}
-          />
-        </Stack.Navigator>
-      }
-    />
+    <>
+      <NetworkError />
+      <Providers
+        organisationsSlot={<OrganisationsScreens />}
+        homeSlot={
+          <Stack.Navigator
+            screenOptions={STACK_NAVIGATOR_OPTIONS}
+            initialRouteName={Routes.TabScreens}>
+            <Stack.Screen
+              options={{headerShown: false}}
+              name={Routes.TabScreens}
+              component={TabScreens}
+            />
+            <Stack.Screen
+              name={Routes.Order}
+              options={orderScreenOptions}
+              component={Order}
+            />
+            <Stack.Screen
+              options={addressScreenOptions}
+              name={Routes.Address}
+              component={Address}
+            />
+            <Stack.Screen
+              options={paymentScreenOptions}
+              name={Routes.Payment}
+              component={PaymentList}
+            />
+            <Stack.Screen
+              options={streetsScreenOptions}
+              name={Routes.Streets}
+              component={StreetsList}
+            />
+            <Stack.Screen
+              options={orderStatusScreenOptions}
+              name={Routes.OrderStatus}
+              component={OrderStatus}
+            />
+          </Stack.Navigator>
+        }
+      />
+    </>
   );
 };
 
