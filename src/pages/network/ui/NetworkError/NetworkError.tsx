@@ -36,8 +36,6 @@ export const NetworkError = () => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    left: 0,
     zIndex: 9,
     elevation: 9,
     width: '100%',
