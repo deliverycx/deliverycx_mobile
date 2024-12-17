@@ -1,13 +1,14 @@
-import {useNetInfoInstance} from '@react-native-community/netinfo';
-import React from 'react';
+import React, {FC} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {COLORS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 
-export const NetworkError = () => {
-  const {refresh} = useNetInfoInstance();
+type Props = {
+  onRefetch: () => void;
+};
 
+export const NetworkError: FC<Props> = ({onRefetch}) => {
   return (
     <SafeAreaView style={styles.container}>
       <InfoStatus
@@ -15,7 +16,7 @@ export const NetworkError = () => {
         text="Нет подключения к интернету."
         desc="Пожалуйста, проверьте ваше интернет-соединение и попробуйте снова."
       />
-      <Button style={styles.btn} text="Повторить" onPress={refresh} />
+      <Button style={styles.btn} text="Повторить" onPress={onRefetch} />
     </SafeAreaView>
   );
 };

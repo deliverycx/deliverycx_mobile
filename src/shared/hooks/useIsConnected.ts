@@ -14,5 +14,5 @@ export const useIsConnected = () => {
     fetchNetInfo();
   }, []);
 
-  return isConnected;
+  return {isConnected, fetchNetInfo};
 };

@@ -93,7 +93,7 @@ const OrganisationsScreens = () => {
 };
 
 const App = (): React.JSX.Element => {
-  const isConnected = useIsConnected();
+  const {isConnected, fetchNetInfo} = useIsConnected();
 
   useEffect(() => {
     SplashScreen.hide();
@@ -107,7 +107,7 @@ const App = (): React.JSX.Element => {
   return (
     <>
       {isNetworkErrorShown ? (
-        <NetworkError />
+        <NetworkError onRefetch={fetchNetInfo} />
       ) : (
         <Providers
           organisationsSlot={<OrganisationsScreens />}
