@@ -1,12 +1,12 @@
 import NetInfo from '@react-native-community/netinfo';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {COLORS} from '../../../../shared/styles.ts';
+import {COLORS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 
 export const NetworkError = () => {
-  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+  const [isConnected, setIsConnected] = useState<boolean | null>();
 
   const fetchNetInfo = () => {
     NetInfo.fetch().then(state => {
@@ -18,7 +18,7 @@ export const NetworkError = () => {
     fetchNetInfo();
   }, []);
 
-  if (isConnected) {
+  if (isConnected || isConnected === undefined) {
     return null;
   }
 
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     left: 0,
-    zIndex: 9999,
+    zIndex: 9,
+    elevation: 9,
     width: '100%',
     height: '100%',
     backgroundColor: COLORS.backgroundPrimary,
