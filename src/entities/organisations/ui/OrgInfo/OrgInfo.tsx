@@ -103,6 +103,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
             <OrgKhinkaliCounter
               style={styles.khinkaliCounter}
               orgId={data.guid}
+              phone={data.phone}
             />
             <View style={styles.mainInfo}>
               <View style={styles.orgWorkTime}>

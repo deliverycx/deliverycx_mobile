@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {COLORS} from '../../../../shared/styles.ts';
+import {COLORS} from '../../../../shared/styles';
 
 export const AppVersion = () => {
   return (

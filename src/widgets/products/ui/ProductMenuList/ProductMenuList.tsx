@@ -11,6 +11,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import {CategoryList, useProducts} from '../../../../entities/products';
 import {COLORS, INDENTS} from '../../../../shared/styles';
+import {GlassesKhinkal} from '../../../../shared/ui/CustomIcons/GlassesKhinkali.tsx';
 import {useSectionProducts} from '../../hooks/useSectionProducts';
 import {useSyncList} from '../../hooks/useSyncList';
 import {ProductCategorySkeleton} from '../ProductCategorySkeleton';
@@ -119,6 +120,13 @@ export const ProductMenuList: FC<Props> = ({
           getItem={(itemData, index) => itemData[index]}
           scrollIndicatorInsets={scrollIndicatorInsets}
           onEndReached={handleEndReached}
+          ListFooterComponent={() => {
+            return (
+              <View style={styles.glassesKhinkal}>
+                <GlassesKhinkal />
+              </View>
+            );
+          }}
           keyExtractor={(_, index) => `${index}`}
           renderItem={({
             item,
@@ -154,6 +162,14 @@ export const ProductMenuList: FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
+  glassesKhinkal: {
+    position: 'absolute',
+    left: 0,
+    bottom: -160,
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
   wrapper: {
     flex: 1,
   },
