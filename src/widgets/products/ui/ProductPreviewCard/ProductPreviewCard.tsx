@@ -14,6 +14,7 @@ import {useCartManager} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {getProductWeightText} from '../../../../entities/products';
 import {useUserStore} from '../../../../entities/user';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {FullProduct} from '../../../../shared/types/productTypes';
 import {Button} from '../../../../shared/ui/Button';
@@ -33,6 +34,8 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const user = useUserStore(state => state.user);
+
+  const metrics = useMetrics();
 
   const {manage, count} = useCartManager({
     orgId: orgId!,
@@ -79,6 +82,8 @@ export const ProductPreviewCard: FC<Props> = ({data, style, imagePriority}) => {
   };
 
   const handleCountChange = async (nextValue: number) => {
+    metrics.changeCart({source: 'menu'});
+
     await manage(nextValue);
   };
 

@@ -21,23 +21,34 @@ import {
   SECRET_GUEST_URL,
   TELEGRAM_BOT_URL,
 } from '../../../../shared/consts';
+import {
+  METRICS_EVENTS,
+  useMetrics,
+  useMetricsMount,
+} from '../../../../shared/hooks/useMetrics';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {FunKhinkal} from '../../../../shared/ui/CustomIcons/FunKhinkal';
 import {Tg} from '../../../../shared/ui/CustomIcons/Tg';
 import {ListButton} from '../../../../shared/ui/ListButton';
-import {formatPhoneNumber} from '../../../../shared/utils/formatPhoneNumber.ts';
-import {phoneByNumber} from '../../../../shared/utils/phoneByNumber.ts';
+import {formatPhoneNumber} from '../../../../shared/utils/formatPhoneNumber';
+import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
 import {AppVersion} from '../AppVersion';
 
 export const Contacts = () => {
   const height = useBottomTabBarHeight();
   const {data} = useCurrentOrg();
 
+  useMetricsMount(METRICS_EVENTS.OPEN_CONTACTS_PAGE);
+
+  const metrics = useMetrics();
+
   const handlePhonePress = () => {
     if (!data) {
       return;
     }
+
+    metrics.callOrg({address: data.address, source: 'contacts'});
 
     phoneByNumber(data.phone);
   };
@@ -58,10 +69,10 @@ export const Contacts = () => {
       </View>
       <View style={styles.headerActions}>
         <View style={styles.actionButtonLeft}>
-          <OrgDisLikeButton />
+          {data && <OrgDisLikeButton org={data} />}
         </View>
         <View style={styles.actionButtonRight}>
-          <OrgLikeButton />
+          {data && <OrgLikeButton org={data} />}
         </View>
       </View>
       <View style={styles.social}>

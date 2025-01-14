@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {CitiesList, City} from '../../../../entities/cities';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 
 type Props = {
@@ -17,6 +18,8 @@ type Props = {
 export const Cities: FC<Props> = ({navigation}) => {
   const [searchValue, setSearchValue] = useState('');
   const insets = useSafeAreaInsets();
+
+  const metrics = useMetrics();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,6 +34,8 @@ export const Cities: FC<Props> = ({navigation}) => {
   }, [navigation]);
 
   const handleChange = (city: City) => {
+    metrics.chooseCity({city: city.name});
+
     navigation.push(Routes.Organisations, {cityId: city.id});
   };
 

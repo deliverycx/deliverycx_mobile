@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Icon} from '../../../../shared/ui/Icon';
 import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
@@ -12,7 +13,13 @@ type Props = {
 export const OrgCallButton: FC<Props> = ({style}) => {
   const {data} = useCurrentOrg();
 
+  const metrics = useMetrics();
+
   const onButtonPress = () => {
+    if (data) {
+      metrics.callOrg({address: data?.address, source: 'menu'});
+    }
+
     phoneByNumber(data!.phone);
   };
 

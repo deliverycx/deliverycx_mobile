@@ -1,5 +1,6 @@
 import React, {forwardRef} from 'react';
 import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {Chip} from '../../../../shared/ui/Сhip';
 import {Category} from '../../types/productsTypes';
@@ -19,6 +20,8 @@ export const CategoryList = forwardRef<FlatList, Props>(
     {data, style, visibleCategoryId, onItemPress, shadow = false},
     forwardedRef,
   ) => {
+    const metrics = useMetrics();
+
     const getMargin = (index: number) => {
       if (index === 0) {
         return {
@@ -46,6 +49,8 @@ export const CategoryList = forwardRef<FlatList, Props>(
           renderItem={({item, index}) => (
             <Chip
               onPress={() => {
+                metrics.pressCatalogButton();
+
                 onItemPress(item.id);
               }}
               variant={visibleCategoryId === item.id ? 'secondary' : 'primary'}

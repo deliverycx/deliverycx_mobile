@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Counter} from '../../../../shared/ui/Counter';
 import {Icon} from '../../../../shared/ui/Icon';
@@ -10,6 +11,13 @@ type Props = {
 };
 
 export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
+  const metrics = useMetrics();
+
+  const handleCutleryChange = (nextCount: number) => {
+    metrics.changeCutlery();
+    onCountChange(nextCount);
+  };
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.left}>
@@ -22,14 +30,17 @@ export const CutlerySwitcher: FC<Props> = ({count, onCountChange}) => {
             max={99}
             variant="secondary"
             value={count}
-            onChange={onCountChange}
+            onChange={handleCutleryChange}
           />
         )}
         <Switch
           style={styles.switch}
           trackColor={{true: COLORS.success}}
           thumbColor={COLORS.backgroundPrimary}
-          onValueChange={checked => onCountChange(checked ? 1 : 0)}
+          onValueChange={checked => {
+            metrics.changeCutlery();
+            onCountChange(checked ? 1 : 0);
+          }}
           value={count > 0}
         />
       </View>

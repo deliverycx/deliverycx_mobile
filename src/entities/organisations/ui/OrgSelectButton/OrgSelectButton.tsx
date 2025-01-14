@@ -1,17 +1,21 @@
 import {useQueryClient} from '@tanstack/react-query';
 import React, {FC, useState} from 'react';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Button} from '../../../../shared/ui/Button';
 import {fetchProducts} from '../../../products';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
+import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
-  orgId: string;
+  data: Organisation;
   disabled?: boolean;
 };
 
-export const OrgSelectButton: FC<Props> = ({orgId, disabled = false}) => {
+export const OrgSelectButton: FC<Props> = ({data, disabled = false}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
+
+  const metrics = useMetrics();
 
   const setOrgInfo = useCurrentOrgStore(state => state.setOrgInfo);
 
@@ -19,10 +23,12 @@ export const OrgSelectButton: FC<Props> = ({orgId, disabled = false}) => {
     setLoading(true);
 
     try {
-      await fetchProducts(queryClient, {organization: orgId});
-      setOrgInfo(orgId);
+      await fetchProducts(queryClient, {organization: data.guid});
+      setOrgInfo(data.guid);
     } catch (err) {
     } finally {
+      metrics.chooseOrg({address: data.address});
+
       setLoading(false);
     }
   };

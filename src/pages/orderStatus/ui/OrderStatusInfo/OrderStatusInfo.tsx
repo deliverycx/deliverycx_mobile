@@ -11,6 +11,7 @@ import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useOrgYaPlaceQuery} from '../../../../entities/organisations/queries/orgYaPlaceQueries';
 import {useUserStore} from '../../../../entities/user';
 import {TELEGRAM_BOT_URL} from '../../../../shared/consts';
+import {useMetrics} from '../../../../shared/hooks/useMetrics.ts';
 import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {Button} from '../../../../shared/ui/Button';
@@ -32,6 +33,8 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderData}) => {
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const userId = useUserStore(state => state.user?.id);
+
+  const metrics = useMetrics();
 
   const {data} = useOrgYaPlaceQuery({organization: orgId!});
 
@@ -92,11 +95,13 @@ export const OrderStatusInfo: FC<Props> = ({variant, orderData}) => {
           <>
             <Button onPress={handleMenuGoPress} text="Перейти в меню" />
             <Button
-              onPress={() =>
+              onPress={() => {
+                metrics.reviewOrder();
+
                 openUrl(
                   `https://yandex.ru/sprav/widget/rating-badge/${data?.goodplaceid}?type=award`,
-                )
-              }
+                );
+              }}
               variant="secondary"
               text="Оставить отзыв"
             />

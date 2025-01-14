@@ -19,6 +19,8 @@ end
 target 'deliverycx_mobile' do
   config = use_native_modules!
 
+  pod 'YandexMobileMetrica', '4.5.2'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

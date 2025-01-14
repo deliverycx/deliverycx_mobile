@@ -32,6 +32,8 @@
 		C625300C2C20C49300A36938 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FF92C20C49300A36938 /* SimpleLineIcons.ttf */; };
 		C625300D2C20C49300A36938 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FFA2C20C49300A36938 /* FontAwesome6_Brands.ttf */; };
 		C625300E2C20C49300A36938 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6252FFB2C20C49300A36938 /* MaterialIcons.ttf */; };
+		C635A5072D1D720800916853 /* YandexMetrica.m in Sources */ = {isa = PBXBuildFile; fileRef = C635A5062D1D720800916853 /* YandexMetrica.m */; };
+		C635A5082D1D720800916853 /* YandexMetrica.m in Sources */ = {isa = PBXBuildFile; fileRef = C635A5062D1D720800916853 /* YandexMetrica.m */; };
 		C6EA2D7B2CAD846D00A3A0FA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6EA2D7A2CAD846D00A3A0FA /* Launch Screen.storyboard */; };
 		F6B65D79C4626EA9F9746B3D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3E00E47089D3AD54C3921D8B /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,8 @@
 		C6252FF92C20C49300A36938 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		C6252FFA2C20C49300A36938 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		C6252FFB2C20C49300A36938 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		C635A5052D1D71DA00916853 /* YandexMetrica.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YandexMetrica.h; sourceTree = "<group>"; };
+		C635A5062D1D720800916853 /* YandexMetrica.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YandexMetrica.m; sourceTree = "<group>"; };
 		C6EA2D7A2CAD846D00A3A0FA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -159,6 +163,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C635A4FF2D1D6ECE00916853 /* NativeModules */,
 				C6252FE82C20C49300A36938 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* deliverycx_mobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -217,6 +222,15 @@
 			);
 			name = Fonts;
 			path = "../node_modules/react-native-vector-icons/Fonts";
+			sourceTree = "<group>";
+		};
+		C635A4FF2D1D6ECE00916853 /* NativeModules */ = {
+			isa = PBXGroup;
+			children = (
+				C635A5052D1D71DA00916853 /* YandexMetrica.h */,
+				C635A5062D1D720800916853 /* YandexMetrica.m */,
+			);
+			path = NativeModules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C635A5082D1D720800916853 /* YandexMetrica.m in Sources */,
 				00E356F31AD99517003FC87E /* deliverycx_mobileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +499,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C635A5072D1D720800916853 /* YandexMetrica.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -562,7 +578,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 39958MKHSD;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -596,7 +612,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 39958MKHSD;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = deliverycx_mobile/Info.plist;

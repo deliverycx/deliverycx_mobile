@@ -1343,6 +1343,14 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.7.0)
   - YandexMapsMobile (4.2.2-full)
+  - YandexMobileMetrica (4.5.2):
+    - YandexMobileMetrica/Static (= 4.5.2)
+  - YandexMobileMetrica/Static (4.5.2):
+    - YandexMobileMetrica/Static/Core (= 4.5.2)
+    - YandexMobileMetrica/Static/Crashes (= 4.5.2)
+  - YandexMobileMetrica/Static/Core (4.5.2)
+  - YandexMobileMetrica/Static/Crashes (4.5.2):
+    - YandexMobileMetrica/Static/Core
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1420,6 +1428,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNYamap (from `../node_modules/react-native-yamap`)
+  - YandexMobileMetrica (= 4.5.2)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1430,6 +1439,7 @@ SPEC REPOS:
     - SDWebImageWebPCoder
     - SocketRocket
     - YandexMapsMobile
+    - YandexMobileMetrica
 
 EXTERNAL SOURCES:
   boost:
@@ -1659,8 +1669,9 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   YandexMapsMobile: 1fd5f86bc368ad6ba528b199f9477e4a26796567
+  YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
   Yoga: ae3c32c514802d30f687a04a6a35b348506d411f
 
-PODFILE CHECKSUM: bc2c0051177b85ccc93d3f44dfb1b56581896a6d
+PODFILE CHECKSUM: 4bff531332b1fb4b669f8b9be14bee743e27de64
 
 COCOAPODS: 1.14.2

@@ -77,7 +77,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
         onDismiss={onCloseRequest}
         footerComponent={() => (
           <Container style={{marginBottom: insets.bottom}}>
-            <OrgSelectButton disabled={isDisabled()} orgId={data.guid} />
+            <OrgSelectButton disabled={isDisabled()} data={data} />
           </Container>
         )}
         ref={modalRef}
@@ -99,7 +99,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
                 <Icon style={styles.icon} name="close" />
               </TouchableOpacity>
             </View>
-            <OrgRating orgId={data.guid} />
+            <OrgRating org={data} />
             <OrgKhinkaliCounter
               style={styles.khinkaliCounter}
               orgId={data.guid}
@@ -110,7 +110,7 @@ export const OrgInfo: FC<Props> = ({onCloseRequest, data}) => {
                 <OrgWorkTime workTime={data.workTime} />
               </View>
               <View style={styles.orgPhone}>
-                <OrgPhone phone={data.phone} />
+                <OrgPhone data={data} />
               </View>
             </View>
             <OrgFilters style={styles.orgFilters} data={data.filters} />

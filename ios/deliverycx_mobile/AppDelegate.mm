@@ -3,6 +3,7 @@
 #import "Orientation.h"
 #import <React/RCTBundleURLProvider.h>
 #import "RNSplashScreen.h"
+#import <YandexMobileMetrica/YandexMobileMetrica.h>
 
 @implementation AppDelegate
 
@@ -21,6 +22,9 @@
   [YMKMapKit setLocale:@"ru_RU"];
   [YMKMapKit setApiKey:@"9319733b-bbba-48e7-af52-8410be35c07d"];
   [YMKMapKit mapKit];
+
+  YMMYandexMetricaConfiguration *configuration = [[YMMYandexMetricaConfiguration alloc] initWithApiKey:@"ed245972-a303-449b-96b6-069395a6e9b7"];
+  [YMMYandexMetrica activateWithConfiguration:configuration];
 
   bool didFinish=[super application:application didFinishLaunchingWithOptions:launchOptions];
 

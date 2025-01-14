@@ -3,12 +3,15 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC, useEffect} from 'react';
 import {OrderForm, useOrderFormContext} from '../../../../entities/order';
 import {useOrgCity} from '../../../../entities/organisations';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {useStreets} from '../../../../widgets/order';
 import {OrderInputButton} from '../OrderInputButton';
 
 export const OrderAddress: FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
+
+  const metrics = useMetrics();
 
   const {watch, register, unregister} = useOrderFormContext<OrderForm>();
 
@@ -40,7 +43,11 @@ export const OrderAddress: FC = () => {
   return (
     <OrderInputButton
       disabled={!streets.length}
-      onPress={() => navigation.push(Routes.Address)}
+      onPress={() => {
+        metrics.pressDeliveryAddress();
+
+        navigation.push(Routes.Address);
+      }}
       text={getAddressInfo()}
       iconName="home"
     />

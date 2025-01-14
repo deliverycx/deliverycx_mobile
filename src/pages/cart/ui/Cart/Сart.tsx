@@ -7,6 +7,10 @@ import {
   useOrderCheckCartQuery,
 } from '../../../../entities/order';
 import {useUserStore} from '../../../../entities/user';
+import {
+  METRICS_EVENTS,
+  useMetricsMount,
+} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {CartList, useCartItems} from '../../../../widgets/cart';
 import {OrgCloseBanner} from '../../../../widgets/organisations';
@@ -16,6 +20,8 @@ type Props = {
 };
 
 export const Cart: FC<Props> = ({navigation}) => {
+  useMetricsMount(METRICS_EVENTS.OPEN_CART_PAGE);
+
   const {data} = useCartItems();
   const userId = useUserStore(state => state.user?.id);
 

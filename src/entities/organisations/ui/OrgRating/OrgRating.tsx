@@ -3,15 +3,19 @@ import {Linking, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {WebView} from 'react-native-webview';
-import {useOrgYaPlaceQuery} from '../../queries/orgYaPlaceQueries.ts';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
+import {useOrgYaPlaceQuery} from '../../queries/orgYaPlaceQueries';
+import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
-  orgId: string;
+  org: Organisation;
 };
 
-export const OrgRating: FC<Props> = ({orgId}) => {
+export const OrgRating: FC<Props> = ({org}) => {
   const [isWebviewLoaded, setIsWebviewLoaded] = useState(false);
-  const {data} = useOrgYaPlaceQuery({organization: orgId});
+  const {data} = useOrgYaPlaceQuery({organization: org.guid});
+
+  const metrics = useMetrics();
 
   return (
     <View style={styles.wrapper}>
@@ -30,6 +34,8 @@ export const OrgRating: FC<Props> = ({orgId}) => {
             uri: `https://yandex.ru/sprav/widget/rating-badge/${data.goodplaceid}?type=award`,
           }}
           onOpenWindow={syntheticEvent => {
+            metrics.pressGoodPlace({address: org.address});
+
             const {nativeEvent} = syntheticEvent;
             const {targetUrl} = nativeEvent;
             Linking.openURL(targetUrl);

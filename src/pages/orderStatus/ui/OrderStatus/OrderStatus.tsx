@@ -2,6 +2,10 @@ import type {RouteProp} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useGetOrderQuery} from '../../../../entities/order';
+import {
+  METRICS_EVENTS,
+  useMetricsMount,
+} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {Container} from '../../../../shared/ui/Container';
 import {OrderStatusInfo} from '../OrderStatusInfo';
@@ -15,6 +19,8 @@ const IIKO_ORDER_RETRY_MS = 1000 * 60;
 const IIKO_ORDER_REFETCH_MS = 2000;
 
 export const OrderStatus = ({route}: Props) => {
+  useMetricsMount(METRICS_EVENTS.OPEN_ORDER_STATUS_PAGE);
+
   const {hash} = route.params;
 
   const [enabledGetOrder, setEnabledGetOrder] = useState(true);

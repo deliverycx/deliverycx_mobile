@@ -6,6 +6,7 @@ import {
   useCurrentOrgStore,
   useExtendedOrgStatus,
 } from '../../../../entities/organisations';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {PaymentMethod} from '../../../../shared/types/order';
@@ -22,6 +23,8 @@ export const PaymentList: FC<Props> = ({navigation}) => {
   const {paymentMetod} = useExtendedOrgStatus(currentOrgId!, {
     enabled: !!currentOrgId,
   });
+
+  const metrics = useMetrics();
 
   const getOptions = () => {
     const options = [];
@@ -58,6 +61,8 @@ export const PaymentList: FC<Props> = ({navigation}) => {
           <ListButton
             style={styles.button}
             onPress={() => {
+              metrics.changePaymentMethod({paymentMethod: item.name});
+
               setValue('paymentMethod', item.id);
               navigation.goBack();
             }}

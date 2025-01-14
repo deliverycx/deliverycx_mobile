@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {OrderForm, useOrderFormContext} from '../../../../entities/order';
 import {useIsOrgClosed} from '../../../../entities/organisations';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Routes, StackParamList} from '../../../../shared/routes';
 import {COLORS} from '../../../../shared/styles';
 import {OrderType} from '../../../../shared/types/order';
@@ -43,6 +44,8 @@ export const Order: FC<Props> = ({navigation}) => {
   const {data} = useCartItems();
 
   const {onSubmit, isFetching} = useOrderSubmit();
+
+  const metrics = useMetrics();
 
   const isOrgClosed = useIsOrgClosed();
 
@@ -168,6 +171,7 @@ export const Order: FC<Props> = ({navigation}) => {
                   render={({field: {value, onChange}}) => {
                     return (
                       <Input
+                        onBlur={() => metrics.orderCommentsBlur()}
                         textAlignVertical="top"
                         autoCapitalize="sentences"
                         style={styles.textarea}

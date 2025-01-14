@@ -1,6 +1,7 @@
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import React, {FC, useState} from 'react';
 import {Platform} from 'react-native';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {DateTimePickerAndroid} from '../../../../shared/ui/DateTimePickerAndroid';
 import {DateTimePickerIOS} from '../../../../shared/ui/DateTimePickerIOS';
 import {InputButton} from '../../../../shared/ui/InputButton';
@@ -16,7 +17,11 @@ const TEN_MINUTES_MS = 1000 * 60 * 10;
 export const OrderDeliveryTime: FC<Props> = ({onChange, value}) => {
   const [open, setOpen] = useState(false);
 
+  const metrics = useMetrics();
+
   const handlePress = () => {
+    metrics.showOrderTimePicker();
+
     setOpen(true);
   };
 

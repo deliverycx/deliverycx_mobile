@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Icon} from '../../../../shared/ui/Icon';
 import {useCartItemsRemove} from '../../../cart';
@@ -21,6 +22,8 @@ type Props = {
 
 export const OrgChangeButton: FC<Props> = ({style, userId}) => {
   const {data, isFetched} = useCurrentOrg();
+
+  const metrics = useMetrics();
 
   const deleteOrgInfo = useCurrentOrgStore(state => state.deleteOrgInfo);
 
@@ -39,6 +42,10 @@ export const OrgChangeButton: FC<Props> = ({style, userId}) => {
   }
 
   const handlePress = () => {
+    if (data) {
+      metrics.leaveOrg({address: data.address});
+    }
+
     cartRemove();
     deleteOrgInfo();
   };

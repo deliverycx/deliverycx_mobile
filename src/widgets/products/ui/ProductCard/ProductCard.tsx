@@ -5,6 +5,11 @@ import {useCartAdd} from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {getProductWeightText} from '../../../../entities/products';
 import {useUserStore} from '../../../../entities/user';
+import {
+  METRICS_EVENTS,
+  useMetrics,
+  useMetricsMount,
+} from '../../../../shared/hooks/useMetrics';
 import {COLORS, INDENTS} from '../../../../shared/styles';
 import {Product} from '../../../../shared/types/productTypes';
 import {Button} from '../../../../shared/ui/Button';
@@ -29,6 +34,10 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
   const orgId = useCurrentOrgStore(state => state.orgId);
   const user = useUserStore(state => state.user);
 
+  useMetricsMount(METRICS_EVENTS.OPEN_PRODUCT_PREVIEW);
+
+  const metrics = useMetrics();
+
   const {add} = useCartAdd({
     orgId: orgId!,
     userId: user?.id!,
@@ -44,6 +53,8 @@ export const ProductCard: FC<Props> = ({onClosed, data}) => {
   }, []);
 
   const handleCounterChange = (nextCount: number) => {
+    metrics.changeCart({source: 'detail'});
+
     setCount(Math.max(INITIAL_COUNT, nextCount));
   };
 

@@ -9,10 +9,11 @@ import {
 } from '../../../../entities/cart';
 import {useCurrentOrgStore} from '../../../../entities/organisations';
 import {useUserStore} from '../../../../entities/user';
+import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Counter} from '../../../../shared/ui/Counter';
+import {IconButton} from '../../../../shared/ui/IconButton';
 import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
-import {IconButton} from "../../../../shared/ui/IconButton";
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
 
 type Props = {
@@ -25,6 +26,8 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
 
   const orgId = useCurrentOrgStore(state => state.orgId);
   const user = useUserStore(state => state.user);
+
+  const metrics = useMetrics();
 
   const {
     update,
@@ -43,6 +46,8 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
   });
 
   const handleCounterChange = (nextCount: number) => {
+    metrics.changeCart({source: 'cart'});
+
     if (nextCount === 0) {
       if (updateControllerRef.current) {
         updateControllerRef.current.abort();
@@ -75,14 +80,14 @@ export const CartProductPreview: FC<Props> = ({data, style}) => {
               LinearGradient={LinearGradient}
             />
           ) : (
-              <View style={styles.bottomButtons}>
-                <IconButton
-                    onPress={() => remove()}
-                    iconName="close"
-                    variant="tertiary"
-                />
-                <Counter max={99} value={count} onChange={handleCounterChange}/>
-              </View>
+            <View style={styles.bottomButtons}>
+              <IconButton
+                onPress={() => remove()}
+                iconName="close"
+                variant="tertiary"
+              />
+              <Counter max={99} value={count} onChange={handleCounterChange} />
+            </View>
           )}
         </View>
       </View>

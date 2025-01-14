@@ -3,12 +3,18 @@ import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useGetOrdersQuery} from '../../../../entities/order';
 import {useUserStore} from '../../../../entities/user';
+import {
+  METRICS_EVENTS,
+  useMetricsMount,
+} from '../../../../shared/hooks/useMetrics';
 import {Container} from '../../../../shared/ui/Container';
 import {InfoStatus} from '../../../../shared/ui/InfoStatus';
 import {OrderHistoryItem} from '../OrderHistoryItem';
 import {OrderHistoryListSkeleton} from '../OrdersListSkeleton';
 
 export const OrderHistory = () => {
+  useMetricsMount(METRICS_EVENTS.OPEN_HISTORY_PAGE);
+
   const userId = useUserStore(state => state.user?.id);
   const bottomTabBarHeight = useBottomTabBarHeight();
   const {data, isFetching} = useGetOrdersQuery(
