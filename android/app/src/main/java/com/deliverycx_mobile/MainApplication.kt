@@ -48,7 +48,7 @@ class MainApplication : Application(), ReactApplication {
     }
 
     // AppMetrica
-    val config = YandexMetricaConfig.newConfigBuilder("ed245972-a303-449b-96b6-069395a6e9b7").build()
+    val config = YandexMetricaConfig.newConfigBuilder("495d0034-6ac0-483f-8446-9c54596f153f").build()
     YandexMetrica.activate(this.applicationContext, config)
   }
 }
