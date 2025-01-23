@@ -12,6 +12,7 @@ import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Icon} from '../../../../shared/ui/Icon';
 import {useCartItemsRemove} from '../../../cart';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress.ts';
 import {useCurrentOrg} from '../../hooks/useCurrentOrg';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 
@@ -43,7 +44,7 @@ export const OrgChangeButton: FC<Props> = ({style, userId}) => {
 
   const handlePress = () => {
     if (data) {
-      metrics.leaveOrg({address: data.address});
+      metrics.leaveOrg({address: getOrgFullAddress(data)});
     }
 
     cartRemove();

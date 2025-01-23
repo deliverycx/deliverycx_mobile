@@ -13,6 +13,7 @@ import {
   OrgVKButton,
   useCurrentOrg,
 } from '../../../../entities/organisations';
+import {getOrgFullAddress} from '../../../../entities/products/utils/getOrgFullAddress';
 import {
   CALORIES_URL,
   FRANCHISE_URL,
@@ -48,7 +49,7 @@ export const Contacts = () => {
       return;
     }
 
-    metrics.callOrg({address: data.address, source: 'contacts'});
+    metrics.callOrg({address: getOrgFullAddress(data), source: 'contacts'});
 
     phoneByNumber(data.phone);
   };

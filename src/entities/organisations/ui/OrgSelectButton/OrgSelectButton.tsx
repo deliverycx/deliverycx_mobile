@@ -3,6 +3,7 @@ import React, {FC, useState} from 'react';
 import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {Button} from '../../../../shared/ui/Button';
 import {fetchProducts} from '../../../products';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 import {Organisation} from '../../types/organisationsTypes';
 
@@ -27,7 +28,7 @@ export const OrgSelectButton: FC<Props> = ({data, disabled = false}) => {
       setOrgInfo(data.guid);
     } catch (err) {
     } finally {
-      metrics.chooseOrg({address: data.address});
+      metrics.chooseOrg({address: getOrgFullAddress(data)});
 
       setLoading(false);
     }

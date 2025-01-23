@@ -4,6 +4,7 @@ import {useMetrics} from '../../../../shared/hooks/useMetrics';
 import {COLORS} from '../../../../shared/styles';
 import {Icon} from '../../../../shared/ui/Icon';
 import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {useCurrentOrg} from '../../hooks/useCurrentOrg';
 
 type Props = {
@@ -17,7 +18,7 @@ export const OrgCallButton: FC<Props> = ({style}) => {
 
   const onButtonPress = () => {
     if (data) {
-      metrics.callOrg({address: data?.address, source: 'menu'});
+      metrics.callOrg({address: getOrgFullAddress(data), source: 'menu'});
     }
 
     phoneByNumber(data!.phone);

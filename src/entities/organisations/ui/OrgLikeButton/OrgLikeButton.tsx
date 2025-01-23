@@ -5,6 +5,7 @@ import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {COLORS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {useOrgSocialQuery} from '../../queries/orgSocialQueries';
 import {useCurrentOrgStore} from '../../stores/useCurrentOrgStore';
 import {Organisation} from '../../types/organisationsTypes';
@@ -26,7 +27,7 @@ export const OrgLikeButton: FC<Props> = ({style, org}) => {
       return;
     }
 
-    metrics.dislikeOrg({address: org.address});
+    metrics.dislikeOrg({address: getOrgFullAddress(org)});
 
     await openUrl(data.like);
   };

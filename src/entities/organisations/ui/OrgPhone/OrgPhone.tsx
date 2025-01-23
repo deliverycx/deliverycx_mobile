@@ -5,6 +5,7 @@ import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
 import {formatRussianPhoneNumber} from '../../../../shared/utils/formatRussianPhoneNumber';
 import {phoneByNumber} from '../../../../shared/utils/phoneByNumber';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
@@ -20,7 +21,7 @@ export const OrgPhone: FC<Props> = ({data, style}) => {
   }, [data]);
 
   const handlePhonePress = () => {
-    metrics.callOrg({address: data.address, source: 'preview'});
+    metrics.callOrg({address: getOrgFullAddress(data), source: 'preview'});
 
     phoneByNumber(data.phone);
   };

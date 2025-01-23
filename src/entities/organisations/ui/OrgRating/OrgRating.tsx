@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {WebView} from 'react-native-webview';
 import {useMetrics} from '../../../../shared/hooks/useMetrics';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {useOrgYaPlaceQuery} from '../../queries/orgYaPlaceQueries';
 import {Organisation} from '../../types/organisationsTypes';
 
@@ -34,7 +35,7 @@ export const OrgRating: FC<Props> = ({org}) => {
             uri: `https://yandex.ru/sprav/widget/rating-badge/${data.goodplaceid}?type=award`,
           }}
           onOpenWindow={syntheticEvent => {
-            metrics.pressGoodPlace({address: org.address});
+            metrics.pressGoodPlace({address: getOrgFullAddress(org)});
 
             const {nativeEvent} = syntheticEvent;
             const {targetUrl} = nativeEvent;

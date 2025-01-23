@@ -6,6 +6,7 @@ import {useOpenUrl} from '../../../../shared/hooks/useOpenUrl';
 import {COLORS} from '../../../../shared/styles';
 import {Button} from '../../../../shared/ui/Button';
 import {Icon} from '../../../../shared/ui/Icon';
+import {getOrgFullAddress} from '../../../products/utils/getOrgFullAddress';
 import {Organisation} from '../../types/organisationsTypes';
 
 type Props = {
@@ -21,7 +22,7 @@ export const OrgDisLikeButton: FC<Props> = ({style, org}) => {
   return (
     <Button
       onPress={() => {
-        metrics.dislikeOrg({address: org.address});
+        metrics.dislikeOrg({address: getOrgFullAddress(org)});
 
         openUrl(TELEGRAM_BOT_URL);
       }}
