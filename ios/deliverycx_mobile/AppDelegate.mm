@@ -23,7 +23,7 @@
   [YMKMapKit setApiKey:@"9319733b-bbba-48e7-af52-8410be35c07d"];
   [YMKMapKit mapKit];
 
-  YMMYandexMetricaConfiguration *configuration = [[YMMYandexMetricaConfiguration alloc] initWithApiKey:@"495d0034-6ac0-483f-8446-9c54596f153f"];
+  YMMYandexMetricaConfiguration *configuration = [[YMMYandexMetricaConfiguration alloc] initWithApiKey:@"6882a583-fa8b-4207-8054-7c49c5211a1e"];
   [YMMYandexMetrica activateWithConfiguration:configuration];
 
   bool didFinish=[super application:application didFinishLaunchingWithOptions:launchOptions];
