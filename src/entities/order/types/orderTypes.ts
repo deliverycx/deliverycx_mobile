@@ -49,7 +49,8 @@ export interface OrderParams {
   paymentMethod: PaymentMethod;
   orderType: OrderType;
   orderTotalAmount: number;
-  date: string,
+  date: string;
+  orderAmount: number;
 }
 
 export interface OrderItem {

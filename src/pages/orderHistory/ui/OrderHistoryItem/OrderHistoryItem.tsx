@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {OrderModel, OrderStatus} from '../../../../entities/order';
 import {COLORS} from '../../../../shared/styles';
+import {OrderType} from '../../../../shared/types/order.ts';
 import {Container} from '../../../../shared/ui/Container';
 import {ProductImageSizer} from '../../../../shared/ui/ProductImageSizer';
 import {getFormatPrice} from '../../../../shared/utils/getFormatPrice';
@@ -26,6 +27,16 @@ export const OrderHistoryItem: FC<Props> = ({order}) => {
           </Text>
         );
     }
+  };
+
+  const getOrderSum = () => {
+    const {orderParams} = order;
+
+    if (orderParams.orderType === OrderType.Courier) {
+      return orderParams.orderTotalAmount;
+    }
+
+    return orderParams.orderAmount;
   };
 
   return (
@@ -56,9 +67,7 @@ export const OrderHistoryItem: FC<Props> = ({order}) => {
       <View style={styles.divider} />
       <View style={styles.orderPrice}>
         <Text style={styles.priceLabel}>Итого</Text>
-        <Text style={styles.priceValue}>
-          {getFormatPrice(order.orderParams.orderTotalAmount)}
-        </Text>
+        <Text style={styles.priceValue}>{getFormatPrice(getOrderSum())}</Text>
       </View>
     </Container>
   );
